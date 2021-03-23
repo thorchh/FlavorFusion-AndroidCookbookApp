@@ -56,11 +56,33 @@ public class MainActivity extends AppCompatActivity {
 
         title = new ArrayList<>();
         title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+
 
         desc = new ArrayList<>();
         desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
         
         img = new ArrayList<>();
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
         img.add(R.drawable.download);
         
 
