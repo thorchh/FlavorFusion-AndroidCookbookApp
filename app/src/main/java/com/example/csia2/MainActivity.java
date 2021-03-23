@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString())
+               // filter(s.toString())
             }
         });
 
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         title.add("signature brown meatballs");
 
         desc = new ArrayList<>();
-        title.add("signature brown meatballs");
+        desc.add("signature brown cheese");
         
         img = new ArrayList<>();
-        title.add("signature brown meatballs");
+        img.add(R.drawable.download);
         
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -98,10 +98,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity2.class);
         startActivity(intent);
     }
-}
+    }
 
-private void filter(String text){
-    ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
-    for (ExampleItem item: mExampleList)
-}
+//private void filter(String text){
+    //ArrayList<ExampleItem> filteredList = new ArrayList<>();
+
+    //for (ExampleItem item: mExampleList)
+//}

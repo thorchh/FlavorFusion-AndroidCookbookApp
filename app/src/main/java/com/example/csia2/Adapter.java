@@ -46,8 +46,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Integer imgb = img.get(i);
         viewHolder.imageViewf.setImageResource(imgb);
 
-
-
     }
 
 
