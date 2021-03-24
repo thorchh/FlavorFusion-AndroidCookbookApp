@@ -2,17 +2,14 @@ package com.example.csia2;
 
 import android.view.LayoutInflater;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CardObj {
 
     private LayoutInflater layoutInflater;
-    private List<String> title;
-    private List<String> desc;
-    private List<Integer> img;
+    private String title;
+    private String desc;
+    private Integer img;
 
-    CardObj(ArrayList<String> title, ArrayList<String> desc, ArrayList<Integer> img){
+    CardObj(String title, String desc, Integer img){
 
         this.title = title;
         this.desc = desc;
@@ -21,15 +18,16 @@ public class CardObj {
 
     }
 
-    getTitle(){
-
+    String getTitle(){
+        return title;
     }
 
-    getDesc(){
-
+    String getDesc(){
+        return desc;
     }
 
-    getImg(){
+    Integer getImg(){
+        return img;
 
     }
 

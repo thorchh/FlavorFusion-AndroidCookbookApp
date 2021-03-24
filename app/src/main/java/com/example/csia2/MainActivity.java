@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> title;
     ArrayList<String> desc;
     ArrayList<Integer> img;
+    ArrayList<CardObj> cardObjList;
 
 
     private Button button;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                // filter(s.toString())
             }
         });
+
+
 
 
         title = new ArrayList<>();
@@ -85,11 +88,15 @@ public class MainActivity extends AppCompatActivity {
         img.add(R.drawable.download);
         img.add(R.drawable.download);
         img.add(R.drawable.download);
-        
+
+        cardObjList = new ArrayList<CardObj>();
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheese", R.drawable.download));
+
+        // CardObj cardObj = new CardObj(title, desc, img);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,title,desc,img);
+        adapter = new Adapter(this, cardObjList);
         recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);

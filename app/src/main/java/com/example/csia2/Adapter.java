@@ -10,21 +10,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private List<String> data;
+    private List<String> title;
     private List<Integer> img;
     private List<String> desc;
+    private ArrayList<Object> cardObjList;
 
 
-    Adapter(Context context, List<String> data, List<String> desc, List<Integer> img){
+    Adapter(Context context,ArrayList<CardObj> objList){
+        for (int i = 0; i< objList.size(); i++){
+
+            this.title.add(objList.get(i).getTitle());
+            this.desc.add(objList.get(i).getDesc());
+            this.img.add(objList.get(i).getImg());
+        }
         this.layoutInflater = LayoutInflater.from(context);
-        this.data = data;
-        this.img = img;
-        this.desc = desc;
+
+
     }
 
     @NonNull
@@ -37,8 +44,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
 
-        String title = data.get(i);
-        viewHolder.textTitle.setText(title);
+        String titleb = title.get(i);
+        viewHolder.textTitle.setText(titleb);
 
         String descb = desc.get(i);
         viewHolder.textDescription.setText(descb);
@@ -52,7 +59,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return title.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
