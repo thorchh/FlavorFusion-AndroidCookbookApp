@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,13 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
     private LayoutInflater layoutInflater;
     private List<String> title = new ArrayList<String>(20);
     private List<Integer> img = new ArrayList<Integer>(20);
     private List<String> desc = new ArrayList<String>(20);
     private ArrayList<Object> cardObjList;
+    private ArrayList<CardObj> cardObjListFull;
 
 
     Adapter(Context context,ArrayList<CardObj> objList){
@@ -30,6 +33,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             this.img.add((objList.get(i)).getImg());
         }
         this.layoutInflater = LayoutInflater.from(context);
+        cardObjListFull = new ArrayList<CardObj>(objList);
 
 
     }
@@ -61,6 +65,40 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public int getItemCount() {
         return title.size();
     }
+
+    @Override
+    public Filter getFilter(){
+        return filter;
+    }
+    private Filter filter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Object> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(cardObjListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CardObj obj: cardObjListFull){
+                    if (obj.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(obj);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            cardObjList.clear();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
