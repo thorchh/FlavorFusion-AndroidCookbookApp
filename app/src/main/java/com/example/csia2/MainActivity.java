@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter adapter;
-    ArrayList<String> title;
+    ArrayList<String> data;
     ArrayList<String> desc;
     ArrayList<Integer> img;
 
@@ -50,23 +50,23 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString())
+                //filter(s.toString());
             }
         });
 
-        title = new ArrayList<>();
-        title.add("signature brown meatballs");
+        data = new ArrayList<>();
+        data.add("signature brown meatballs");
 
         desc = new ArrayList<>();
-        title.add("signature brown meatballs");
+        desc.add("signature brown meatballssss");
         
         img = new ArrayList<>();
-        title.add("signature brown meatballs");
+        img.add(9);
         
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,title,desc,img);
+        adapter = new Adapter(this,data,desc,img);
         recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-private void filter(String text){
-    ArrayList<ExampleItem> filteredList = new ArrayList<>();
+//private void filter(String text){
+//    ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
-    for (ExampleItem item: mExampleList)
-}
+//    for (ExampleItem item: mExampleList)
+//}
