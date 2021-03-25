@@ -22,9 +22,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter adapter;
-    ArrayList<String> title;
-    ArrayList<String> desc;
-    ArrayList<Integer> img;
     ArrayList<CardObj> cardObjList;
 
 
@@ -56,43 +53,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        cardObjList = new ArrayList<>();
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
 
 
-        title = new ArrayList<>();
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
-        title.add("signature brown meatballs");
 
-
-        desc = new ArrayList<>();
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        desc.add("signature brown cheese");
-        
-        img = new ArrayList<>();
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-        img.add(R.drawable.download);
-
-        cardObjList = new ArrayList<CardObj>();
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheese", R.drawable.download));
-
-        // CardObj cardObj = new CardObj(title, desc, img);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

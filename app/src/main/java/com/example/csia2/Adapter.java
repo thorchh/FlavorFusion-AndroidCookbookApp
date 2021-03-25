@@ -16,18 +16,18 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private List<String> title;
-    private List<Integer> img;
-    private List<String> desc;
+    private List<String> title = new ArrayList<String>(20);
+    private List<Integer> img = new ArrayList<Integer>(20);
+    private List<String> desc = new ArrayList<String>(20);
     private ArrayList<Object> cardObjList;
 
 
     Adapter(Context context,ArrayList<CardObj> objList){
         for (int i = 0; i< objList.size(); i++){
-
+            // System.out.println(objList.get(i).getTitle());
             this.title.add(objList.get(i).getTitle());
-            this.desc.add(objList.get(i).getDesc());
-            this.img.add(objList.get(i).getImg());
+            this.desc.add((objList.get(i)).getDesc());
+            this.img.add((objList.get(i)).getImg());
         }
         this.layoutInflater = LayoutInflater.from(context);
 
