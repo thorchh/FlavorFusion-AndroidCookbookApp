@@ -22,9 +22,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter adapter;
-    ArrayList<String> data;
+    ArrayList<String> title;
     ArrayList<String> desc;
     ArrayList<Integer> img;
+    ArrayList<CardObj> cardObjList;
 
 
     private Button button;
@@ -50,23 +51,52 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                //filter(s.toString());
+               // filter(s.toString())
             }
         });
 
-        data = new ArrayList<>();
-        data.add("signature brown meatballs");
+
+
+
+        title = new ArrayList<>();
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+        title.add("signature brown meatballs");
+
 
         desc = new ArrayList<>();
-        desc.add("signature brown meatballssss");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
+        desc.add("signature brown cheese");
         
         img = new ArrayList<>();
-        img.add(9);
-        
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+        img.add(R.drawable.download);
+
+        cardObjList = new ArrayList<CardObj>();
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheese", R.drawable.download));
+
+        // CardObj cardObj = new CardObj(title, desc, img);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,data,desc,img);
+        adapter = new Adapter(this, cardObjList);
         recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -98,10 +128,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity2.class);
         startActivity(intent);
     }
-}
+    }
+
 
 //private void filter(String text){
-//    ArrayList<ExampleItem> filteredList = new ArrayList<>();
+    //ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
-//    for (ExampleItem item: mExampleList)
+    //for (ExampleItem item: mExampleList)
 //}
