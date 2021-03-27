@@ -14,8 +14,6 @@ public class CardObj {
         this.title = title;
         this.desc = desc;
         this.img = img;
-
-
     }
 
     String getTitle(){
@@ -26,9 +24,6 @@ public class CardObj {
         return desc;
     }
 
-    Integer getImg(){
-        return img;
-
-    }
+    Integer getImg(){return img;}
 
 }
