@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(MainActivity.this, "onCreate", Toast.LENGTH_LONG ).show();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         cardObjList = new ArrayList<>();
         cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
         cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-
 
 
 
@@ -79,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity2.class);
         startActivity(intent);
     }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Toast.makeText(MainActivity.this, "onCreateOptionsMenu", Toast.LENGTH_LONG ).show();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
@@ -100,5 +104,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return true;
+
     }
     }

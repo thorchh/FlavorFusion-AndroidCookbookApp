@@ -8,7 +8,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,19 +21,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private List<String> title = new ArrayList<String>(20);
     private List<Integer> img = new ArrayList<Integer>(20);
     private List<String> desc = new ArrayList<String>(20);
-    private ArrayList<Object> cardObjList;
+    private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
 
 
     Adapter(Context context,ArrayList<CardObj> objList){
+        cardObjList = objList;
         for (int i = 0; i< objList.size(); i++){
-            // System.out.println(objList.get(i).getTitle());
             this.title.add(objList.get(i).getTitle());
             this.desc.add((objList.get(i)).getDesc());
             this.img.add((objList.get(i)).getImg());
         }
         this.layoutInflater = LayoutInflater.from(context);
-        cardObjListFull = new ArrayList<CardObj>(objList);
+        cardObjListFull = new ArrayList<>(objList);
 
 
     }
