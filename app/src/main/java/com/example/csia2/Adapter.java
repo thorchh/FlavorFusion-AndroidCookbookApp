@@ -25,6 +25,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private ArrayList<CardObj> cardObjListFull;
 
 
+
     Adapter(Context context,ArrayList<CardObj> objList){
         cardObjList = objList;
         for (int i = 0; i< objList.size(); i++){
@@ -74,7 +75,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Object> filteredList = new ArrayList<>();
+            List<CardObj> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0){
                 filteredList.addAll(cardObjListFull);

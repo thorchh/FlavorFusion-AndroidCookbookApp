@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.nav_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                System.out.println(newText);
                 adapter.getFilter().filter(newText);
+                Toast.makeText(MainActivity.this, "onQueryTextChange", Toast.LENGTH_LONG ).show();
                 return false;
             }
         });
