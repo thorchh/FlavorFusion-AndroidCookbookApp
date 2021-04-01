@@ -19,9 +19,6 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
     private LayoutInflater layoutInflater;
-    private List<String> title = new ArrayList<String>(20);
-    private List<Integer> img = new ArrayList<Integer>(20);
-    private List<String> desc = new ArrayList<String>(20);
 
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
@@ -43,11 +40,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     Adapter(Context context,ArrayList<CardObj> objList){
         cardObjList = objList;
         cardObjListFull = new ArrayList<>(objList);
-        for (int i = 0; i< cardObjList.size(); i++){
-            this.title.add(cardObjList.get(i).getTitle());
-            this.desc.add((cardObjList.get(i)).getDesc());
-            this.img.add((cardObjList.get(i)).getImg());
-        }
 
         this.layoutInflater = LayoutInflater.from(context);
 
@@ -64,19 +56,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        for (int j = 0; j< cardObjList.size(); j++){
-            title.add(cardObjList.get(j).getTitle());
-            desc.add((cardObjList.get(j)).getDesc());
-            img.add((cardObjList.get(j)).getImg());
-        }
 
-        String titleb = title.get(i);
+        String titleb = cardObjList.get(i).getTitle();
         viewHolder.textTitle.setText(titleb);
 
-        String descb = desc.get(i);
+        String descb = cardObjList.get(i).getDesc();
         viewHolder.textDescription.setText(descb);
 
-        Integer imgb = img.get(i);
+        Integer imgb = cardObjList.get(i).getImg();
         viewHolder.imageViewf.setImageResource(imgb);
 
     }
@@ -85,7 +72,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     @Override
     public int getItemCount() {
-        return title.size();
+        return cardObjList.size();
     }
 
     @Override
