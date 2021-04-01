@@ -92,7 +92,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (CardObj obj: cardObjListFull){
-                    if (obj.getTitle().toLowerCase().contains(filterPattern)){
+                    if (obj.getTitle().toLowerCase().contains(filterPattern) || obj.getDesc().toLowerCase().contains(filterPattern)){
                         filteredList.add(obj);
                     }
                 }
