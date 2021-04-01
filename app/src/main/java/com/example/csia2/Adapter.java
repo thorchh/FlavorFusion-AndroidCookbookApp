@@ -8,6 +8,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,20 +22,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private List<String> title = new ArrayList<String>(20);
     private List<Integer> img = new ArrayList<Integer>(20);
     private List<String> desc = new ArrayList<String>(20);
+
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        TextView textTitle, textDescription;
+        ImageView imageViewf;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textTitle = itemView.findViewById(R.id.textTitle);
+            textDescription = itemView.findViewById(R.id.textDescription);
+            imageViewf = itemView.findViewById(R.id.imageView);
+        }
+    }
 
 
     Adapter(Context context,ArrayList<CardObj> objList){
         cardObjList = objList;
-        for (int i = 0; i< objList.size(); i++){
-            this.title.add(objList.get(i).getTitle());
-            this.desc.add((objList.get(i)).getDesc());
-            this.img.add((objList.get(i)).getImg());
-        }
-        this.layoutInflater = LayoutInflater.from(context);
         cardObjListFull = new ArrayList<>(objList);
+        for (int i = 0; i< cardObjList.size(); i++){
+            this.title.add(cardObjList.get(i).getTitle());
+            this.desc.add((cardObjList.get(i)).getDesc());
+            this.img.add((cardObjList.get(i)).getImg());
+        }
+
+        this.layoutInflater = LayoutInflater.from(context);
+
 
 
     }
@@ -48,6 +64,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+        for (int j = 0; j< cardObjList.size(); j++){
+            title.add(cardObjList.get(j).getTitle());
+            desc.add((cardObjList.get(j)).getDesc());
+            img.add((cardObjList.get(j)).getImg());
+        }
 
         String titleb = title.get(i);
         viewHolder.textTitle.setText(titleb);
@@ -73,6 +94,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     }
     private Filter filter = new Filter(){
 
+
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CardObj> filteredList = new ArrayList<>();
@@ -91,7 +113,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-
+            System.out.println("performFiltering");
+            System.out.println("performFiltering");
             return results;
         }
 
@@ -99,20 +122,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         protected void publishResults(CharSequence constraint, FilterResults results) {
             cardObjList.clear();
             cardObjList.addAll((List) results.values);
+            for (CardObj i:cardObjList){
+                System.out.println(i);
+            }
             notifyDataSetChanged();
+            System.out.println("publishResults");
         }
     };
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView textTitle, textDescription;
-        ImageView imageViewf;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.textTitle);
-            textDescription = itemView.findViewById(R.id.textDescription);
-            imageViewf = itemView.findViewById(R.id.imageView);
-        }
-    }
 }
