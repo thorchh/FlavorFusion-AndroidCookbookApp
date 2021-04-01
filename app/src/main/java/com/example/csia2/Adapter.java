@@ -23,21 +23,37 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    private OnNoteListener mOnNoteListener;
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textTitle, textDescription;
         ImageView imageViewf;
+        OnNoteListener onNoteListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
             textDescription = itemView.findViewById(R.id.textDescription);
             imageViewf = itemView.findViewById(R.id.imageView);
+            this.onNoteListener = onNoteListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAdapterPosition());
         }
     }
 
+    public interface OnNoteListener{
+        void onNoteClick(int position);
 
-    Adapter(Context context,ArrayList<CardObj> objList){
+    }
+
+
+    Adapter(Context context,ArrayList<CardObj> objList, OnNoteListener onNoteListener){
+        this.mOnNoteListener = onNoteListener;
         cardObjList = objList;
         cardObjListFull = new ArrayList<>(objList);
 
@@ -51,7 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = layoutInflater.inflate(R.layout.custom_view, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnNoteListener);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {

@@ -5,26 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.SearchView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Adapter.OnNoteListener{
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<CardObj> cardObjList;
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this, cardObjList);
+        adapter = new Adapter(this, cardObjList, this);
         recyclerView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -83,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Toast.makeText(MainActivity.this, "onCreateOptionsMenu", Toast.LENGTH_LONG ).show();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
@@ -101,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 System.out.println(newText);
                 adapter.getFilter().filter(newText);
-                Toast.makeText(MainActivity.this, "onQueryTextChange", Toast.LENGTH_LONG ).show();
                 return false;
             }
         });
@@ -109,4 +102,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
+
+
+    @Override
+    public void onNoteClick(int position) {
+        cardObjList.get(position);
+        Intent intent = new Intent(this, MainActivity4.class);
+        startActivity(intent);
     }
+}
