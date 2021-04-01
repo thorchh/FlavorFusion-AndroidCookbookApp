@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Objects;
 
 public class MainActivity4 extends AppCompatActivity {
     CardObj cardObj;
@@ -44,7 +47,11 @@ public class MainActivity4 extends AppCompatActivity {
                 return false;
             }
         });
-        CardObj cardObjf = getIntent().getExtras().getParcelable("cardObj");
+        CardObj cardObjf = Objects.requireNonNull(getIntent().getExtras()).getParcelable("cardObj");
+        assert cardObjf != null;
         System.out.println(cardObjf.getTitle());
+        TextView titleView = (TextView) findViewById(R.id.text2);
+        String title = cardObjf.getTitle();
+        titleView.setText(title);
     }
 }
