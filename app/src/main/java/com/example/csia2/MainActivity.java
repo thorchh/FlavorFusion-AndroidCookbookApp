@@ -39,6 +39,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         cardObjList = new ArrayList<>();
         cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
         cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
 
 
 
@@ -108,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
     public void onNoteClick(int position) {
         cardObjList.get(position);
         Intent intent = new Intent(this, MainActivity4.class);
+        intent.putExtra("cardObj", cardObjList.get(position));
         startActivity(intent);
     }
 }

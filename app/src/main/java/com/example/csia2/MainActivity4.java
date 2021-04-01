@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity4 extends AppCompatActivity {
-
+    CardObj cardObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,5 +44,7 @@ public class MainActivity4 extends AppCompatActivity {
                 return false;
             }
         });
+        CardObj cardObjf = getIntent().getExtras().getParcelable("cardObj");
+        System.out.println(cardObjf.getTitle());
     }
 }
