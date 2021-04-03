@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<CardObj> cardObjList;
+    DatabaseReference reff;
+    Recipe recipe;
 
 
     private Button button;
@@ -77,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
                 return false;
             }
         });
+
+
+        recipe = new Recipe();
+        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        recipe.setTitle("Meatballs");
+        recipe.setDesc("Cheese");
+        reff.push().setValue(recipe);
     }
 
     public void Activity2(View v){
