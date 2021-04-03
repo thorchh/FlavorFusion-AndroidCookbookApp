@@ -16,8 +16,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -82,12 +85,32 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
             }
         });
 
-
+        //push to firebase
         recipe = new Recipe();
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         recipe.setTitle("Meatballs");
         recipe.setDesc("Cheese");
-        reff.push().setValue(recipe);
+        reff.child("Meatballs").setValue(recipe);
+
+
+        //get from firebase
+        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        reff.addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot);
+                String  title = dataSnapshot.child("Meatballs").child("title").getValue().toString();
+                String  desc = dataSnapshot.child("Meatballs").child("desc").getValue().toString();
+                System.out.println(title + desc);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void Activity2(View v){
