@@ -37,18 +37,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
 
 
         cardObjList = new ArrayList<>();
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.download));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.download));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
+        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
+        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
 
 
 

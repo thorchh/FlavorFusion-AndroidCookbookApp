@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,9 +50,8 @@ public class MainActivity4 extends AppCompatActivity {
         });
         CardObj cardObjf = Objects.requireNonNull(getIntent().getExtras()).getParcelable("cardObj");
         assert cardObjf != null;
-        System.out.println(cardObjf.getTitle());
-        TextView titleView = (TextView) findViewById(R.id.text2);
-        String title = cardObjf.getTitle();
-        titleView.setText(title);
+        ((TextView) findViewById(R.id.recipeTitle)).setText(cardObjf.getTitle());
+        ((TextView) findViewById(R.id.recipeDesc)).setText(cardObjf.getDesc());
+        ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(cardObjf.getImg());
     }
 }

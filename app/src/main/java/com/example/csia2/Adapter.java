@@ -8,7 +8,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +32,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
         public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-            textTitle = itemView.findViewById(R.id.textTitle);
+            textTitle = itemView.findViewById(R.id.recipeTitle);
             textDescription = itemView.findViewById(R.id.textDescription);
             imageViewf = itemView.findViewById(R.id.imageView);
             this.onNoteListener = onNoteListener;
