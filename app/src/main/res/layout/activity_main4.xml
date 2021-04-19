@@ -78,11 +78,10 @@
                 android:layout_height="wrap_content"
                 android:text="time" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ingredients w/ shopping" />
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="wrap_content"
+                android:layout_height="323dp" />
 
             <TextView
                 android:id="@+id/textView8"

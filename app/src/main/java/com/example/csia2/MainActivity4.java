@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity4 extends AppCompatActivity {
     CardObj cardObj;
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,5 +57,22 @@ public class MainActivity4 extends AppCompatActivity {
         ((TextView) findViewById(R.id.recipeTitle)).setText(cardObjf.getTitle());
         ((TextView) findViewById(R.id.recipeDesc)).setText(cardObjf.getDesc());
         ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(cardObjf.getImg());
+        listView =(ListView)findViewById(R.id.listview);
+
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("bobs");
+        arrayList.add("jeff");
+        arrayList.add("gustav");
+        arrayList.add("bobs");
+        arrayList.add("bobs");
+
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);
+        listView.setAdapter(arrayAdapter);
+
+
+
+
+
     }
 }

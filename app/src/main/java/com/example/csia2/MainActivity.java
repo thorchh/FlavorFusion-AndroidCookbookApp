@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
     Adapter adapter;
     ArrayList<CardObj> cardObjList;
     DatabaseReference reff;
+    DatabaseReference reff1;
     Recipe recipe;
 
 
@@ -90,12 +91,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         recipe.setTitle("Meatballs");
         recipe.setDesc("Cheese");
+        reff.push();
         reff.child("Meatballs").setValue(recipe);
+        System.out.println("very very naice");
+
 
 
         //get from firebase
-        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        reff.addValueEventListener(new ValueEventListener(){
+        reff1 = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        System.out.println("very naice");
+        reff1.addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
