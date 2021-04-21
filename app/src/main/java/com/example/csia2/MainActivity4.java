@@ -1,11 +1,16 @@
 package com.example.csia2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,7 +62,6 @@ public class MainActivity4 extends AppCompatActivity {
         ((TextView) findViewById(R.id.recipeTitle)).setText(cardObjf.getTitle());
         ((TextView) findViewById(R.id.recipeDesc)).setText(cardObjf.getDesc());
         ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(cardObjf.getImg());
-        listView =(ListView)findViewById(R.id.listview);
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("bobs");
@@ -65,12 +69,35 @@ public class MainActivity4 extends AppCompatActivity {
         arrayList.add("gustav");
         arrayList.add("bobs");
         arrayList.add("bobs");
+        arrayList.add("bobs");
+        arrayList.add("bobs");
+        arrayList.add("bobs");
 
+        LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        linf = LayoutInflater.from(MainActivity4.this);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(arrayAdapter);
+        LinearLayout ingridientLinearLayout = (LinearLayout)findViewById(R.id.ingredientsLinearLayout);
 
+        for (int i = 0; i< arrayList.size();i++){
 
+            View v = linf.inflate(R.layout.itemlayout, null);
+
+            TextView tv = ((TextView) v.findViewById(R.id.linearLayoutTextView));
+            tv.setText(arrayList.get(i));
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView tv = ((TextView) v.findViewById(v.getId()));
+                    if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
+                        System.out.println("yay");
+                        tv.setPaintFlags(0);
+                    }
+                    tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+            });
+
+            ingridientLinearLayout.addView(v);
+        }
 
 
 
