@@ -58,11 +58,11 @@ public class MainActivity4 extends AppCompatActivity {
                 return false;
             }
         });
-        CardObj cardObjf = Objects.requireNonNull(getIntent().getExtras()).getParcelable("cardObj");
-        assert cardObjf != null;
-        ((TextView) findViewById(R.id.recipeTitle)).setText(cardObjf.getTitle());
-        ((TextView) findViewById(R.id.recipeDesc)).setText(cardObjf.getDesc());
-        ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(cardObjf.getImg());
+        Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
+        assert recipePassThrough != null;
+        ((TextView) findViewById(R.id.recipeTitle)).setText(recipePassThrough.getTitle());
+        ((TextView) findViewById(R.id.recipeDesc)).setText(recipePassThrough.getDesc());
+        ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(recipePassThrough.getImg());
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("bobs");
@@ -90,7 +90,6 @@ public class MainActivity4 extends AppCompatActivity {
                 public void onClick(View v) {
                     CheckBox tv = ((CheckBox) v.findViewById(v.getId()));
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
-                        System.out.println("yay");
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
                     }
                     else {
