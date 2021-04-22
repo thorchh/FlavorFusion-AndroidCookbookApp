@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
     DatabaseReference reff;
     HashMap<CardObj, Recipe> recipeHash = new HashMap<>();
     Recipe recipe;
-    int progr = 0;
-
-
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,4 +156,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         intent.putExtra("recipePassThrough", passThrough);
         startActivity(intent);
     }
+
+
 }

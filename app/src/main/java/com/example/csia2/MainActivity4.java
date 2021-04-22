@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +26,9 @@ import java.util.Objects;
 public class MainActivity4 extends AppCompatActivity {
     CardObj cardObj;
     ListView listView;
+    int progr = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,10 @@ public class MainActivity4 extends AppCompatActivity {
         ((TextView) findViewById(R.id.recipeTitle)).setText(recipePassThrough.getTitle());
         ((TextView) findViewById(R.id.recipeDesc)).setText(recipePassThrough.getDesc());
         ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(recipePassThrough.getImg());
+        ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
+        ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
+
+
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("bobs");
