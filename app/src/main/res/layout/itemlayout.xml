@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <CheckBox
         android:id="@+id/linearLayoutTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
+        android:checked="false"
         android:text="TextView" />
 </LinearLayout>
