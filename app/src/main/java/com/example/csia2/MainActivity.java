@@ -23,17 +23,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements Adapter.OnNoteListener{
     RecyclerView recyclerView;
     Adapter adapter;
+    ArrayList<Recipe> recipeObjList;
     ArrayList<CardObj> cardObjList;
     DatabaseReference reff;
-    DatabaseReference reff1;
+    HashMap<CardObj, Recipe> recipeHash = new HashMap<>();
     Recipe recipe;
-
-
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +43,18 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         setContentView(R.layout.activity_main);
 
 
+
+        //Recipes + Cards + Hashmap
+        recipeObjList = new ArrayList<>();
         cardObjList = new ArrayList<>();
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
-        cardObjList.add(new CardObj("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1));
-        cardObjList.add(new CardObj("meatballs", "cheeseeeee", R.drawable.squat2));
+        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5));
+        for (int i = 0; i< recipeObjList.size();i++){
+            //create and add cardobj to cardobjlist with recipe from recipe obj list
+            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg()));
+
+            //link recipe and cardobj
+            recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
+        }
 
 
 
@@ -87,27 +87,22 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         });
 
         //push to firebase
-        recipe = new Recipe();
+        recipe = new Recipe("Meatballs", "Cheese", 5, 5);
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        recipe.setTitle("Meatballs");
-        recipe.setDesc("Cheese");
         reff.push();
         reff.child("Meatballs").setValue(recipe);
-        System.out.println("very very naice");
-
-
 
         //get from firebase
-        reff1 = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        System.out.println("very naice");
-        reff1.addValueEventListener(new ValueEventListener(){
+        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        reff.addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot);
                 String  title = dataSnapshot.child("Meatballs").child("title").getValue().toString();
                 String  desc = dataSnapshot.child("Meatballs").child("desc").getValue().toString();
-                System.out.println(title + desc);
+                Integer difficulty = Integer.parseInt(dataSnapshot.child("Meatballs").child("difficulty").getValue().toString());
+                System.out.println(title + desc + difficulty);
 
             }
 
@@ -151,11 +146,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
     }
 
 
+
     @Override
     public void onNoteClick(int position) {
-        cardObjList.get(position);
+        //get cardobj from cardobjlist and get recipe through hashmap
+        Recipe passThrough = recipeHash.get(cardObjList.get(position));
+        //new intent
         Intent intent = new Intent(this, MainActivity4.class);
-        intent.putExtra("cardObj", cardObjList.get(position));
+        intent.putExtra("recipePassThrough", passThrough);
         startActivity(intent);
     }
+
+
 }
