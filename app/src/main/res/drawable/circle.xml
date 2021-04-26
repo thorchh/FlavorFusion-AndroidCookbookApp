@@ -14,7 +14,7 @@
             android:toDegrees="270">
             <shape
                 android:shape="ring"
-                android:thicknessRatio="16"
+                android:thicknessRatio="24"
                 android:useLevel="true">
                 <gradient
                     android:endColor="#FF5252"

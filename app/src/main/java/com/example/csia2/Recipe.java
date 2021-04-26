@@ -7,14 +7,18 @@ public class Recipe implements Parcelable {
     private String title;
     private String desc;
     private Integer img;
+    // 0-5/5
     private Integer difficulty;
+    // in minutes
+    private Integer time;
 
 
-    public Recipe(String title, String desc, Integer img, int difficulty) {
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time) {
         this.title = title;
         this.desc = desc;
         this.img = img;
         this.difficulty = difficulty;
+        this.time = time;
     }
 
     protected Recipe(Parcel in) {
@@ -29,6 +33,11 @@ public class Recipe implements Parcelable {
             difficulty = null;
         } else {
             difficulty = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            time = null;
+        } else {
+            time = in.readInt();
         }
     }
 
@@ -47,6 +56,12 @@ public class Recipe implements Parcelable {
         } else {
             dest.writeByte((byte) 1);
             dest.writeInt(difficulty);
+        }
+        if (time == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(time);
         }
     }
 
@@ -76,6 +91,7 @@ public class Recipe implements Parcelable {
     }
     public Integer getImg(){return img;}
     public Integer getDifficulty() { return difficulty; }
+    public Integer getTime() { return time; }
 
     //setters
     public void setTitle(String title) {
@@ -88,4 +104,5 @@ public class Recipe implements Parcelable {
         this.img = img;
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
+    public void setTime(Integer time) { this.time = time; }
 }

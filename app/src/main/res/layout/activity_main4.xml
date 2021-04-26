@@ -116,6 +116,7 @@
                         android:id="@+id/timeTextViewProgressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center|center_horizontal|center_vertical"
                         android:text="60%"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="20sp"

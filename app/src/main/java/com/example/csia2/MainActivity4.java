@@ -68,6 +68,19 @@ public class MainActivity4 extends AppCompatActivity {
         ((ImageView) findViewById(R.id.recipeIMG)).setImageResource(recipePassThrough.getImg());
         ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
         ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
+        ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(100 * recipePassThrough.getTime()/100);
+        if (recipePassThrough.getTime() <= 60){
+            ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minutes");
+        }else{
+            int hours = recipePassThrough.getTime() / 60;
+            int minutes = recipePassThrough.getTime() % 60;
+            String tt = String.format("%d Hours \n %02d Minutes", hours , minutes);
+
+            ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
+        }
+
+
+
 
 
 

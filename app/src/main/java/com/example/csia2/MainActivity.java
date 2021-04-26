@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         //Recipes + Cards + Hashmap
         recipeObjList = new ArrayList<>();
         cardObjList = new ArrayList<>();
-        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5));
+        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50));
         for (int i = 0; i< recipeObjList.size();i++){
             //create and add cardobj to cardobjlist with recipe from recipe obj list
             cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg()));
@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         });
 
         //push to firebase
-        recipe = new Recipe("Meatballs", "Cheese", 5, 5);
+        //need to find a way to push pictures to firebase
+        recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10);
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.push();
         reff.child("Meatballs").setValue(recipe);
