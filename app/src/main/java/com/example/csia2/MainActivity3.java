@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class MainActivity3 extends AppCompatActivity {
 
@@ -41,5 +45,9 @@ public class MainActivity3 extends AppCompatActivity {
                 return false;
             }
         });
+
+        FirebaseUser user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
+        ((TextView) findViewById(R.id.ProfileEmail)).setText(user.getEmail());
+
     }
 }
