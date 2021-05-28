@@ -44,7 +44,7 @@ public class LoginRegister extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged:signed_in" + user.getUid());
                     toastMessage("Successfully signed in with: " + user.getEmail());
                     startActivity(new Intent(getApplicationContext()
-                            ,MainActivity.class).putExtra("user", user));
+                            , MainHomeActivity.class).putExtra("user", user));
 
                 } else{
                     // User is signed out

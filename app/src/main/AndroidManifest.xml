@@ -26,11 +26,11 @@
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
-        <activity android:name=".MainActivity4" />
-        <activity android:name=".MainActivity3" />
-        <activity android:name=".MainActivity2" />
+        <activity android:name=".RecipeActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SearchActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainHomeActivity"
             android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
