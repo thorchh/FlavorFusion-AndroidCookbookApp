@@ -108,7 +108,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         System.out.println("about to write");
         recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10);
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        reff.push();
         reff.child("Meatballs").setValue(recipe);
 
         System.out.println("finished writing");
@@ -122,6 +121,24 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         }
         */
 
+        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        reff.addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot);
+                String  title = dataSnapshot.child("Meatballs").child("title").getValue().toString();
+                String  desc = dataSnapshot.child("Meatballs").child("desc").getValue().toString();
+                Integer difficulty = Integer.parseInt(dataSnapshot.child("Meatballs").child("difficulty").getValue().toString());
+                System.out.println(title + desc + difficulty);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 /*
         //get from firebase
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
