@@ -83,7 +83,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
             assert user != null;
         }
-        System.out.println(user);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -115,21 +114,11 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
         //push to firebase
         //need to find a way to push pictures to firebase
-        System.out.println("about to write");
-        recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10, true, "Blue", ingridients);
-        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        reff.child("Meatballs").setValue(recipe);
-
-        System.out.println("finished writing");
-
-
-        //recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10);
-
-/*        for (int i = 0; i< recipeObjList.size();i++) {
-            reff = FirebaseDatabase.getInstance().getReference();
-            reff.setValue("yo");
+        for (int i = 0; i< recipeObjList.size();i++) {
+            recipe = recipeObjList.get(i);
+            reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+            reff.child(recipe.getTitle()).setValue(recipe);
         }
-        */
 
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.addValueEventListener(new ValueEventListener(){
