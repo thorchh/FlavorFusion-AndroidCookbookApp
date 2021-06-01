@@ -6,6 +6,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Recipe implements Parcelable {
     private String title;
     private String desc;
@@ -16,9 +19,10 @@ public class Recipe implements Parcelable {
     private Integer time;
     private Boolean saved;
     private String colourTag;
+    private ArrayList<String> ingridients;
 
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag) {
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<String> ingridients) {
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -26,6 +30,7 @@ public class Recipe implements Parcelable {
         this.time = time;
         this.saved = saved;
         this.colourTag = colourTag;
+        this.ingridients = ingridients;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -49,6 +54,7 @@ public class Recipe implements Parcelable {
         }
         saved = in.readBoolean();
         colourTag = in.readString();
+        ingridients = (ArrayList<String>) in.readSerializable();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -76,6 +82,7 @@ public class Recipe implements Parcelable {
         }
         dest.writeBoolean(saved);
         dest.writeString(colourTag);
+        dest.writeSerializable(ingridients);
     }
 
     @Override
@@ -110,6 +117,8 @@ public class Recipe implements Parcelable {
     public String getColourTag() {
         return colourTag;
     }
+    public ArrayList<String> getIngridients() {return ingridients;}
+
 
     //setters
     public void setTitle(String title) {
@@ -123,6 +132,7 @@ public class Recipe implements Parcelable {
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
     public void setTime(Integer time) { this.time = time; }
-    public void setTime(Boolean saved) { this.saved = saved; }
-    public void setTime(String colourTag) { this.colourTag = colourTag; }
+    public void setSaved(Boolean saved) { this.saved = saved; }
+    public void setColourTag(String colourTag) { this.colourTag = colourTag; }
+    public void setIngridients(ArrayList<String> ingridients) { this.ingridients = ingridients; }
 }
