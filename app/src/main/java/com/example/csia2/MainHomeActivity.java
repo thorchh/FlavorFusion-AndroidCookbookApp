@@ -126,10 +126,11 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot);
-                String  title = dataSnapshot.child("Meatballs").child("title").getValue().toString();
-                String  desc = dataSnapshot.child("Meatballs").child("desc").getValue().toString();
-                Integer difficulty = Integer.parseInt(dataSnapshot.child("Meatballs").child("difficulty").getValue().toString());
+                String  title = dataSnapshot.child("signature brown meat").child("title").getValue().toString();
+                String  desc = dataSnapshot.child("signature brown meat").child("desc").getValue().toString();
+                Integer difficulty = Integer.parseInt(dataSnapshot.child("signature brown meat").child("difficulty").getValue().toString());
                 System.out.println(title + desc + difficulty);
+                System.out.println(dataSnapshot.child("signature brown meat").getValue().toString());
 
             }
 
