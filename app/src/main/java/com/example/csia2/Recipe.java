@@ -15,15 +15,17 @@ public class Recipe implements Parcelable {
     // in minutes
     private Integer time;
     private Boolean saved;
+    private String colourTag;
 
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved) {
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag) {
         this.title = title;
         this.desc = desc;
         this.img = img;
         this.difficulty = difficulty;
         this.time = time;
         this.saved = saved;
+        this.colourTag = colourTag;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -46,6 +48,7 @@ public class Recipe implements Parcelable {
             time = in.readInt();
         }
         saved = in.readBoolean();
+        colourTag = in.readString();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -72,6 +75,7 @@ public class Recipe implements Parcelable {
             dest.writeInt(time);
         }
         dest.writeBoolean(saved);
+        dest.writeString(colourTag);
     }
 
     @Override
@@ -102,6 +106,10 @@ public class Recipe implements Parcelable {
     public Integer getImg(){return img;}
     public Integer getDifficulty() { return difficulty; }
     public Integer getTime() { return time; }
+    public Boolean getSaved() {return saved;}
+    public String getColourTag() {
+        return colourTag;
+    }
 
     //setters
     public void setTitle(String title) {
@@ -115,4 +123,6 @@ public class Recipe implements Parcelable {
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
     public void setTime(Integer time) { this.time = time; }
+    public void setTime(Boolean saved) { this.saved = saved; }
+    public void setTime(String colourTag) { this.colourTag = colourTag; }
 }

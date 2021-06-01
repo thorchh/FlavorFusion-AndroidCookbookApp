@@ -53,8 +53,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         //Recipes + Cards + Hashmap
         recipeObjList = new ArrayList<>();
         cardObjList = new ArrayList<>();
-        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50, true));
-        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false));
+        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50, true, "Green"));
+        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "Red"));
 
 
         for (int i = 0; i< recipeObjList.size();i++){
@@ -106,7 +106,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         //push to firebase
         //need to find a way to push pictures to firebase
         System.out.println("about to write");
-        recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10, true);
+        recipe = new Recipe("Meatballs", "Cheese", 5, 5, 10, true, "Blue");
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.child("Meatballs").setValue(recipe);
 
