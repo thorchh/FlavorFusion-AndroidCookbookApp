@@ -1,7 +1,10 @@
 package com.example.csia2;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 public class Recipe implements Parcelable {
     private String title;
@@ -11,16 +14,19 @@ public class Recipe implements Parcelable {
     private Integer difficulty;
     // in minutes
     private Integer time;
+    private Boolean saved;
 
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time) {
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved) {
         this.title = title;
         this.desc = desc;
         this.img = img;
         this.difficulty = difficulty;
         this.time = time;
+        this.saved = saved;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     protected Recipe(Parcel in) {
         title = in.readString();
         desc = in.readString();
@@ -39,8 +45,10 @@ public class Recipe implements Parcelable {
         } else {
             time = in.readInt();
         }
+        saved = in.readBoolean();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
@@ -63,6 +71,7 @@ public class Recipe implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(time);
         }
+        dest.writeBoolean(saved);
     }
 
     @Override
@@ -71,6 +80,7 @@ public class Recipe implements Parcelable {
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public Recipe createFromParcel(Parcel in) {
             return new Recipe(in);
