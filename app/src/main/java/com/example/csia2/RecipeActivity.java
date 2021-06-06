@@ -19,11 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class RecipeActivity extends AppCompatActivity {
+    FirebaseUser user;
     CardObj cardObj;
     ListView listView;
     int progr = 0;
@@ -44,23 +46,24 @@ public class RecipeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         startActivity(new Intent(getApplicationContext()
-                                , MainHomeActivity.class));
+                                , MainHomeActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_search:
                         startActivity(new Intent(getApplicationContext()
-                                , SearchActivity.class));
+                                , SearchActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext()
-                                , ProfileActivity.class));
+                                , ProfileActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
             }
         });
+
         Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
         assert recipePassThrough != null;
         ((TextView) findViewById(R.id.recipeTitle)).setText(recipePassThrough.getTitle());
@@ -79,20 +82,9 @@ public class RecipeActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
         }
 
-
-
-
-
-
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("bobs");
-        arrayList.add("jeff");
-        arrayList.add("jefffffff");
-        arrayList.add("bobs");
-        arrayList.add("bobs");
-        arrayList.add("bobs");
-        arrayList.add("bobs");
-        arrayList.add("bobs");
+        arrayList = recipePassThrough.getIngridients();
+
 
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         linf = LayoutInflater.from(RecipeActivity.this);

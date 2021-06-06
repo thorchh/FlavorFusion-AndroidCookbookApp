@@ -56,61 +56,10 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mainhome);
 
+        user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
+        assert user != null;
 
-
-        //Recipes + Cards + Hashmap
-        recipeObjList = new ArrayList<>();
-        cardObjList = new ArrayList<>();
-        ingridients = new ArrayList<String> ();
-        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
-        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50, true, "Green", ingridients));
-        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "Red", ingridients));
-
-
-        for (int i = 0; i< recipeObjList.size();i++){
-            //create and add cardobj to cardobjlist with recipe from recipe obj list
-            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg()));
-
-            //link recipe and cardobj
-            recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
-        }
-
-        // need to check if coming from login register activity to home activity so as to not ask for user if not
-        String callingActivity = getIntent().getStringExtra("activity");
-        System.out.println(callingActivity);
-
-        if (callingActivity.equals("200")){
-            user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
-            assert user != null;
-        }
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this, cardObjList, this);
-        recyclerView.setAdapter(adapter);
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.nav_home:
-                        return true;
-                    case R.id.nav_search:
-                        startActivity(new Intent(getApplicationContext()
-                                , SearchActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.nav_profile:
-                        startActivity(new Intent(getApplicationContext()
-                                , ProfileActivity.class).putExtra("user", user));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
+      /*
 
         //push to firebase
         //need to find a way to push pictures to firebase
@@ -120,11 +69,22 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             reff.child(recipe.getTitle()).setValue(recipe);
         }
 
+        */
+
+        recipeObjList = new ArrayList<>();
+
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> childrenCount = dataSnapshot.getChildren();
+
+                //create Recipes from firebase
+                for (i in )
+                    // Enhanced loop for (E element : list) {
+                    recipeObjList.append(dataSnapshot.child("signature brown meat").getValue);
+                System.out.println(childrenCount);
                 System.out.println(dataSnapshot);
                 String  title = dataSnapshot.child("signature brown meat").child("title").getValue().toString();
                 String  desc = dataSnapshot.child("signature brown meat").child("desc").getValue().toString();
@@ -139,29 +99,54 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
             }
         });
-/*
-        //get from firebase
-        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
-        reff.addValueEventListener(new ValueEventListener(){
 
+
+        cardObjList = new ArrayList<>();
+        ingridients = new ArrayList<String> ();
+        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
+        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50, true, "Green", ingridients));
+        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "Red", ingridients));
+
+        //cardobj + cardobjlist + hashmap (recipehash)
+        for (int i = 0; i< recipeObjList.size();i++){
+            //create and add cardobj to cardobjlist with recipe from recipe obj list
+            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg()));
+
+            //link recipe and cardobj
+            recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
+        }
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(this, cardObjList, this);
+        recyclerView.setAdapter(adapter);
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot);
-                String  title = dataSnapshot.child("Meatballs").child("title").getValue().toString();
-                String  desc = dataSnapshot.child("Meatballs").child("desc").getValue().toString();
-                Integer difficulty = Integer.parseInt(dataSnapshot.child("Meatballs").child("difficulty").getValue().toString());
-                System.out.println(title + desc + difficulty);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_home:
+                        return true;
+                    case R.id.nav_search:
+                        startActivity(new Intent(getApplicationContext()
+                                , SearchActivity.class).putExtra("user", user));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.nav_profile:
+                        startActivity(new Intent(getApplicationContext()
+                                , ProfileActivity.class).putExtra("user", user));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
             }
         });
 
- */
     }
+
 
     public void Activity2(View v){
         Intent intent = new Intent(this, SearchActivity.class);

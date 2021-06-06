@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class LoginRegister extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -32,6 +34,7 @@ public class LoginRegister extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.password);
         btnSignIn = (Button) findViewById(R.id.emailSignInButton);
         btnSignOut = (Button) findViewById(R.id.emailSignOutButton);
+
 
         mAuth = FirebaseAuth.getInstance();
 
