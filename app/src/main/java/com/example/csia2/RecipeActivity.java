@@ -31,6 +31,7 @@ public class RecipeActivity extends AppCompatActivity {
     CardObj cardObj;
     ListView listView;
     int progr = 0;
+    Boolean saved;
 
 
     @Override
@@ -88,6 +89,7 @@ public class RecipeActivity extends AppCompatActivity {
 
             ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
         }
+        saved =  recipePassThrough.getSaved();
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList = recipePassThrough.getIngridients();
@@ -128,7 +130,11 @@ public class RecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(RecipeActivity.this, "Click", Toast.LENGTH_SHORT).show();
                 //find way to send back saved and checklist to the main saved, maybe change the way it works?
-
+                if(saved == true){
+                    saved = false;
+                }else{
+                    saved = true;
+                }
             }
         });
 
