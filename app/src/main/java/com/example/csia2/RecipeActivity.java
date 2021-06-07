@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,11 @@ public class RecipeActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_recipe);
+
+        user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
+        assert user != null;
+
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
@@ -113,6 +120,17 @@ public class RecipeActivity extends AppCompatActivity {
             ingridientLinearLayout.addView(v);
         }
 
+        Button bookmarkButton = findViewById(R.id.bookmark);
+
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RecipeActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                //find way to send back saved and checklist to the main saved, maybe change the way it works?
+
+            }
+        });
 
 
     }

@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
+    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,9 @@ public class ProfileActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_profile);
+
+        user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
+        assert user != null;
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
@@ -31,12 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         startActivity(new Intent(getApplicationContext()
-                                , MainHomeActivity.class));
+                                , MainHomeActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_search:
                         startActivity(new Intent(getApplicationContext()
-                                , SearchActivity.class));
+                                , SearchActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_profile:

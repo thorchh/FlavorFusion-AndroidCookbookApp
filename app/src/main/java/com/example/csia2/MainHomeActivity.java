@@ -51,7 +51,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(MainHomeActivity.this, "onCreate", Toast.LENGTH_LONG ).show();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mainhome);
@@ -76,15 +75,20 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.addValueEventListener(new ValueEventListener(){
 
+            //get from saved branch
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> childrenCount = dataSnapshot.getChildren();
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 //create Recipes from firebase
-                for (i in )
+                for (DataSnapshot element : children){
+                    System.out.println(element.getValue());
+                    //recipeObjList.add(element.getValue());
+                }
                     // Enhanced loop for (E element : list) {
-                    recipeObjList.append(dataSnapshot.child("signature brown meat").getValue);
-                System.out.println(childrenCount);
+
+                System.out.println(children);
                 System.out.println(dataSnapshot);
                 String  title = dataSnapshot.child("signature brown meat").child("title").getValue().toString();
                 String  desc = dataSnapshot.child("signature brown meat").child("desc").getValue().toString();
@@ -188,9 +192,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         Recipe passThrough = recipeHash.get(cardObjList.get(position));
         //new intent
         Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra("recipePassThrough", passThrough);
+        intent.putExtra("recipePassThrough", passThrough).putExtra("user", user);
         startActivity(intent);
     }
-
-
 }
