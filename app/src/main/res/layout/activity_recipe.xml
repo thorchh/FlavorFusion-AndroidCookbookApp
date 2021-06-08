@@ -58,11 +58,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
+                <ToggleButton
                     android:id="@+id/bookmark"
                     android:layout_width="62dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/bookmark_button"
+                    android:background="@drawable/bookmark"
                     android:scaleX="0.65"
                     android:scaleY="0.65"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -156,7 +156,8 @@
                 android:id="@+id/recipeDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:text="Description"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView23"

@@ -16,9 +16,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
@@ -122,19 +124,32 @@ public class RecipeActivity extends AppCompatActivity {
             ingridientLinearLayout.addView(v);
         }
 
-        Button bookmarkButton = findViewById(R.id.bookmark);
+        final ToggleButton bookmarkButton = findViewById(R.id.bookmark);
 
+        bookmarkButton.setText(null);
+        bookmarkButton.setTextOn(null);
+        bookmarkButton.setTextOff(null);
+        if(saved == true){
+            bookmarkButton.setChecked(true);
+            bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
+        }else{
+            bookmarkButton.setChecked(false);
+            bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
+        }
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Toast.makeText(RecipeActivity.this, "Click", Toast.LENGTH_SHORT).show();
                 //find way to send back saved and checklist to the main saved, maybe change the way it works?
                 if(saved == true){
+                    bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = false;
+                    bookmarkButton.setChecked(false);
                 }else{
+                    bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = true;
+                    bookmarkButton.setChecked(true);
                 }
+                Toast.makeText(RecipeActivity.this, saved.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
