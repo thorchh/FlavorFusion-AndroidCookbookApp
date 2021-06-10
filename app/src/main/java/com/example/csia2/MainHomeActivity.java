@@ -2,11 +2,13 @@ package com.example.csia2;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.util.Log;
 import android.widget.SearchView;
 import android.content.Intent;
@@ -77,24 +79,29 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
             //get from saved branch
 
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 //create Recipes from firebase
                 for (DataSnapshot element : children){
-                    System.out.println(element.getValue());
-                    //recipeObjList.add(element.getValue());
+                    //System.out.println(element.getValue());
+                    recipeObjList.add((Recipe) element.getValue());
+                    recipeObjList.add(new Recipe(element.child("title").getValue().toString(),element.child("description").getValue().toString(), Integer.parseInt(element.child("IMG").getValue().toString()), Integer.parseInt(element.child("difficulty").getValue().toString()), Integer.parseInt(element.child("time").getValue().toString()), Boolean.parseBoolean(element.child("saved").getValue().toString()), element.child("colourTag").getValue().toString(), (ArrayList<String>) element.child("ingridients").getValue()));
+                    System.out.println(element.child("ingridients").getValue().getClass().getName());
                 }
+                //System.out.println(recipeObjList);
+
                     // Enhanced loop for (E element : list) {
 
-                System.out.println(children);
-                System.out.println(dataSnapshot);
+                //System.out.println(children);
+                //System.out.println(dataSnapshot);
                 String  title = dataSnapshot.child("signature brown meat").child("title").getValue().toString();
                 String  desc = dataSnapshot.child("signature brown meat").child("desc").getValue().toString();
                 Integer difficulty = Integer.parseInt(dataSnapshot.child("signature brown meat").child("difficulty").getValue().toString());
-                System.out.println(title + desc + difficulty);
-                System.out.println(dataSnapshot.child("signature brown meat").getValue().toString());
+               // System.out.println(title + desc + difficulty);
+                //System.out.println(dataSnapshot.child("signature brown meat").getValue().toString());
 
             }
 
@@ -108,8 +115,12 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         cardObjList = new ArrayList<>();
         ingridients = new ArrayList<String> ();
         ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
-        recipeObjList.add(new Recipe("signature brown meatballs", "signature brown cheeseeeee", R.drawable.squat1, 5, 50, true, "Green", ingridients));
+
+
+        recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridients));
         recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "Red", ingridients));
+
+
 
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
@@ -119,6 +130,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
         }
+
+
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
