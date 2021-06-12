@@ -8,22 +8,23 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class RecipeActivity extends AppCompatActivity {
     ListView listView;
     int progr = 0;
     Boolean saved;
+    float userRating;
 
 
     @Override
@@ -74,7 +76,7 @@ public class RecipeActivity extends AppCompatActivity {
             }
         });
 
-        Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
+        final Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
         assert recipePassThrough != null;
         ((TextView) findViewById(R.id.recipeTitle)).setText(recipePassThrough.getTitle());
         ((TextView) findViewById(R.id.recipeDesc)).setText(recipePassThrough.getDesc());
@@ -92,6 +94,7 @@ public class RecipeActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
         }
         saved =  recipePassThrough.getSaved();
+        userRating = recipePassThrough.getUserRating();
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList = recipePassThrough.getIngridients();
@@ -144,15 +147,28 @@ public class RecipeActivity extends AppCompatActivity {
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = false;
                     bookmarkButton.setChecked(false);
+                    FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("saved").setValue(false);
                 }else{
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = true;
                     bookmarkButton.setChecked(true);
+
+                    FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("saved").setValue(true);
                 }
                 Toast.makeText(RecipeActivity.this, saved.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setRating(userRating);
 
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
+
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                float userRating = rating;
+
+            }
+        });
     }
 }

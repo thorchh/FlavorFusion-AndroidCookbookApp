@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Recipe implements Parcelable {
     private String title;
@@ -20,9 +19,10 @@ public class Recipe implements Parcelable {
     private Boolean saved;
     private String colourTag;
     private ArrayList<String> ingridients;
+    private float userRating;
 
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<String> ingridients) {
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<String> ingridients, float userRating){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -31,6 +31,7 @@ public class Recipe implements Parcelable {
         this.saved = saved;
         this.colourTag = colourTag;
         this.ingridients = ingridients;
+        this.userRating = userRating;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -55,6 +56,7 @@ public class Recipe implements Parcelable {
         saved = in.readBoolean();
         colourTag = in.readString();
         ingridients = (ArrayList<String>) in.readSerializable();
+        userRating = in.readFloat();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -83,6 +85,7 @@ public class Recipe implements Parcelable {
         dest.writeBoolean(saved);
         dest.writeString(colourTag);
         dest.writeSerializable(ingridients);
+        dest.writeFloat(userRating);
     }
 
     @Override
@@ -118,6 +121,7 @@ public class Recipe implements Parcelable {
         return colourTag;
     }
     public ArrayList<String> getIngridients() {return ingridients;}
+    public float getUserRating() {return userRating;}
 
 
     //setters
@@ -135,4 +139,5 @@ public class Recipe implements Parcelable {
     public void setSaved(Boolean saved) { this.saved = saved; }
     public void setColourTag(String colourTag) { this.colourTag = colourTag; }
     public void setIngridients(ArrayList<String> ingridients) { this.ingridients = ingridients; }
+    public void setUserRating(float userRating) { this.userRating = userRating; }
 }

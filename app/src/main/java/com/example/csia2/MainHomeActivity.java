@@ -49,6 +49,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     FirebaseUser user;
     DatabaseReference reff;
     ArrayList<String> ingridients;
+    float userRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,12 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
         assert user != null;
 
-      /*
+        recipeObjList = new ArrayList<>();
+        ingridients = new ArrayList<String>();
+/*
+        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
+        recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridients, 2.5f));
+        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "green", ingridients, 2.5f));
 
         //push to firebase
         //need to find a way to push pictures to firebase
@@ -70,9 +76,9 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             reff.child(recipe.getTitle()).setValue(recipe);
         }
 
-        */
+*/
 
-        recipeObjList = new ArrayList<>();
+
 
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
         reff.addValueEventListener(new ValueEventListener(){
@@ -86,9 +92,9 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
                 //create Recipes from firebase
                 for (DataSnapshot element : children){
-                    //System.out.println(element.getValue());
-                    recipeObjList.add((Recipe) element.getValue());
-                    recipeObjList.add(new Recipe(element.child("title").getValue().toString(),element.child("description").getValue().toString(), Integer.parseInt(element.child("IMG").getValue().toString()), Integer.parseInt(element.child("difficulty").getValue().toString()), Integer.parseInt(element.child("time").getValue().toString()), Boolean.parseBoolean(element.child("saved").getValue().toString()), element.child("colourTag").getValue().toString(), (ArrayList<String>) element.child("ingridients").getValue()));
+                    System.out.println(element.getValue());
+                    System.out.println(element.child("img").getValue());
+                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("description").getValue(), (Integer) Math.toIntExact(element.child("img").getValue()), (Integer) element.child("difficulty").getValue(), (Integer)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<String>) element.child("ingridients").getValue(), (float) element.child("userRating").getValue()));
                     System.out.println(element.child("ingridients").getValue().getClass().getName());
                 }
                 //System.out.println(recipeObjList);
@@ -113,15 +119,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
 
         cardObjList = new ArrayList<>();
-        ingridients = new ArrayList<String> ();
-        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
-
-
-        recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridients));
-        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "Red", ingridients));
-
-
-
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
             //create and add cardobj to cardobjlist with recipe from recipe obj list
