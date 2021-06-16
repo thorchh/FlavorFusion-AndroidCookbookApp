@@ -48,8 +48,10 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     Recipe recipe;
     FirebaseUser user;
     DatabaseReference reff;
-    ArrayList<String> ingridients;
+    ArrayList<ArrayList> ingridientsChecklist;
     float userRating;
+    private ArrayList<String> ingridients;
+    private ArrayList<Boolean> checklist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,32 +94,26 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
                 //create Recipes from firebase
                 for (DataSnapshot element : children){
-                    System.out.println(element.getValue());
-                    System.out.println(element.child("img").getValue());
-                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("description").getValue(), (Integer) Math.toIntExact(element.child("img").getValue()), (Integer) element.child("difficulty").getValue(), (Integer)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<String>) element.child("ingridients").getValue(), (float) element.child("userRating").getValue()));
-                    System.out.println(element.child("ingridients").getValue().getClass().getName());
+                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("desc").getValue(), (Long) element.child("img").getValue(), (Long) element.child("difficulty").getValue(), (Long)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<String>) element.child("ingridients").getValue(), (double) element.child("userRating").getValue()));
                 }
-                //System.out.println(recipeObjList);
-
-                    // Enhanced loop for (E element : list) {
-
-                //System.out.println(children);
-                //System.out.println(dataSnapshot);
-                String  title = dataSnapshot.child("signature brown meat").child("title").getValue().toString();
-                String  desc = dataSnapshot.child("signature brown meat").child("desc").getValue().toString();
-                Integer difficulty = Integer.parseInt(dataSnapshot.child("signature brown meat").child("difficulty").getValue().toString());
-               // System.out.println(title + desc + difficulty);
-                //System.out.println(dataSnapshot.child("signature brown meat").getValue().toString());
-
+                init();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                init();
             }
         });
 
 
+
+
+
+    }
+
+    public void init(){
+        System.out.println(recipeObjList);
+        System.out.println("he;;o" + recipeObjList.get(0).getDesc());
         cardObjList = new ArrayList<>();
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
@@ -127,8 +123,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
         }
-
-
+        System.out.println("yeye"+cardObjList);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -158,7 +153,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 return false;
             }
         });
-
     }
 
 

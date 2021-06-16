@@ -18,11 +18,24 @@ public class Recipe implements Parcelable {
     private Integer time;
     private Boolean saved;
     private String colourTag;
-    private ArrayList<String> ingridients;
+    private ArrayList<ArrayList> ingridientsChecklist;
+    //private ArrayList<String> ingridients;
+    //private ArrayList<Boolean> checklist;
     private float userRating;
 
+    public Recipe(String title, String desc, Long img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating){
+        this.title = title;
+        this.desc = desc;
+        this.img = img.intValue();
+        this.difficulty = difficulty.intValue();
+        this.time = time.intValue();
+        this.saved = saved;
+        this.colourTag = colourTag;
+        this.ingridientsChecklist = ingridientsChecklist;
+        this.userRating = userRating.floatValue();
+    }
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<String> ingridients, float userRating){
+    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -30,7 +43,7 @@ public class Recipe implements Parcelable {
         this.time = time;
         this.saved = saved;
         this.colourTag = colourTag;
-        this.ingridients = ingridients;
+        this.ingridientsChecklist = ingridientsChecklist;
         this.userRating = userRating;
     }
 
@@ -55,7 +68,7 @@ public class Recipe implements Parcelable {
         }
         saved = in.readBoolean();
         colourTag = in.readString();
-        ingridients = (ArrayList<String>) in.readSerializable();
+        ingridientsChecklist = (ArrayList<ArrayList>) in.readSerializable();
         userRating = in.readFloat();
     }
 
@@ -84,7 +97,7 @@ public class Recipe implements Parcelable {
         }
         dest.writeBoolean(saved);
         dest.writeString(colourTag);
-        dest.writeSerializable(ingridients);
+        dest.writeSerializable(ingridientsChecklist);
         dest.writeFloat(userRating);
     }
 
@@ -120,7 +133,7 @@ public class Recipe implements Parcelable {
     public String getColourTag() {
         return colourTag;
     }
-    public ArrayList<String> getIngridients() {return ingridients;}
+    public ArrayList<ArrayList> getIngridients() {return ingridientsChecklist;}
     public float getUserRating() {return userRating;}
 
 
@@ -138,6 +151,6 @@ public class Recipe implements Parcelable {
     public void setTime(Integer time) { this.time = time; }
     public void setSaved(Boolean saved) { this.saved = saved; }
     public void setColourTag(String colourTag) { this.colourTag = colourTag; }
-    public void setIngridients(ArrayList<String> ingridients) { this.ingridients = ingridients; }
+    public void setIngridients(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
     public void setUserRating(float userRating) { this.userRating = userRating; }
 }
