@@ -64,11 +64,14 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         assert user != null;
 
         recipeObjList = new ArrayList<>();
-        ingridients = new ArrayList<String>();
-/*
+        ingridients = new ArrayList<>();
+        checklist = new ArrayList<>();
+        ingridientsChecklist = new ArrayList<>();
         ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
-        recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridients, 2.5f));
-        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "green", ingridients, 2.5f));
+        checklist.add(true); checklist.add(true); checklist.add(true); checklist.add(false); checklist.add(true);
+        ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
+        recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridientsChecklist, 2.5f));
+        recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "green", ingridientsChecklist, 2.5f));
 
         //push to firebase
         //need to find a way to push pictures to firebase
@@ -78,7 +81,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             reff.child(recipe.getTitle()).setValue(recipe);
         }
 
-*/
+
 
 
 
@@ -94,7 +97,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
                 //create Recipes from firebase
                 for (DataSnapshot element : children){
-                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("desc").getValue(), (Long) element.child("img").getValue(), (Long) element.child("difficulty").getValue(), (Long)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<String>) element.child("ingridients").getValue(), (double) element.child("userRating").getValue()));
+                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("desc").getValue(), (Long) element.child("img").getValue(), (Long) element.child("difficulty").getValue(), (Long)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue(), (double) element.child("userRating").getValue()));
                 }
                 init();
             }
@@ -112,8 +115,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     }
 
     public void init(){
-        System.out.println(recipeObjList);
-        System.out.println("he;;o" + recipeObjList.get(0).getDesc());
         cardObjList = new ArrayList<>();
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
@@ -123,7 +124,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
         }
-        System.out.println("yeye"+cardObjList);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

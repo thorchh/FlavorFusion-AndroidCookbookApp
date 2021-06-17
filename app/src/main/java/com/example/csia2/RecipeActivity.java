@@ -96,8 +96,8 @@ public class RecipeActivity extends AppCompatActivity {
         saved =  recipePassThrough.getSaved();
         userRating = recipePassThrough.getUserRating();
 
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList = recipePassThrough.getIngridients();
+        ArrayList<ArrayList> arrayList;
+        arrayList = recipePassThrough.getingridientsChecklist();
 
 
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -105,16 +105,24 @@ public class RecipeActivity extends AppCompatActivity {
 
         LinearLayout ingridientLinearLayout = (LinearLayout)findViewById(R.id.ingredientsLinearLayout);
 
-        for (int i = 0; i< arrayList.size();i++){
+        for (int i = 0; i< arrayList.get(0).size();i++){
 
             View v = linf.inflate(R.layout.itemlayout, null);
 
-            TextView tv = ((TextView) v.findViewById(R.id.linearLayoutTextView));
-            tv.setText(arrayList.get(i));
+            CheckBox tv = ((CheckBox) v.findViewById(R.id.linearLayoutTextView));
+            tv.setText((String)(arrayList.get(0).get(i)));
+            tv.setChecked((Boolean)(arrayList.get(1).get(i)));
+            if ((Boolean) arrayList.get(1).get(i)) {
+                tv.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+            else{
+                tv.setPaintFlags(tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG);
+            }
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CheckBox tv = ((CheckBox) v.findViewById(v.getId()));
+                    TextView tv = ((CheckBox) v.findViewById(R.id.linearLayoutTextView));
+
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
                     }

@@ -133,7 +133,7 @@ public class Recipe implements Parcelable {
     public String getColourTag() {
         return colourTag;
     }
-    public ArrayList<ArrayList> getIngridients() {return ingridientsChecklist;}
+    public ArrayList<ArrayList> getingridientsChecklist() {return ingridientsChecklist;}
     public float getUserRating() {return userRating;}
 
 
@@ -151,6 +151,6 @@ public class Recipe implements Parcelable {
     public void setTime(Integer time) { this.time = time; }
     public void setSaved(Boolean saved) { this.saved = saved; }
     public void setColourTag(String colourTag) { this.colourTag = colourTag; }
-    public void setIngridients(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
+    public void setingridientsChecklist(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
     public void setUserRating(float userRating) { this.userRating = userRating; }
 }
