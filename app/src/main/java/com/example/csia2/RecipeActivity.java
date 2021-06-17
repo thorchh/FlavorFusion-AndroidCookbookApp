@@ -174,7 +174,8 @@ public class RecipeActivity extends AppCompatActivity {
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                float userRating = rating;
+                userRating = rating;
+                FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
 
             }
         });

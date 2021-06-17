@@ -97,7 +97,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
                 //create Recipes from firebase
                 for (DataSnapshot element : children){
-                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("desc").getValue(), (Long) element.child("img").getValue(), (Long) element.child("difficulty").getValue(), (Long)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue(), (double) element.child("userRating").getValue()));
+                    recipeObjList.add(new Recipe((String) element.child("title").getValue(),(String) element.child("desc").getValue(), (Long) element.child("img").getValue(), (Long) element.child("difficulty").getValue(), (Long)element.child("time").getValue(), (Boolean) element.child("saved").getValue(), (String) element.child("colourTag").getValue(), (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue(), (Double) element.child("userRating").getValue()));
                 }
                 init();
             }
