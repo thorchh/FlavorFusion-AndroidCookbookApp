@@ -54,7 +54,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     private ArrayList<String> ingridients;
     private ArrayList<Boolean> checklist;
     String img;
-    String imgURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +98,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 for (DataSnapshot element : children){
                     String title = (String) element.child("title").getValue();
                     String desc = (String) element.child("desc").getValue();
-                    imgURI = (String) element.child("img").getValue();
+                    String imgURI = (String) element.child("img").getValue();
                     Long difficulty = (Long) element.child("difficulty").getValue();
                     Long time = (Long)element.child("time").getValue();
                     Boolean saved = (Boolean) element.child("saved").getValue();
@@ -122,27 +121,37 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             }
         });
 
+        System.out.println("before");
+        //final recipe??
+        for (Recipe recipe:recipeObjList) {
+            int count = 0;
+            System.out.println(recipe);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference getImage = databaseReference.child("Recipe").child(recipe.getTitle()).child("img");
+            final int finalCount = count;
+            getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // getting a DataSnapshot for the location at the specified
+                    // relative path and getting in the link variable
+                    String link = dataSnapshot.getValue(String.class);
+                    System.out.println(recipeObjList.get(finalCount).getImg());
+                    recipeObjList.get(finalCount).setImg(link);
+                    System.out.println(recipeObjList.get(finalCount).getImg());
+                    // loading that data into rImage
+                    // variable which is ImageView
+                    //Picasso.get().load(link).into(rImage);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference getImage = databaseReference.child("Recipe").child("img");
-        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // getting a DataSnapshot for the location at the specified
-                // relative path and getting in the link variable
-                String link = dataSnapshot.getValue(String.class);
-                imgURI = link;
-                // loading that data into rImage
-                // variable which is ImageView
-                //Picasso.get().load(link).into(rImage);
+                }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
+            count++;
+        }
+        System.out.println("after");
 
 
     }
