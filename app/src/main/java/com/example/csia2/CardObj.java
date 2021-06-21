@@ -9,9 +9,9 @@ public class CardObj implements Parcelable {
     private LayoutInflater layoutInflater;
     private String title;
     private String desc;
-    private Integer img;
+    private String img;
 
-    CardObj(String title, String desc, Integer img){
+    CardObj(String title, String desc, String img){
 
         this.title = title;
         this.desc = desc;
@@ -24,7 +24,7 @@ public class CardObj implements Parcelable {
         if (in.readByte() == 0) {
             img = null;
         } else {
-            img = in.readInt();
+            img = in.readString();
         }
     }
 
@@ -48,7 +48,7 @@ public class CardObj implements Parcelable {
         return desc;
     }
 
-    Integer getImg(){return img;}
+    String getImg(){return img;}
 
     @Override
     public int describeContents() {
@@ -63,7 +63,7 @@ public class CardObj implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(img);
+            dest.writeString(img);
         }
     }
 }

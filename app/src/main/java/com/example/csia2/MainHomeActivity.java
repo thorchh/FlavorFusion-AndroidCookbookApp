@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+import com.squareup.picasso.Picasso;
 
 public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNoteListener{
     RecyclerView recyclerView;
@@ -52,6 +53,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     float userRating;
     private ArrayList<String> ingridients;
     private ArrayList<Boolean> checklist;
+    String img;
+    String imgURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         ingridients = new ArrayList<>();
         checklist = new ArrayList<>();
         ingridientsChecklist = new ArrayList<>();
-        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
+/*        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
         checklist.add(true); checklist.add(true); checklist.add(true); checklist.add(false); checklist.add(true);
         ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
         recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridientsChecklist, 2.5f));
@@ -79,10 +82,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             recipe = recipeObjList.get(i);
             reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
             reff.child(recipe.getTitle()).setValue(recipe);
-        }
-
-
-
+        }*/
 
 
         reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
@@ -99,7 +99,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 for (DataSnapshot element : children){
                     String title = (String) element.child("title").getValue();
                     String desc = (String) element.child("desc").getValue();
-                    Long img = (Long) element.child("img").getValue();
+                    imgURI = (String) element.child("img").getValue();
                     Long difficulty = (Long) element.child("difficulty").getValue();
                     Long time = (Long)element.child("time").getValue();
                     Boolean saved = (Boolean) element.child("saved").getValue();
@@ -108,9 +108,9 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                     Object userRating = element.child("userRating").getValue();
                     if (userRating instanceof Long) {
                         Long lUserRating = (Long) userRating;
-                        recipeObjList.add(new Recipe(title, desc, img, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue()));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue()));
                     } else {
-                        recipeObjList.add(new Recipe(title, desc, img, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating));
                     }
                 }
                 init();
@@ -123,7 +123,26 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         });
 
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference getImage = databaseReference.child("Recipe").child("img");
+        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // getting a DataSnapshot for the location at the specified
+                // relative path and getting in the link variable
+                String link = dataSnapshot.getValue(String.class);
+                imgURI = link;
+                // loading that data into rImage
+                // variable which is ImageView
+                //Picasso.get().load(link).into(rImage);
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }

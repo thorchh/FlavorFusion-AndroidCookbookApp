@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +80,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         String descb = cardObjList.get(i).getDesc();
         viewHolder.textDescription.setText(descb);
 
-        Integer imgb = cardObjList.get(i).getImg();
-        viewHolder.imageViewf.setImageResource(imgb);
+        String imgb = cardObjList.get(i).getImg();
+        Picasso.get().load(imgb).into(viewHolder.imageViewf);
 
     }
 

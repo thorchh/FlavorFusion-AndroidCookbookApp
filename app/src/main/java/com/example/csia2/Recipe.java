@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Recipe implements Parcelable {
     private String title;
     private String desc;
-    private Integer img;
+    private String img;
     // 0-5/5
     private Integer difficulty;
     // in minutes
@@ -23,10 +23,10 @@ public class Recipe implements Parcelable {
     //private ArrayList<Boolean> checklist;
     private float userRating;
 
-    public Recipe(String title, String desc, Long img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating){
+    public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating){
         this.title = title;
         this.desc = desc;
-        this.img = img.intValue();
+        this.img = img;
         this.difficulty = difficulty.intValue();
         this.time = time.intValue();
         this.saved = saved;
@@ -35,7 +35,7 @@ public class Recipe implements Parcelable {
         this.userRating = userRating.floatValue();
     }
 
-    public Recipe(String title, String desc, Integer img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating){
+    public Recipe(String title, String desc, String img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -54,7 +54,7 @@ public class Recipe implements Parcelable {
         if (in.readByte() == 0) {
             img = null;
         } else {
-            img = in.readInt();
+            img = in.readString();
         }
         if (in.readByte() == 0) {
             difficulty = null;
@@ -81,7 +81,7 @@ public class Recipe implements Parcelable {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeInt(img);
+            dest.writeString(img);
         }
         if (difficulty == null) {
             dest.writeByte((byte) 0);
@@ -126,7 +126,7 @@ public class Recipe implements Parcelable {
     public String getDesc() {
         return desc;
     }
-    public Integer getImg(){return img;}
+    public String getImg(){return img;}
     public Integer getDifficulty() { return difficulty; }
     public Integer getTime() { return time; }
     public Boolean getSaved() {return saved;}
@@ -144,7 +144,7 @@ public class Recipe implements Parcelable {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public void setImg(Integer img) {
+    public void setImg(String img) {
         this.img = img;
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
