@@ -38,8 +38,8 @@
 
             <TextView
                 android:id="@+id/recipeTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="239dp"
+                android:layout_height="21dp"
                 android:layout_marginStart="32dp"
                 android:text="Title"
                 android:textSize="17sp"
@@ -53,8 +53,8 @@
 
             <TextView
                 android:id="@+id/textDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="239dp"
+                android:layout_height="19dp"
                 android:layout_marginStart="32dp"
                 android:ellipsize="end"
                 android:maxLines="2"
@@ -65,6 +65,18 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/recipeTitle"
                 app:layout_constraintVertical_bias="0.119" />
+
+            <TextView
+                android:id="@+id/colourTag"
+                android:layout_width="26dp"
+                android:layout_height="84dp"
+                android:backgroundTint="@color/Blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textDescription"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
