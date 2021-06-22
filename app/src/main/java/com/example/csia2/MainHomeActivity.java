@@ -112,6 +112,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                         recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating));
                     }
                 }
+                System.out.println(recipeObjList);
                 init();
             }
 
@@ -121,37 +122,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             }
         });
 
-        System.out.println("before");
-        //final recipe??
-        for (Recipe recipe:recipeObjList) {
-            int count = 0;
-            System.out.println(recipe);
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference getImage = databaseReference.child("Recipe").child(recipe.getTitle()).child("img");
-            final int finalCount = count;
-            getImage.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // getting a DataSnapshot for the location at the specified
-                    // relative path and getting in the link variable
-                    String link = dataSnapshot.getValue(String.class);
-                    System.out.println(recipeObjList.get(finalCount).getImg());
-                    recipeObjList.get(finalCount).setImg(link);
-                    System.out.println(recipeObjList.get(finalCount).getImg());
-                    // loading that data into rImage
-                    // variable which is ImageView
-                    //Picasso.get().load(link).into(rImage);
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            count++;
-        }
-        System.out.println("after");
 
 
     }
@@ -195,6 +166,40 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 return false;
             }
         });
+
+        System.out.println("before");
+        System.out.println(recipeObjList);
+        //final recipe??
+        for (Recipe recipe:recipeObjList) {
+            int count = 0;
+            System.out.println(recipe);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference getImage = databaseReference.child("Recipe").child(recipe.getTitle()).child("img");
+            System.out.println(getImage);
+            final int finalCount = count;
+            getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // getting a DataSnapshot for the location at the specified
+                    // relative path and getting in the link variable
+                    String link = dataSnapshot.getValue(String.class);
+                    System.out.println(recipeObjList.get(finalCount).getImg());
+                    recipeObjList.get(finalCount).setImg(link);
+                    System.out.println(recipeObjList.get(finalCount).getImg());
+                    // loading that data into rImage
+                    // variable which is ImageView
+                    //Picasso.get().load(link).into(rImage);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            count++;
+        }
+        System.out.println("after");
     }
 
 
