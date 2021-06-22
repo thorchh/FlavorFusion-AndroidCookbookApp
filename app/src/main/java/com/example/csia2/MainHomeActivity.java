@@ -175,7 +175,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             System.out.println(recipe);
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             DatabaseReference getImage = databaseReference.child("Recipe").child(recipe.getTitle()).child("img");
-            System.out.println(getImage);
+            System.out.println("get img: " + getImage);
             final int finalCount = count;
             getImage.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
