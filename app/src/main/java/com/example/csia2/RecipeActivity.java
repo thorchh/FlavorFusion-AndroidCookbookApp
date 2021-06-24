@@ -2,6 +2,7 @@ package com.example.csia2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
@@ -189,5 +191,6 @@ public class RecipeActivity extends AppCompatActivity {
 
         //img
         Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
+
     }
 }

@@ -6,4 +6,11 @@
     <color name="Red">#FF8A80</color>
     <color name="Blue">#A7FFEB</color>
     <color name="Green">#CCFF90</color>
+
+    <array name="array_name">
+        <item>@color/Red</item>
+        <item>@color/Blue</item>
+        <item>@color/Green</item>
+
+    </array>
 </resources>

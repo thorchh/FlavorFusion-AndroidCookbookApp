@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
@@ -28,15 +31,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textTitle, textDescription;
+        TextView textTitle, textDescription,colourTag;
         ImageView imageViewf;
         OnNoteListener onNoteListener;
+        private int[] colorArray;
+
 
         public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.recipeTitle);
             textDescription = itemView.findViewById(R.id.textDescription);
             imageViewf = itemView.findViewById(R.id.imageView);
+            colourTag = itemView.findViewById(R.id.colourTag);
             this.onNoteListener = onNoteListener;
             itemView.setOnClickListener(this);
         }
@@ -61,7 +67,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         this.layoutInflater = LayoutInflater.from(context);
 
 
-
     }
 
     @NonNull
@@ -82,6 +87,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
         String imgb = cardObjList.get(i).getImg();
         Picasso.get().load(imgb).into(viewHolder.imageViewf);
+        Context context  = viewHolder.colourTag.getContext();
+        int[] colorArray= context.getResources().getIntArray(R.array.array_name);
+        for (int b = 0; b < colorArray.length; b++) {
+            viewHolder.colourTag.setBackgroundColor(colorArray[b]);
+
+        }
 
     }
 

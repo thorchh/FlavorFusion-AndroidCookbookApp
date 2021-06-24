@@ -70,7 +70,7 @@
                 android:id="@+id/colourTag"
                 android:layout_width="26dp"
                 android:layout_height="84dp"
-                android:backgroundTint="@color/Blue"
+                android:background="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
