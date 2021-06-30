@@ -132,7 +132,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
             //create and add cardobj to cardobjlist with recipe from recipe obj list
-            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg()));
+            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(),recipeObjList.get(i).getColourTag()));
 
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
@@ -167,9 +167,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             }
         });
 
-        System.out.println("before");
         System.out.println(recipeObjList);
-        //final recipe??
         for (Recipe recipe:recipeObjList) {
             int count = 0;
             System.out.println(recipe);
@@ -199,7 +197,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             });
             count++;
         }
-        System.out.println("after");
     }
 
 

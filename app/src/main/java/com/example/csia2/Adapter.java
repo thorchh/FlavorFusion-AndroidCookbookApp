@@ -31,7 +31,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textTitle, textDescription,colourTag;
+        TextView textTitle, textDescription,colourTagText;
         ImageView imageViewf;
         OnNoteListener onNoteListener;
         private int[] colorArray;
@@ -42,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             textTitle = itemView.findViewById(R.id.recipeTitle);
             textDescription = itemView.findViewById(R.id.textDescription);
             imageViewf = itemView.findViewById(R.id.imageView);
-            colourTag = itemView.findViewById(R.id.colourTag);
+            colourTagText = itemView.findViewById(R.id.colourTag);
             this.onNoteListener = onNoteListener;
             itemView.setOnClickListener(this);
         }
@@ -87,11 +87,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
         String imgb = cardObjList.get(i).getImg();
         Picasso.get().load(imgb).into(viewHolder.imageViewf);
-        Context context  = viewHolder.colourTag.getContext();
+
+        String colourb = cardObjList.get(i).getColourTag();
+
+        Context context  = viewHolder.colourTagText.getContext();
         int[] colorArray= context.getResources().getIntArray(R.array.array_name);
         for (int b = 0; b < colorArray.length; b++) {
-            viewHolder.colourTag.setBackgroundColor(colorArray[b]);
-
+            if (colourb.equals("Red")){
+                viewHolder.colourTagText.setBackgroundColor(colorArray[0]);
+            }
+            else if (colourb.equals("blue")){
+                viewHolder.colourTagText.setBackgroundColor(colorArray[1]);
+            }
+            else if (colourb.equals("Green")){
+                viewHolder.colourTagText.setBackgroundColor(colorArray[2]);
+            }
         }
 
     }

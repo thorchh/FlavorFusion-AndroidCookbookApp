@@ -192,6 +192,5 @@ public class RecipeActivity extends AppCompatActivity {
         //img
         Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
 
-        
     }
 }

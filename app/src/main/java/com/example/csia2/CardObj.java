@@ -10,12 +10,14 @@ public class CardObj implements Parcelable {
     private String title;
     private String desc;
     private String img;
+    private String colourTag;
 
-    CardObj(String title, String desc, String img){
+    CardObj(String title, String desc, String img, String colourTag){
 
         this.title = title;
         this.desc = desc;
         this.img = img;
+        this.colourTag = colourTag;
     }
 
     protected CardObj(Parcel in) {
@@ -26,6 +28,7 @@ public class CardObj implements Parcelable {
         } else {
             img = in.readString();
         }
+        colourTag = in.readString();
     }
 
     public static final Creator<CardObj> CREATOR = new Creator<CardObj>() {
@@ -50,6 +53,8 @@ public class CardObj implements Parcelable {
 
     String getImg(){return img;}
 
+    String getColourTag() {return colourTag;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -65,5 +70,6 @@ public class CardObj implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeString(img);
         }
+        dest.writeString(colourTag);
     }
 }
