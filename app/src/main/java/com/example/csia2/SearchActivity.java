@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity implements Adapter.OnNoteL
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
             //create and add cardobj to cardobjlist with recipe from recipe obj list
-            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(), recipeObjList.get(i).getColourTag()));
+            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(), recipeObjList.get(i).getColourTag(), recipeObjList.get(i).getingridientsChecklist()));
 
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));

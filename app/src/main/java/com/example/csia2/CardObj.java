@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 
+import java.util.ArrayList;
+
 public class CardObj implements Parcelable {
 
     private LayoutInflater layoutInflater;
@@ -12,12 +14,15 @@ public class CardObj implements Parcelable {
     private String img;
     private String colourTag;
 
-    CardObj(String title, String desc, String img, String colourTag){
+    private ArrayList<ArrayList> ingridientsChecklist;
+
+    CardObj(String title, String desc, String img, String colourTag, ArrayList<ArrayList> ingridientsChecklist){
 
         this.title = title;
         this.desc = desc;
         this.img = img;
         this.colourTag = colourTag;
+        this.ingridientsChecklist = ingridientsChecklist;
     }
 
     protected CardObj(Parcel in) {
@@ -29,6 +34,7 @@ public class CardObj implements Parcelable {
             img = in.readString();
         }
         colourTag = in.readString();
+        ingridientsChecklist = (ArrayList<ArrayList>) in.readSerializable();
     }
 
     public static final Creator<CardObj> CREATOR = new Creator<CardObj>() {
@@ -55,6 +61,8 @@ public class CardObj implements Parcelable {
 
     String getColourTag() {return colourTag;}
 
+    ArrayList<ArrayList> getIngridientsChecklist() {return ingridientsChecklist;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,5 +79,6 @@ public class CardObj implements Parcelable {
             dest.writeString(img);
         }
         dest.writeString(colourTag);
+        dest.writeSerializable(ingridientsChecklist);
     }
 }
