@@ -128,12 +128,12 @@ public class RecipeActivity extends AppCompatActivity {
                     //true
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
+                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
                     }
                     //false
                     else {
                         tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
+                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
                     }
                 }
             });
@@ -163,13 +163,13 @@ public class RecipeActivity extends AppCompatActivity {
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = false;
                     bookmarkButton.setChecked(false);
-                    FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("saved").setValue(false);
+                    FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("saved").setValue(false);
                 }else{
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = true;
                     bookmarkButton.setChecked(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("saved").setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("saved").setValue(true);
                 }
             }
         });
@@ -184,7 +184,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 userRating = rating;
-                FirebaseDatabase.getInstance().getReference().child("Recipe").child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
+                FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
 
             }
         });

@@ -9,12 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Objects;
 
 public class LoginRegister extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -23,17 +22,19 @@ public class LoginRegister extends AppCompatActivity {
     // UI references.
     private EditText mEmail, mPassword;
     private Button btnSignIn,btnSignOut,btnAddItems;
+    private TextView tvRegisterActivity;
 
     private static final String TAG = "LoginRegister";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
-        //declare buttons and edit texts in oncreate
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        btnSignIn = (Button) findViewById(R.id.emailSignInButton);
+        //declare buttons, edit texts and text views in oncreate
+        mEmail = (EditText) findViewById(R.id.emailLogin);
+        mPassword = (EditText) findViewById(R.id.passwordLogin);
+        btnSignIn = (Button) findViewById(R.id.register);
         btnSignOut = (Button) findViewById(R.id.emailSignOutButton);
+        tvRegisterActivity = (TextView) findViewById(R.id.notReg);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -79,6 +80,12 @@ public class LoginRegister extends AppCompatActivity {
             }
         });
 
+        tvRegisterActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            }
+        });
     }
 
     @Override

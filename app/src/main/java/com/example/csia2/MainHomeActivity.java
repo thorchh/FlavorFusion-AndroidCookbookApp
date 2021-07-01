@@ -61,14 +61,13 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mainhome);
-
         user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
         assert user != null;
-
         recipeObjList = new ArrayList<>();
         ingridients = new ArrayList<>();
         checklist = new ArrayList<>();
         ingridientsChecklist = new ArrayList<>();
+
 /*        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
         checklist.add(true); checklist.add(true); checklist.add(true); checklist.add(false); checklist.add(true);
         ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
@@ -83,36 +82,30 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             reff.child(recipe.getTitle()).setValue(recipe);
         }*/
 
-
-        reff = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        //change this to different branches later
+        reff = FirebaseDatabase.getInstance().getReference().child("RecipeUser");
         reff.addValueEventListener(new ValueEventListener(){
 
-            //get from saved branch
-
+            //get from firebase database 'saved' branch
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                //create Recipes from firebase
+                //create Recipes from firebase into recipeObjList
+                //loop through
                 for (DataSnapshot element : children){
-                    String title = (String) element.child("title").getValue();
-                    String desc = (String) element.child("desc").getValue();
-                    String imgURI = (String) element.child("img").getValue();
-                    Long difficulty = (Long) element.child("difficulty").getValue();
-                    Long time = (Long)element.child("time").getValue();
-                    Boolean saved = (Boolean) element.child("saved").getValue();
-                    String colourTag = (String) element.child("colourTag").getValue();
-                    ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();
-                    Object userRating = element.child("userRating").getValue();
+                    //set values
+                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue();
                     if (userRating instanceof Long) {
                         Long lUserRating = (Long) userRating;
+                        // create new recipe and append into recipeobjlist
                         recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue()));
                     } else {
+                        // create new recipe and append into recipeobjlist
                         recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating));
                     }
                 }
-                System.out.println(recipeObjList);
+                //run init()
                 init();
             }
 
@@ -121,42 +114,43 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 init();
             }
         });
-
-
-
-
     }
 
+    // to initialise everything
     public void init(){
         cardObjList = new ArrayList<>();
         //cardobj + cardobjlist + hashmap (recipehash)
         for (int i = 0; i< recipeObjList.size();i++){
             //create and add cardobj to cardobjlist with recipe from recipe obj list
             cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(),recipeObjList.get(i).getColourTag(),recipeObjList.get(i).getingridientsChecklist()));
-
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
         }
 
+        //get recyclerview and adapter
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new Adapter(this, cardObjList, this);
         recyclerView.setAdapter(adapter);
 
-
+        //get bottomnav
         BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            //if bottomnav pressed
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
+                    //home
                     case R.id.nav_home:
                         return true;
+                    //search
                     case R.id.nav_search:
                         startActivity(new Intent(getApplicationContext()
                                 , SearchActivity.class).putExtra("user", user));
                         overridePendingTransition(0,0);
                         return true;
+                    //profile
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext()
                                 , ProfileActivity.class).putExtra("user", user));
@@ -167,53 +161,41 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             }
         });
 
-        System.out.println(recipeObjList);
+        //loop through recipeobjlist
         for (Recipe recipe:recipeObjList) {
             int count = 0;
-            System.out.println(recipe);
+            //database reference
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference getImage = databaseReference.child("Recipe").child(recipe.getTitle()).child("img");
+            //take link from firebase database, need to find a way to set this. (so can easily add new and edit.)
+            DatabaseReference getImage = databaseReference.child("RecipeUser").child(recipe.getTitle()).child("img");
             System.out.println("get img: " + getImage);
             final int finalCount = count;
             getImage.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // getting a DataSnapshot for the location at the specified
-                    // relative path and getting in the link variable
+                    // getting a DataSnapshot for the location at the specified relative path and getting in the link variable
                     String link = dataSnapshot.getValue(String.class);
-                    System.out.println(recipeObjList.get(finalCount).getImg());
+                    System.out.println("link: " + link);
+                    //setting link
                     recipeObjList.get(finalCount).setImg(link);
                     System.out.println(recipeObjList.get(finalCount).getImg());
-                    // loading that data into rImage
-                    // variable which is ImageView
-                    //Picasso.get().load(link).into(rImage);
-
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
             count++;
         }
     }
 
-
-    public void Activity2(View v){
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
+    //search menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
-
         MenuItem searchItem = menu.findItem(R.id.nav_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -227,13 +209,10 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 return false;
             }
         });
-
         return true;
-
     }
 
-
-
+    //when cardobj is pressed
     @Override
     public void onNoteClick(int position) {
         //get cardobj from cardobjlist and get recipe through hashmap
