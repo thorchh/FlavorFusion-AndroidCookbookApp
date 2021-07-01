@@ -30,6 +30,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
     private ArrayList<String> check;
+    String finalCheck = "";
     private OnNoteListener mOnNoteListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -137,20 +138,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 for (CardObj obj: cardObjListFull){
                     check = obj.getIngridientsChecklist().get(0);
                     for (int i = 0; i< check.size(); i++){
-                        check.join
+                        finalCheck+=(check.get(i));
                     }
-                    System.out.println(check);
-                    if (obj.getTitle().toLowerCase().contains(filterPattern)){
+                    if (obj.getTitle().toLowerCase().contains(filterPattern) || obj.getDesc().toLowerCase().contains(filterPattern)||finalCheck.contains(filterPattern)){
                         filteredList.add(obj);
-                        System.out.println("title");
-                    }
-                    else if(obj.getDesc().toLowerCase().contains(filterPattern)){
-                        filteredList.add(obj);
-                        System.out.println("desc");
-                    }
-                    else if(check.toString().matches("\\[.*\\b" + filterPattern + "\\b.*]")){
-                        filteredList.add(obj);
-                        System.out.println("ingridients");
                     }
                 }
             }
