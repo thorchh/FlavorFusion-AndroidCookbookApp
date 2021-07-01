@@ -1,6 +1,7 @@
 package com.example.csia2;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -17,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.security.AccessController.getContext;
 
@@ -26,7 +29,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
-
+    private ArrayList<String> check;
     private OnNoteListener mOnNoteListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -117,9 +120,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     public Filter getFilter(){
         return filter;
     }
+
     private Filter filter = new Filter(){
 
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CardObj> filteredList = new ArrayList<>();
@@ -130,8 +135,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (CardObj obj: cardObjListFull){
-                    if (obj.getTitle().toLowerCase().contains(filterPattern) || obj.getDesc().toLowerCase().contains(filterPattern) || obj.getIngridientsChecklist().get(0).toLowerCase().contains(filterPattern)){
+                    check = obj.getIngridientsChecklist().get(0);
+                    for (int i = 0; i< check.size(); i++){
+                        check.join
+                    }
+                    System.out.println(check);
+                    if (obj.getTitle().toLowerCase().contains(filterPattern)){
                         filteredList.add(obj);
+                        System.out.println("title");
+                    }
+                    else if(obj.getDesc().toLowerCase().contains(filterPattern)){
+                        filteredList.add(obj);
+                        System.out.println("desc");
+                    }
+                    else if(check.toString().matches("\\[.*\\b" + filterPattern + "\\b.*]")){
+                        filteredList.add(obj);
+                        System.out.println("ingridients");
                     }
                 }
             }
