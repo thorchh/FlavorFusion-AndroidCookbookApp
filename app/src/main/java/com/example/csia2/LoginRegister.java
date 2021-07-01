@@ -66,7 +66,6 @@ public class LoginRegister extends AppCompatActivity {
                 String pass = mPassword.getText().toString();
                 if(!email.equals("") && !pass.equals("")){
                     mAuth.signInWithEmailAndPassword(email,pass);
-
                 }else{
                     toastMessage("You didn't fill in all the fields.");
                 }

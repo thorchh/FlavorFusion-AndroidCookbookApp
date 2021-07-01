@@ -16,6 +16,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -25,8 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEmail, mPassword;
     private Button register;
     private TextView tvLoginActivity;
+    DatabaseReference reff;
     FirebaseUser user;
-
+    DataSnapshot finalCopy;
+    int numRecipe;
+    String email;
+    String pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = mEmail.getText().toString();
-                String pass = mPassword.getText().toString();
+                email = mEmail.getText().toString();
+                pass = mPassword.getText().toString();
                 if(!email.equals("") && !pass.equals("")){
                     registerUser(email, pass);
                 }else if (pass.length() < 6){
@@ -70,12 +81,28 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    toastMessage("Successfully signed in with: " + email);
-                    mAuth.signInWithEmailAndPassword(email,pass);
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Intent i = new Intent(getApplicationContext(), MainHomeActivity.class);
-                    i.putExtra("user", user).putExtra("activity", "200");
-                    startActivity(i);
+                    reff = FirebaseDatabase.getInstance().getReference();
+                    System.out.println(reff.child("RecipeMain"));
+/*
+                        would need to add some delay, async is the problem
+*/
+                        reff.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            System.out.println("snap" + snapshot);
+                            finalCopy = snapshot;
+                            System.out.println("final copy" + finalCopy.child("recipemain").getValue());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+                        //  */
+                    init();
+                    
                 }else{
                     toastMessage("Registration failed, please try again");
                 }
@@ -83,6 +110,34 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    public void init(){
+        //reff.child("Recipe" + email.substring(0,(email.indexOf('@')))).setValue(finalCopy.getValue());
+/*                    ArrayList<Boolean> arr = new ArrayList();
+                    reff.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            System.out.println("snap" + snapshot);
+                            finalCopy = snapshot;
+                            System.out.println("final copy" + finalCopy.child("recipemain").getValue());
+                            numRecipe = ((ArrayList) finalCopy.child("recipemain").getValue()).size();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+                    for (int i = 0; i < numRecipe; i++) {arr.add(true);}*/
+        reff.child("Recipe" + email.substring(0,(email.indexOf('@')))).setValue(finalCopy.child("RecipeMain").getValue());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mAuth.signInWithEmailAndPassword(email,pass);
+        toastMessage("Successfully signed in with: " + email);
+        Intent i = new Intent(getApplicationContext(), MainHomeActivity.class);
+        i.putExtra("user", user).putExtra("activity", "200");
+        startActivity(i);
+    }
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
