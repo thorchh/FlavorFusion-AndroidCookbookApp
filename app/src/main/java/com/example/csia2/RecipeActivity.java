@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -192,5 +195,11 @@ public class RecipeActivity extends AppCompatActivity {
         //img
         Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
 
+        //colourTag
+        String[] colours = getResources().getStringArray(R.array.colours);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),R.layout.dropdown_item, colours);
+        AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        tv.setInputType(InputType.TYPE_NULL);
+        tv.setAdapter(arrayAdapter);
     }
 }
