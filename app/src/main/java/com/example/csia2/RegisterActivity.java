@@ -133,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
         reff.child("Recipe" + email.substring(0,(email.indexOf('@')))).setValue(finalCopy.child("RecipeMain").getValue());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mAuth.signInWithEmailAndPassword(email,pass);
+
         toastMessage("Successfully signed in with: " + email);
         Intent i = new Intent(getApplicationContext(), MainHomeActivity.class);
         i.putExtra("user", user).putExtra("activity", "200");
