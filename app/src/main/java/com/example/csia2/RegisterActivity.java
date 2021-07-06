@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -86,22 +87,15 @@ public class RegisterActivity extends AppCompatActivity {
 /*
                         would need to add some delay, async is the problem
 */
-                        reff.addListenerForSingleValueEvent(new ValueEventListener() {
+                    reff.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            System.out.println("snap" + snapshot);
-                            finalCopy = snapshot;
-                            System.out.println("final copy" + finalCopy.child("recipemain").getValue());
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            finalCopy = task.getResult();
+                            System.out.println(finalCopy);
+                            init();
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
                     });
                         //  */
-                    init();
                     
                 }else{
                     toastMessage("Registration failed, please try again");
