@@ -101,10 +101,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 viewHolder.colourTagText.setBackgroundColor(colorArray[0]);
             }
             else if (colourb.equals("blue")){
-                viewHolder.colourTagText.setBackgroundColor(colorArray[1]);
+                viewHolder.colourTagText.setBackgroundColor(colorArray[2]);
             }
             else if (colourb.equals("Green")){
-                viewHolder.colourTagText.setBackgroundColor(colorArray[2]);
+                viewHolder.colourTagText.setBackgroundColor(colorArray[1]);
             }
         }
 

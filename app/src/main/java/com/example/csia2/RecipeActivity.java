@@ -2,6 +2,7 @@ package com.example.csia2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -18,10 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -33,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -43,6 +48,7 @@ public class RecipeActivity extends AppCompatActivity {
     Boolean saved;
     float userRating;
     String imgURI;
+    String colourTag;
 
 
 
@@ -196,10 +202,27 @@ public class RecipeActivity extends AppCompatActivity {
         Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
 
         //colourTag
+        colourTag = recipePassThrough.getColourTag();
         String[] colours = getResources().getStringArray(R.array.colours);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),R.layout.dropdown_item, colours);
-        AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        tv.setInputType(InputType.TYPE_NULL);
+        Spinner tv = (Spinner) findViewById(R.id.spinner);
         tv.setAdapter(arrayAdapter);
+        tv.setSelection(Arrays.asList(colours).indexOf(colourTag));
+        tv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = (String) adapterView.getItemAtPosition(i);
+                FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("colourTag").setValue(item);
+                colourTag = item;
+                System.out.println(Arrays.asList(colours).indexOf(colourTag));
+                TypedArray ta = getApplicationContext().getResources().obtainTypedArray(R.array.array_name);
+                System.out.println(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));
+                tv.setBackgroundColor(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }
