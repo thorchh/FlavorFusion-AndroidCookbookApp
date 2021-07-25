@@ -1,6 +1,7 @@
 package com.example.csia2;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -39,6 +42,10 @@ public class EditActivity extends AppCompatActivity {
     float userRating;
     String imgURI;
     String colourTag;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    ImageView imageView;
+    Uri mImgURI;
+    ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class EditActivity extends AppCompatActivity {
         TextView difficultyProgressBarTextView = findViewById(R.id.difficultyProgressBarTextView);
         TextView timeProgressBarTextView = findViewById(R.id.timeProgressBarTextView);
         Button saveButton = findViewById(R.id.saveEditActivityButton);
+        imageView = findViewById(R.id.recipeIMGEditActivity);
 
         //bottomNav
             BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -97,20 +105,19 @@ public class EditActivity extends AppCompatActivity {
         Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMGEditActivity));
         difficultyProgressBarEditActivity.setProgress(recipePassThrough.getDifficulty()*20);
         difficultyProgressBarTextView.setHint(String.format("Difficulty: %d/5", recipePassThrough.getDifficulty()));
-        timeProgressBarEditActivity.setProgress(100 * recipePassThrough.getTime()/100);
+        timeProgressBarEditActivity.setProgress(recipePassThrough.getTime());
 
         //Ingridient arraylist
-        ArrayList<ArrayList> arrayList;
-        arrayList = recipePassThrough.getingridientsChecklist();
+        arrayList = recipePassThrough.getingridientsChecklist().get(0);
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         linf = LayoutInflater.from(EditActivity.this);
         LinearLayout ingridientLinearLayout = (LinearLayout)findViewById(R.id.ingredientsLinearLayoutEditActivity);
-        for (int i = 0; i< arrayList.get(0).size();i++){
+        for (int i = 0; i< arrayList.size();i++){
 
             View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
 
             EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
-            tv.setText((String)(arrayList.get(0).get(i)));
+            tv.setText((String)(arrayList.get(i)));
             final int finalI = i;
             tv.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -118,7 +125,7 @@ public class EditActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    System.out.println("pinanpkdfpsad!");
+                    arrayList.set(finalI, s.toString());
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
@@ -155,32 +162,6 @@ public class EditActivity extends AppCompatActivity {
 
             timeProgressBarTextView.setHint(tt);
         }
-
-
-        //on edit listeners
-        recipeTitleEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("bob!");
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        recipeDescEditText.addTextChangedListener(new TextWatcher(){
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
         //numberpickers
         timeProgressBarEditNumPick.setMaxValue(7200);
@@ -231,11 +212,33 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        //img pick and upload
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
+
         //save button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //get data
+                String tempTitle = recipeTitleEditText.getText().toString();
+                Integer tempTime = (timeProgressBarEditActivity.getProgress());
+                Integer tempDifficulty = difficultyProgressBarEditActivity.getProgress()/20;
+                String tempDescription = (String) recipeDescEditText.getText().toString();
+                //ingridients
+                //dont worry about checks, format them all to false
+                ArrayList<ArrayList> ingridientsChecklist = new ArrayList<>();
+                ArrayList<Boolean> checklist = new ArrayList<>();
+                ArrayList<String> ingridients = new ArrayList<>();
+                for(int i = 0; i< arrayList.size(); i++){ ingridients.add(arrayList.get(i)); checklist.add(false); }
+                ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
+                // need to add functionality to add and remove ingridients
+
+                // need to add img functionality: push to firebase database
 
                 //send to firebase
 
@@ -243,5 +246,22 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
             }
         });
+    }
+
+    //img chooser
+    private void openFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            mImgURI = data.getData();
+            Picasso.get().load(mImgURI).into(imageView);
+        }
     }
 }

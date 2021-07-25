@@ -102,7 +102,7 @@ public class RecipeActivity extends AppCompatActivity {
             Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
         ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
         ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
-        ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(100 * recipePassThrough.getTime()/100);
+        ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(recipePassThrough.getTime());
             //set time
             int hours = recipePassThrough.getTime() / 60;
             int minutes = recipePassThrough.getTime() % 60;
@@ -232,9 +232,7 @@ public class RecipeActivity extends AppCompatActivity {
                 String item = (String) adapterView.getItemAtPosition(i);
                 FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("colourTag").setValue(item);
                 colourTag = item;
-                System.out.println(Arrays.asList(colours).indexOf(colourTag));
                 TypedArray ta = getApplicationContext().getResources().obtainTypedArray(R.array.array_name);
-                System.out.println(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));
                 tv.setBackgroundColor(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));
             }
             @Override
