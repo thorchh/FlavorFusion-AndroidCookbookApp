@@ -97,37 +97,38 @@ public class RecipeActivity extends AppCompatActivity {
         assert recipePassThrough != null;
         ((TextView) findViewById(R.id.recipeTitle)).setText(recipePassThrough.getTitle());
         ((TextView) findViewById(R.id.recipeDesc)).setText(recipePassThrough.getDesc());
-        imgURI = recipePassThrough.getImg();
+            //img
+            imgURI = recipePassThrough.getImg();
+            Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
         ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
         ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
         ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(100 * recipePassThrough.getTime()/100);
-        //set time
-        int hours = recipePassThrough.getTime() / 60;
-        int minutes = recipePassThrough.getTime() % 60;
-        if (recipePassThrough.getTime() <= 60){
-            if (minutes == 1){
-                ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minute");
-            }else{
-                ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minutes");
-            }
-        }else{
-            String tt;
-            if (hours == 1){
+            //set time
+            int hours = recipePassThrough.getTime() / 60;
+            int minutes = recipePassThrough.getTime() % 60;
+            if (recipePassThrough.getTime() <= 60){
                 if (minutes == 1){
-                    tt = String.format("%d Hour \n %02d Minute", hours , minutes);
+                    ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minute");
                 }else{
-                    tt = String.format("%d Hour \n %02d Minutes", hours , minutes);
+                    ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minutes");
                 }
-            }else{
-                if (minutes == 1){
-                    tt = String.format("%d Hours \n %02d Minute", hours , minutes);
-                }else{
-                    tt = String.format("%d Hours \n %02d Minutes", hours , minutes);
+            }else {
+                String tt;
+                if (hours == 1) {
+                    if (minutes == 1) {
+                        tt = String.format("%d Hour \n %02d Minute", hours, minutes);
+                    } else {
+                        tt = String.format("%d Hour \n %02d Minutes", hours, minutes);
+                    }
+                } else {
+                    if (minutes == 1) {
+                        tt = String.format("%d Hours \n %02d Minute", hours, minutes);
+                    } else {
+                        tt = String.format("%d Hours \n %02d Minutes", hours, minutes);
+                    }
                 }
+                ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
             }
-
-            ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
-        }
 
         //checkboxList
         ArrayList<ArrayList> arrayList;
@@ -217,7 +218,6 @@ public class RecipeActivity extends AppCompatActivity {
         });
 
         //img
-        Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
 
         //colourTag
         colourTag = recipePassThrough.getColourTag();

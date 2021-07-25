@@ -52,7 +52,9 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="Title"
-                android:textSize="30sp" />
+                android:textColor="#323232"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -194,6 +196,12 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description:" />
+
+            <TextView
                 android:id="@+id/recipeDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,10 +210,10 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="save like share" />
+                android:text="Ingridients:" />
 
             <LinearLayout
                 android:id="@+id/ingredientsLinearLayout"

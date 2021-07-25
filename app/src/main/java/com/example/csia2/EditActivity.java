@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -92,6 +94,7 @@ public class EditActivity extends AppCompatActivity {
         recipeTitleEditText.setText(recipePassThrough.getTitle());
         recipeDescEditText.setText(recipePassThrough.getDesc());
         imgURI = recipePassThrough.getImg();
+        Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMGEditActivity));
         difficultyProgressBarEditActivity.setProgress(recipePassThrough.getDifficulty()*20);
         difficultyProgressBarTextView.setHint(String.format("Difficulty: %d/5", recipePassThrough.getDifficulty()));
         timeProgressBarEditActivity.setProgress(100 * recipePassThrough.getTime()/100);
@@ -108,30 +111,19 @@ public class EditActivity extends AppCompatActivity {
 
             EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
             tv.setText((String)(arrayList.get(0).get(i)));
-            if ((Boolean) arrayList.get(1).get(i)) {
-                tv.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            }
-            else{
-                tv.setPaintFlags(tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG);
-            }
             final int finalI = i;
-            tv.setOnClickListener(new View.OnClickListener() {
+            tv.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onClick(View v) {
-                    TextView tv = ((CheckBox) v.findViewById(R.id.linearLayoutTextView));
-                    //true
-                    if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
-                        tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
-                    }
-                    //false
-                    else {
-                        tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
-                    }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    System.out.println("pinanpkdfpsad!");
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
                 }
             });
-
             ingridientLinearLayout.addView(v);
         }
 
@@ -167,38 +159,26 @@ public class EditActivity extends AppCompatActivity {
 
         //on edit listeners
         recipeTitleEditText.addTextChangedListener(new TextWatcher() {
-
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 System.out.println("bob!");
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         recipeDescEditText.addTextChangedListener(new TextWatcher(){
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -255,6 +235,8 @@ public class EditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //get data
+
                 //send to firebase
 
                 //go back to RecipeActivity
