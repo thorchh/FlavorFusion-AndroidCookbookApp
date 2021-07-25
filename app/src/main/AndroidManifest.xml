@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.csia2">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditActivity"></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".EditActivity"/>
+        <activity android:name=".RegisterActivity"/>
         <activity
             android:name=".LoginRegister"
             android:label="@string/title_activity_login_register">
@@ -26,16 +26,16 @@
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
-        <activity android:name=".RecipeActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".RecipeActivity"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".SearchActivity"/>
         <activity
             android:name=".MainHomeActivity"
             android:label="">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

@@ -38,6 +38,7 @@ import java.util.ListIterator;
 import java.util.Objects;
 
 public class SearchActivity extends AppCompatActivity implements Adapter.OnNoteListener{
+    //call it exploreActivity
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Recipe> recipeObjList;

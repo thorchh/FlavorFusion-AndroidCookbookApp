@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -100,12 +101,30 @@ public class RecipeActivity extends AppCompatActivity {
         ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
         ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
         ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(100 * recipePassThrough.getTime()/100);
+        //set time
+        int hours = recipePassThrough.getTime() / 60;
+        int minutes = recipePassThrough.getTime() % 60;
         if (recipePassThrough.getTime() <= 60){
-            ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minutes");
+            if (minutes == 1){
+                ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minute");
+            }else{
+                ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minutes");
+            }
         }else{
-            int hours = recipePassThrough.getTime() / 60;
-            int minutes = recipePassThrough.getTime() % 60;
-            String tt = String.format("%d Hours \n %02d Minutes", hours , minutes);
+            String tt;
+            if (hours == 1){
+                if (minutes == 1){
+                    tt = String.format("%d Hour \n %02d Minute", hours , minutes);
+                }else{
+                    tt = String.format("%d Hour \n %02d Minutes", hours , minutes);
+                }
+            }else{
+                if (minutes == 1){
+                    tt = String.format("%d Hours \n %02d Minute", hours , minutes);
+                }else{
+                    tt = String.format("%d Hours \n %02d Minutes", hours , minutes);
+                }
+            }
 
             ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
         }
@@ -150,9 +169,8 @@ public class RecipeActivity extends AppCompatActivity {
             ingridientLinearLayout.addView(v);
         }
 
-        final ToggleButton bookmarkButton = findViewById(R.id.bookmark);
-
         //bookmark
+        final ToggleButton bookmarkButton = findViewById(R.id.bookmark);
         saved =  recipePassThrough.getSaved();
         bookmarkButton.setText(null);
         bookmarkButton.setTextOn(null);
@@ -222,6 +240,16 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        //edit recipe button
+        Button editButton = findViewById(R.id.editButton);
+        editButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), EditActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
             }
         });
     }

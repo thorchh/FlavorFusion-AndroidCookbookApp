@@ -102,17 +102,26 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="108dp"
-                android:layout_height="54dp"
-                android:backgroundTint="#FFFFFF"
-                android:clickable="true"
-                android:text="Button"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/editButton"
+                    android:layout_width="148dp"
+                    android:layout_height="36dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:clickable="true"
+                    android:text="edit recipe"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="NotSibling" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout"

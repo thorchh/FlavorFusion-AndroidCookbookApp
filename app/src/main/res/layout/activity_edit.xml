@@ -63,7 +63,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <ProgressBar
                         android:id="@+id/difficultyProgressBarEditActivity"
@@ -77,25 +77,38 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
-                        android:id="@+id/difficultyTextViewProgressBarEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="60%"
+                    <NumberPicker
+                        android:id="@+id/difficultyProgressBarEditNumPick"
+                        android:layout_width="58dp"
+                        android:layout_height="115dp"
+                        android:hint="Difficulty"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="@+id/difficultyProgressBarEditActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:inputType="text"/>
+                        app:layout_constraintVertical_bias="0.49" />
+
+                    <TextView
+                        android:id="@+id/difficultyProgressBarTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        app:layout_constraintBottom_toBottomOf="@+id/difficultyProgressBarEditActivity"
+                        app:layout_constraintEnd_toEndOf="@+id/difficultyProgressBarEditActivity"
+                        app:layout_constraintHorizontal_bias="0.503"
+                        app:layout_constraintStart_toStartOf="@+id/difficultyProgressBarEditActivity"
+                        app:layout_constraintTop_toBottomOf="@+id/difficultyProgressBarEditNumPick"
+                        app:layout_constraintVertical_bias="1.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <ProgressBar
                         android:id="@+id/timeProgressBarEditActivity"
@@ -109,19 +122,34 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
-                        android:id="@+id/timeTextViewProgressBarEditText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <NumberPicker
+                        android:id="@+id/timeProgressBarEditNumPick"
+                        android:layout_width="58dp"
+                        android:layout_height="115dp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:gravity="center|center_horizontal|center_vertical"
-                        android:text="60%"
+                        android:hint="Time"
+                        android:inputType="time"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="@+id/timeProgressBarEditActivity"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:inputType="text"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/timeProgressBarTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center"
+                        android:text=""
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/timeProgressBarEditNumPick"
+                        app:layout_constraintVertical_bias="1.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,10 +166,20 @@
                 android:inputType="text"/>
 
             <LinearLayout
-                android:id="@+id/ingredientsLinearLayout"
+                android:id="@+id/ingredientsLinearLayoutEditActivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/saveEditActivityButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="save"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientsLinearLayoutEditActivity" />
 
 
         </LinearLayout>
