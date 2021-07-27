@@ -24,7 +24,7 @@ public class Recipe implements Parcelable {
     private float userRating;
     private ArrayList<String> instructionArrayList;
 
-    public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating){
+    public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating, ArrayList<String> instructionArrayList){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -34,9 +34,10 @@ public class Recipe implements Parcelable {
         this.colourTag = colourTag;
         this.ingridientsChecklist = ingridientsChecklist;
         this.userRating = userRating.floatValue();
+        this.instructionArrayList = instructionArrayList;
     }
 
-    public Recipe(String title, String desc, String img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating){
+    public Recipe(String title, String desc, String img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating, ArrayList<String> instructionArrayList){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -46,6 +47,7 @@ public class Recipe implements Parcelable {
         this.colourTag = colourTag;
         this.ingridientsChecklist = ingridientsChecklist;
         this.userRating = userRating;
+        this.instructionArrayList = instructionArrayList;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -71,6 +73,7 @@ public class Recipe implements Parcelable {
         colourTag = in.readString();
         ingridientsChecklist = (ArrayList<ArrayList>) in.readSerializable();
         userRating = in.readFloat();
+        instructionArrayList = (ArrayList<String>) in.readSerializable();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -100,6 +103,7 @@ public class Recipe implements Parcelable {
         dest.writeString(colourTag);
         dest.writeSerializable(ingridientsChecklist);
         dest.writeFloat(userRating);
+        dest.writeSerializable(instructionArrayList);
     }
 
     @Override
@@ -136,6 +140,7 @@ public class Recipe implements Parcelable {
     }
     public ArrayList<ArrayList> getingridientsChecklist() {return ingridientsChecklist;}
     public float getUserRating() {return userRating;}
+    public ArrayList<String> getInstructionsArrayList() {return instructionArrayList;}
 
 
     //setters
@@ -154,4 +159,5 @@ public class Recipe implements Parcelable {
     public void setColourTag(String colourTag) { this.colourTag = colourTag; }
     public void setingridientsChecklist(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
     public void setUserRating(float userRating) { this.userRating = userRating; }
+    public void setInstructionsArrayList(ArrayList<String> instructionArrayList) { this.instructionArrayList = instructionArrayList; }
 }

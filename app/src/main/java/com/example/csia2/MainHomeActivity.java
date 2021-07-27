@@ -53,6 +53,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     float userRating;
     private ArrayList<String> ingridients;
     private ArrayList<Boolean> checklist;
+    private ArrayList<String> instructionsArrayList;
     String img;
 
     @Override
@@ -67,6 +68,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         ingridients = new ArrayList<>();
         checklist = new ArrayList<>();
         ingridientsChecklist = new ArrayList<>();
+        instructionsArrayList = new ArrayList<>();
 
 /*        ingridients.add("cheese"); ingridients.add("not cheese"); ingridients.add("bananas"); ingridients.add("not bananas");
         checklist.add(true); checklist.add(true); checklist.add(true); checklist.add(false); checklist.add(true);
@@ -95,14 +97,14 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 //loop through
                 for (DataSnapshot element : children){
                     //set values
-                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue();
+                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
                     if (userRating instanceof Long) {
                         Long lUserRating = (Long) userRating;
                         // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue()));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue(), instructionsArrayList));
                     } else {
                         // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating, instructionsArrayList));
                     }
                 }
                 //run init()
@@ -126,7 +128,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             //link recipe and cardobj
             recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
         }
-
         //get recyclerview and adapter
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

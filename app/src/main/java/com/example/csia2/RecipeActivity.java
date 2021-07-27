@@ -171,8 +171,8 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
         //Instructions
-        ArrayList<ArrayList> instructionsArrayList;
-        //instructionsArrayList = recipePassThrough.getInstructionsArrayList();
+        ArrayList<String> instructionsArrayList;
+        instructionsArrayList = recipePassThrough.getInstructionsArrayList();
         LinearLayout instructionsLinearLayout = (LinearLayout)findViewById(R.id.instructionsLinearLayout);
         for (int i = 0; i< instructionsArrayList.size();i++){
 
