@@ -3,17 +3,14 @@ package com.example.csia2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -23,17 +20,13 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
@@ -179,7 +172,7 @@ public class RecipeActivity extends AppCompatActivity {
             View v = linf.inflate(R.layout.instructionslayout, null);
             TextView tv1 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStep);
             TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutTextView);
-            tv1.setText("Step " + i + " :");
+            tv1.setText("Step " + (i+1) + " :");
             tv2.setText((String)(instructionsArrayList.get(i)));
             instructionsLinearLayout.addView(v);
         }

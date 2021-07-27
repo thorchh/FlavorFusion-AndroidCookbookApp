@@ -185,6 +185,18 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
 
+            <TextView
+                android:id="@+id/instructionsTextViewEditActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instructions:" />
+
+            <LinearLayout
+                android:id="@+id/instructionsLinearLayoutEditActivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
             <Button
                 android:id="@+id/saveEditActivityButton"
                 android:layout_width="match_parent"

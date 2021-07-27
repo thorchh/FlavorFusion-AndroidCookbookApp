@@ -46,6 +46,7 @@ public class EditActivity extends AppCompatActivity {
     ImageView imageView;
     Uri mImgURI;
     ArrayList<String> arrayList;
+    ArrayList<String> instructionsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class EditActivity extends AppCompatActivity {
         TextView timeProgressBarTextView = findViewById(R.id.timeProgressBarTextView);
         Button saveButton = findViewById(R.id.saveEditActivityButton);
         imageView = findViewById(R.id.recipeIMGEditActivity);
+        LinearLayout instructionsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
 
         //bottomNav
             BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -107,11 +109,10 @@ public class EditActivity extends AppCompatActivity {
         difficultyProgressBarTextView.setHint(String.format("Difficulty: %d/5", recipePassThrough.getDifficulty()));
         timeProgressBarEditActivity.setProgress(recipePassThrough.getTime());
 
-        //Ingridient arraylist
+        //Ingredients ArrayList
         arrayList = recipePassThrough.getingridientsChecklist().get(0);
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         linf = LayoutInflater.from(EditActivity.this);
-        LinearLayout ingridientLinearLayout = (LinearLayout)findViewById(R.id.ingredientsLinearLayoutEditActivity);
         for (int i = 0; i< arrayList.size();i++){
 
             View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
@@ -131,9 +132,34 @@ public class EditActivity extends AppCompatActivity {
                 public void afterTextChanged(Editable s) {
                 }
             });
-            ingridientLinearLayout.addView(v);
+            ingredientsLinearLayoutEditActivity.addView(v);
         }
 
+        //Instructions ArrayList
+        instructionsArrayList = recipePassThrough.getInstructionsArrayList();
+        LinearLayout instructions = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
+        for (int i = 0; i< instructionsArrayList.size();i++){
+
+            View v = linf.inflate(R.layout.instructionslayouteditactivity, null);
+            EditText tv = ((EditText) v.findViewById(R.id.instructionsLinearLayoutTextViewEditActivity));
+            TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStepEditActivity);
+            tv.setText((String)(instructionsArrayList.get(i)));
+            tv2.setText("Step " + (i+1) + " :");
+            final int finalI = i;
+            tv.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    instructionsArrayList.set(finalI, s.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            instructionsLinearLayoutEditActivity.addView(v);
+        }
 
         //set time
         int hours = recipePassThrough.getTime() / 60;
@@ -229,18 +255,17 @@ public class EditActivity extends AppCompatActivity {
                 Integer tempTime = (timeProgressBarEditActivity.getProgress());
                 Integer tempDifficulty = difficultyProgressBarEditActivity.getProgress()/20;
                 String tempDescription = (String) recipeDescEditText.getText().toString();
-                //ingridients
-                //dont worry about checks, format them all to false
                 ArrayList<ArrayList> ingridientsChecklist = new ArrayList<>();
                 ArrayList<Boolean> checklist = new ArrayList<>();
                 ArrayList<String> ingridients = new ArrayList<>();
                 for(int i = 0; i< arrayList.size(); i++){ ingridients.add(arrayList.get(i)); checklist.add(false); }
                 ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
+                System.out.println(instructionsArrayList);
                 // need to add functionality to add and remove ingridients
 
-                // need to add img functionality: push to firebase database
+                // need to add img functionality: push to firebase database and storage
 
-                //send to firebase
+                //send to firebase (to user branch)
 
                 //go back to RecipeActivity
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
