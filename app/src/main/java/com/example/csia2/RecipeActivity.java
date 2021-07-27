@@ -170,6 +170,20 @@ public class RecipeActivity extends AppCompatActivity {
             ingridientLinearLayout.addView(v);
         }
 
+        //Instructions
+        ArrayList<ArrayList> instructionsArrayList;
+        //instructionsArrayList = recipePassThrough.getInstructionsArrayList();
+        LinearLayout instructionsLinearLayout = (LinearLayout)findViewById(R.id.instructionsLinearLayout);
+        for (int i = 0; i< instructionsArrayList.size();i++){
+
+            View v = linf.inflate(R.layout.instructionslayout, null);
+            TextView tv1 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStep);
+            TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutTextView);
+            tv1.setText("Step " + i + " :");
+            tv2.setText((String)(instructionsArrayList.get(i)));
+            instructionsLinearLayout.addView(v);
+        }
+
         //bookmark
         final ToggleButton bookmarkButton = findViewById(R.id.bookmark);
         saved =  recipePassThrough.getSaved();
