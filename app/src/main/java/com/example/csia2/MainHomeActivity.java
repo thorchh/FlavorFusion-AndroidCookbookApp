@@ -8,6 +8,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.Image;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import android.widget.SearchView;
@@ -21,6 +24,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,6 +45,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNoteListener{
@@ -55,6 +66,12 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     private ArrayList<Boolean> checklist;
     private ArrayList<String> instructionsArrayList;
     String img;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference imageRef = storage.getReference();
+    ArrayList<String> imageUrls = new ArrayList<String>();
+    ArrayList<String> imageName = new ArrayList<String>();
+    ArrayList<ArrayList> imageUrlsName = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +205,9 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             });
             count++;
         }
+
+        //img
+        listFiles();
     }
 
     //search menu
@@ -223,4 +243,37 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         intent.putExtra("recipePassThrough", passThrough).putExtra("user", user);
         startActivity(intent);
     }
+
+    //imgs get img reference list from firebase
+    public void listFiles(){
+        try {
+            imageRef.child("images/").listAll().addOnSuccessListener(new OnSuccessListener<ListResult>(){
+                @Override
+                public void onSuccess(ListResult listResult) {
+                    List<StorageReference> images;
+                    images = (List) listResult.getItems();
+                    for (StorageReference image : images){
+                       Task<Uri> urlTask = image.getDownloadUrl();
+                       urlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                           @Override
+                           public void onSuccess(Uri uri) {
+                               System.out.println("name: " + image.getName());
+                               System.out.println("uri: " + uri);
+                               System.out.println("uri to string: " + uri.toString());
+                               imageUrlsName.clear();
+                               imageUrls.add(uri.toString());
+                               imageName.add(image.getName().substring(0,image.getName().length() - 4));
+                               imageUrlsName.add(imageName);imageUrlsName.add(imageUrls);
+                               System.out.println("imageUrlsName: " + imageUrlsName);
+
+                           }
+                       });
+                    }
+                }
+            });
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(),"oops, had a problem loading images", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
