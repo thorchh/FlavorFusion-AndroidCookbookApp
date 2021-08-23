@@ -68,8 +68,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     String img;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference imageRef = storage.getReference();
-    ArrayList<String> imageUrls = new ArrayList<String>();
-    ArrayList<String> imageName = new ArrayList<String>();
+    ArrayList<String> imageUrls = new ArrayList();
+    ArrayList<String> imageName = new ArrayList<>();
     ArrayList<ArrayList> imageUrlsName = new ArrayList<>();
 
 
@@ -207,6 +207,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         }
 
         //img
+        System.out.println();
         listFiles();
     }
 
@@ -265,7 +266,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                                imageName.add(image.getName().substring(0,image.getName().length() - 4));
                                imageUrlsName.add(imageName);imageUrlsName.add(imageUrls);
                                System.out.println("imageUrlsName: " + imageUrlsName);
-
                            }
                        });
                     }
