@@ -192,10 +192,10 @@ public class EditActivity extends AppCompatActivity {
         //numberpickers
         timeProgressBarEditNumPick.setMaxValue(7200);
         timeProgressBarEditNumPick.setMinValue(1);
-        timeProgressBarEditNumPick.setValue(30);
+        timeProgressBarEditNumPick.setValue(recipePassThrough.getTime());
         difficultyProgressBarEditNumPick.setMaxValue(5);
         difficultyProgressBarEditNumPick.setMinValue(1);
-        difficultyProgressBarEditNumPick.setValue(3);
+        difficultyProgressBarEditNumPick.setValue(recipePassThrough.getDifficulty());
 
         timeProgressBarEditNumPick.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -205,10 +205,10 @@ public class EditActivity extends AppCompatActivity {
                 if (newVal <= 60){
                     if (minutes == 1){
                         timeProgressBarTextView.setText(newVal + "\n Minute");
-                        timeProgressBarEditActivity.setProgress(100 * newVal/100);
+                        timeProgressBarEditActivity.setProgress(newVal);
                     }else{
                         timeProgressBarTextView.setText(newVal + "\n Minutes");
-                        timeProgressBarEditActivity.setProgress(100 * newVal/100);
+                        timeProgressBarEditActivity.setProgress(newVal);
                     }
                 }else{
                     String tt;
@@ -226,7 +226,7 @@ public class EditActivity extends AppCompatActivity {
                         }
                     }
                     timeProgressBarTextView.setText(tt);
-                    timeProgressBarEditActivity.setProgress(100 * newVal/100);
+                    timeProgressBarEditActivity.setProgress(newVal);
                 }
             }
         });

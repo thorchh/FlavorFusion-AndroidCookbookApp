@@ -161,23 +161,28 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description:" />
+                android:text="Description:"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/recipeDescEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="5dp"
                 android:hint="Description"
                 android:inputType="text"
                 android:text="Description"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingridients:" />
+                android:text="Ingridients:"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/ingredientsLinearLayoutEditActivity"
@@ -189,7 +194,9 @@
                 android:id="@+id/instructionsTextViewEditActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Instructions:" />
+                android:text="Instructions:"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/instructionsLinearLayoutEditActivity"

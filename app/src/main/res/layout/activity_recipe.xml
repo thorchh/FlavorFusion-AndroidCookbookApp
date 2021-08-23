@@ -199,33 +199,39 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description:" />
+                android:layout_marginTop="5dp"
+                android:text="Description:"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/recipeDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Description"
-                android:textSize="18sp" />
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="5dp"
+                android:text="Description" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingridients:" />
+                android:text="Ingridients:"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/ingredientsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical" />
 
             <TextView
                 android:id="@+id/instructionsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Instructions:" />
+                android:text="Instructions:"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/instructionsLinearLayout"
