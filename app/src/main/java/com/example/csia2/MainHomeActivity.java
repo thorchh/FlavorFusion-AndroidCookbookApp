@@ -246,6 +246,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     }
 
     //imgs get img reference list from firebase
+    //need to find a way to get this list added to the list of objects
     public void listFiles(){
         try {
             imageRef.child("images/").listAll().addOnSuccessListener(new OnSuccessListener<ListResult>(){
@@ -266,6 +267,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                                imageName.add(image.getName().substring(0,image.getName().length() - 4));
                                imageUrlsName.add(imageName);imageUrlsName.add(imageUrls);
                                System.out.println("imageUrlsName: " + imageUrlsName);
+                               // ^^ this needs to happen before adding images to the recipe objlist
+                               // maybe add this to init before everything and then add init after this onSuccess?
                            }
                        });
                     }
