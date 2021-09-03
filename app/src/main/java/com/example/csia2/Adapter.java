@@ -26,7 +26,6 @@ import static java.security.AccessController.getContext;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
     private LayoutInflater layoutInflater;
-
     private ArrayList<CardObj> cardObjList;
     private ArrayList<CardObj> cardObjListFull;
     private ArrayList<String> check;

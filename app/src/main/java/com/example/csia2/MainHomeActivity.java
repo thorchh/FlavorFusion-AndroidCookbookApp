@@ -92,7 +92,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
         recipeObjList.add(new Recipe("signature brown meatballs", "I am a salmon lover. This is a great recipe for a slightly exotic flavor of Indian inspiration with a maple twist. The flavor is exceptional, delicious, and unique. Orange zest may be added for an extra flavor twist.", R.drawable.squat1, 5, 50, true, "Green", ingridientsChecklist, 2.5f));
         recipeObjList.add(new Recipe("signature brown meat", "just cheese", R.drawable.squat1, 2, 100, false, "green", ingridientsChecklist, 2.5f));
-
         //push to firebase
         //need to find a way to push pictures to firebase
         for (int i = 0; i< recipeObjList.size();i++) {
@@ -137,8 +136,77 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
 
     // to initialise everything
     public void init(){
+        cardObjList = new ArrayList<>();
+        //cardobj + cardobjlist + hashmap (recipehash)
+        for (int i = 0; i< recipeObjList.size();i++){
+            //create and add cardobj to cardobjlist with recipe from recipe obj list
+            cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(),recipeObjList.get(i).getColourTag(),recipeObjList.get(i).getingridientsChecklist()));
+            //link recipe and cardobj
+            recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
+        }
+        //get recyclerview and adapter
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(this, cardObjList, this);
+        recyclerView.setAdapter(adapter);
+
+        //get bottomnav
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            //if bottomnav pressed
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    //home
+                    case R.id.nav_home:
+                        return true;
+                    //search
+                    case R.id.nav_search:
+                        startActivity(new Intent(getApplicationContext()
+                                , SearchActivity.class).putExtra("user", user));
+                        overridePendingTransition(0,0);
+                        return true;
+                    //profile
+                    case R.id.nav_profile:
+                        startActivity(new Intent(getApplicationContext()
+                                , ProfileActivity.class).putExtra("user", user));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        //loop through recipeobjlist
+        for (Recipe recipe:recipeObjList) {
+            int count = 0;
+            //database reference
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            //take link from firebase database, need to find a way to set this. (so can easily add new and edit.)
+            DatabaseReference getImage = databaseReference.child("RecipeUser").child(recipe.getTitle()).child("img");
+            System.out.println("get img: " + getImage);
+            final int finalCount = count;
+            getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // getting a DataSnapshot for the location at the specified relative path and getting in the link variable
+                    String link = dataSnapshot.getValue(String.class);
+                    System.out.println("link: " + link);
+                    //setting link
+                    recipeObjList.get(finalCount).setImg(link);
+                    System.out.println(recipeObjList.get(finalCount).getImg());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+            count++;
+        }
+
         //img
-        System.out.println();
+        System.out.println("hello");
         listFiles();
     }
 
@@ -185,94 +253,31 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 public void onSuccess(ListResult listResult) {
                     List<StorageReference> images;
                     images = (List) listResult.getItems();
-                    // set a counter so the init part only happens on the last run of the for loop i.e. if counter = last one, then create the list
+
                     for (StorageReference image : images){
-                       Task<Uri> urlTask = image.getDownloadUrl();
-                       urlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                           @Override
-                           public void onSuccess(Uri uri) {
-                               System.out.println("name: " + image.getName());
-                               System.out.println("uri: " + uri);
-                               System.out.println("uri to string: " + uri.toString());
-                               imageUrlsName.clear();
-                               imageUrls.add(uri.toString());
-                               imageName.add(image.getName().substring(0,image.getName().length() - 4));
-                               imageUrlsName.add(imageName);imageUrlsName.add(imageUrls);
-                               System.out.println("imageUrlsName: " + imageUrlsName);
-                               // ^^ this needs to happen before adding images to the recipe objlist
-                               // maybe add this to init before everything and then add init after this onSuccess?
-                               cardObjList = new ArrayList<>();
-                               //cardobj + cardobjlist + hashmap (recipehash)
-                               for (int i = 0; i< recipeObjList.size();i++){
-                                   //create and add cardobj to cardobjlist with recipe from recipe obj list
-                                   cardObjList.add(new CardObj(recipeObjList.get(i).getTitle(), recipeObjList.get(i).getDesc(), recipeObjList.get(i).getImg(),recipeObjList.get(i).getColourTag(),recipeObjList.get(i).getingridientsChecklist()));
-                                   //link recipe and cardobj
-                                   recipeHash.put(cardObjList.get(i),recipeObjList.get(i));
-                               }
-                               //get recyclerview and adapter
-                               recyclerView = findViewById(R.id.recyclerView);
-                               recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                               adapter = new Adapter(getApplicationContext(), cardObjList, MainHomeActivity.this);
-                               recyclerView.setAdapter(adapter);
+                        Task<Uri> urlTask = image.getDownloadUrl();
+                        urlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String email = user.getEmail();
+                                int index = email.indexOf('@');
+                                email = email.substring(0,index);
 
-                               //get bottomnav
-                               BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
-                               bottomNavigationView.setSelectedItemId(R.id.nav_home);
-                               bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                                   //if bottomnav pressed
-                                   @Override
-                                   public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                                       switch (menuItem.getItemId()){
-                                           //home
-                                           case R.id.nav_home:
-                                               return true;
-                                           //search
-                                           case R.id.nav_search:
-                                               startActivity(new Intent(getApplicationContext()
-                                                       , SearchActivity.class).putExtra("user", user));
-                                               overridePendingTransition(0,0);
-                                               return true;
-                                           //profile
-                                           case R.id.nav_profile:
-                                               startActivity(new Intent(getApplicationContext()
-                                                       , ProfileActivity.class).putExtra("user", user));
-                                               overridePendingTransition(0,0);
-                                               return true;
-                                       }
-                                       return false;
-                                   }
-                               });
-
-                               //loop through recipeobjlist
-                               for (Recipe recipe:recipeObjList) {
-                                   int count = 0;
-                                   //database reference
-                                   DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                                   //take link from firebase database, need to find a way to set this. (so can easily add new and edit.)
-                                   DatabaseReference getImage = databaseReference.child("RecipeUser").child(recipe.getTitle()).child("img");
-                                   System.out.println("get img: " + getImage);
-                                   final int finalCount = count;
-                                   getImage.addListenerForSingleValueEvent(new ValueEventListener() {
-                                       @Override
-                                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                           // getting a DataSnapshot for the location at the specified relative path and getting in the link variable
-                                           String link = dataSnapshot.getValue(String.class);
-                                           System.out.println("link: " + link);
-                                           //setting link
-                                           recipeObjList.get(finalCount).setImg(link);
-                                           System.out.println(recipeObjList.get(finalCount).getImg());
-                                       }
-
-                                       @Override
-                                       public void onCancelled(@NonNull DatabaseError error) {
-                                       }
-                                   });
-                                   count++;
-                               }
-
-                           }
-                       });
+                                System.out.println("name: " + image.getName());
+                                System.out.println("uri: " + uri);
+                                System.out.println("uri to string: " + uri.toString());
+                                imageUrlsName.clear();
+                                imageUrls.add(uri.toString());
+                                imageName.add(image.getName().substring(0,image.getName().length() - 4));
+                                imageUrlsName.add(imageName);imageUrlsName.add(imageUrls);
+                                System.out.println("imageUrlsName: " + imageUrlsName);
+                                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(image.getName().substring(0,image.getName().length() - 4)).child("img").setValue(uri.toString());
+                                // ^^ this needs to happen before adding images to the recipe objlist
+                                // maybe add this to init before everything and then add init after this onSuccess?
+                            }
+                        });
                     }
+
                 }
             });
         }catch(Exception e){

@@ -17,9 +17,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -69,7 +71,10 @@ public class EditActivity extends AppCompatActivity {
         TextView timeProgressBarTextView = findViewById(R.id.timeProgressBarTextView);
         Button saveButton = findViewById(R.id.saveEditActivityButton);
         imageView = findViewById(R.id.recipeIMGEditActivity);
+        ImageButton addInstructionButton = findViewById(R.id.addInstructionButton);
+        ImageButton addIngredientButton = findViewById(R.id.addIngredientButton);
         LinearLayout instructionsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
+
 
         //bottomNav
             BottomNavigationView bottomNavigationView = findViewById(R.id.navBot);
@@ -109,6 +114,7 @@ public class EditActivity extends AppCompatActivity {
         difficultyProgressBarTextView.setHint(String.format("Difficulty: %d/5", recipePassThrough.getDifficulty()));
         timeProgressBarEditActivity.setProgress(recipePassThrough.getTime());
 
+
         //Ingredients ArrayList
         arrayList = recipePassThrough.getingridientsChecklist().get(0);
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -116,7 +122,6 @@ public class EditActivity extends AppCompatActivity {
         for (int i = 0; i< arrayList.size();i++){
 
             View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
-
             EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
             tv.setText((String)(arrayList.get(i)));
             final int finalI = i;
@@ -130,6 +135,22 @@ public class EditActivity extends AppCompatActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
+                }
+            });
+            //remove ingredient button
+            ImageButton removeIngredientButton = v.findViewById(R.id.removeIngredientButton);
+            removeIngredientButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Remove Ingredient");
+                    System.out.println(arrayList);
+                    System.out.println(finalI);
+                    EditText tempLin =  v.findViewById(R.id.linearLayoutEditTextView);
+                    System.out.println((tempLin).getText());
+                    // need to change finalI
+                    arrayList.remove((tempLin).getText());
+                    ingredientsLinearLayoutEditActivity.removeView(v);
+
                 }
             });
             ingredientsLinearLayoutEditActivity.addView(v);
@@ -146,6 +167,7 @@ public class EditActivity extends AppCompatActivity {
             tv.setText((String)(instructionsArrayList.get(i)));
             tv2.setText("Step " + (i+1) + " :");
             final int finalI = i;
+            //text
             tv.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -156,6 +178,14 @@ public class EditActivity extends AppCompatActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
+                }
+            });
+            //remove instruction button
+            ImageButton removeInstructionButton = v.findViewById(R.id.removeInstructionButton);
+            removeInstructionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Remove Instruction");
                 }
             });
             instructionsLinearLayoutEditActivity.addView(v);
@@ -238,11 +268,35 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        //img pick and upload
-        imageView.setOnClickListener(new View.OnClickListener() {
+        //add ingredient button
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                openFileChooser();
+            public void onClick(View view) {
+                arrayList.add("");
+                LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                linf = LayoutInflater.from(EditActivity.this);
+                View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
+                EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
+                tv.setText("");
+                ingredientsLinearLayoutEditActivity.addView(v);
+            }
+        });
+
+        //add instruction button
+        addInstructionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                linf = LayoutInflater.from(EditActivity.this);
+                View v = linf.inflate(R.layout.instructionslayouteditactivity, null);
+                EditText tv = ((EditText) v.findViewById(R.id.instructionsLinearLayoutTextViewEditActivity));
+                TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStepEditActivity);
+                tv.setText("");
+                instructionsArrayList.add("");
+                int i = instructionsArrayList.toArray().length;
+                System.out.println(i);
+                tv2.setText("Step " + (i) + " :");
+                instructionsLinearLayoutEditActivity.addView(v);
             }
         });
 
@@ -260,12 +314,17 @@ public class EditActivity extends AppCompatActivity {
                 ArrayList<String> ingridients = new ArrayList<>();
                 for(int i = 0; i< arrayList.size(); i++){ ingridients.add(arrayList.get(i)); checklist.add(false); }
                 ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
-                System.out.println(instructionsArrayList);
-                // need to add functionality to add and remove ingridients
-
-                // need to add img functionality: push to firebase database and storage
 
                 //send to firebase (to user branch)
+                String email = user.getEmail();
+                int index = email.indexOf('@');
+                email = email.substring(0,index);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("desc").setValue(tempDescription);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("difficulty").setValue(tempDifficulty);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("title").setValue(tempTitle);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("time").setValue(tempTime);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("instructionsArrayList").setValue(instructionsArrayList);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("ingridientsChecklist").setValue(ingridientsChecklist);
 
                 //go back to RecipeActivity
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
