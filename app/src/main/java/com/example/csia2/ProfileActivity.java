@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_search:
                         startActivity(new Intent(getApplicationContext()
-                                , SearchActivity.class).putExtra("user", user));
+                                , ExploreActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_profile:

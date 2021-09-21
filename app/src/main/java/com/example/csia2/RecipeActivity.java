@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,16 +23,12 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -83,7 +78,7 @@ public class RecipeActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_search:
                         startActivity(new Intent(getApplicationContext()
-                                , SearchActivity.class).putExtra("user", user));
+                                , ExploreActivity.class).putExtra("user", user));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_profile:
@@ -196,12 +191,12 @@ public class RecipeActivity extends AppCompatActivity {
                     //true
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
+                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
                     }
                     //false
                     else {
                         tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
+                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
                     }
                 }
             });
@@ -248,13 +243,13 @@ public class RecipeActivity extends AppCompatActivity {
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = false;
                     bookmarkButton.setChecked(false);
-                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("saved").setValue(false);
+                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("saved").setValue(false);
                 }else{
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = true;
                     bookmarkButton.setChecked(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("saved").setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("saved").setValue(true);
                 }
             }
         });
@@ -269,7 +264,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 userRating = rating;
-                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
+                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("userRating").setValue(userRating);
 
             }
         });
@@ -287,7 +282,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = (String) adapterView.getItemAtPosition(i);
-                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("colourTag").setValue(item);
+                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("colourTag").setValue(item);
                 colourTag = item;
                 TypedArray ta = getApplicationContext().getResources().obtainTypedArray(R.array.array_name);
                 tv.setBackgroundColor(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));

@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-public class SearchActivity extends AppCompatActivity implements Adapter.OnNoteListener{
+public class ExploreActivity extends AppCompatActivity implements Adapter.OnNoteListener{
     //call it exploreActivity
     RecyclerView recyclerView;
     Adapter adapter;

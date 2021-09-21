@@ -28,7 +28,7 @@
         -->
         <activity android:name=".RecipeActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".ProfileActivity"/>
-        <activity android:name=".SearchActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <activity android:name=".ExploreActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name=".MainHomeActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"

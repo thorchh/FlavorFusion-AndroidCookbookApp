@@ -4,12 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,9 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,18 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -95,7 +83,7 @@ public class EditActivity extends AppCompatActivity {
                             return true;
                         case R.id.nav_search:
                             startActivity(new Intent(getApplicationContext()
-                                    , SearchActivity.class).putExtra("user", user));
+                                    , ExploreActivity.class).putExtra("user", user));
                             overridePendingTransition(0, 0);
                             return true;
                         case R.id.nav_profile:
@@ -118,6 +106,7 @@ public class EditActivity extends AppCompatActivity {
         difficultyProgressBarEditActivity.setProgress(recipePassThrough.getDifficulty()*20);
         difficultyProgressBarTextView.setHint(String.format("Difficulty: %d/5", recipePassThrough.getDifficulty()));
         timeProgressBarEditActivity.setProgress(recipePassThrough.getTime());
+        recipeID = recipePassThrough.getRecipeID();
 
 
         //Ingredients ArrayList
@@ -241,9 +230,11 @@ public class EditActivity extends AppCompatActivity {
                     if (minutes == 1){
                         timeProgressBarTextView.setText(newVal + "\n Minute");
                         timeProgressBarEditActivity.setProgress(newVal);
+                        System.out.println(timeProgressBarEditActivity.getProgress());
                     }else{
                         timeProgressBarTextView.setText(newVal + "\n Minutes");
                         timeProgressBarEditActivity.setProgress(newVal);
+                        System.out.println(timeProgressBarEditActivity.getProgress());
                     }
                 }else{
                     String tt;
@@ -262,6 +253,7 @@ public class EditActivity extends AppCompatActivity {
                     }
                     timeProgressBarTextView.setText(tt);
                     timeProgressBarEditActivity.setProgress(newVal);
+
                 }
             }
         });
@@ -311,7 +303,9 @@ public class EditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //get data
                 String tempTitle = recipeTitleEditText.getText().toString();
-                Integer tempTime = (timeProgressBarEditActivity.getProgress());
+                Integer tempTime = timeProgressBarEditActivity.getProgress();
+                System.out.println("tempTime: " + tempTime);
+                System.out.println(timeProgressBarEditActivity.getProgress());
                 Integer tempDifficulty = difficultyProgressBarEditActivity.getProgress()/20;
                 String tempDescription = (String) recipeDescEditText.getText().toString();
                 ArrayList<ArrayList> ingridientsChecklist = new ArrayList<>();
@@ -325,15 +319,19 @@ public class EditActivity extends AppCompatActivity {
                 int index = email.indexOf('@');
                 email = email.substring(0,index);
                 //FirebaseDatabase.getInstance().getReference().children();
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipePassThrough.getTitle()).child("title").setValue(tempTitle);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("desc").setValue(tempDescription);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("difficulty").setValue(tempDifficulty);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("time").setValue(tempTime);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("title").setValue(tempTitle);
+                recipePassThrough.setTitle(tempTitle);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("desc").setValue(tempDescription);
+                recipePassThrough.setDesc(tempDescription);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("difficulty").setValue(tempDifficulty);
+                recipePassThrough.setDifficulty(tempDifficulty);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("time").setValue(tempTime);
+                recipePassThrough.setTime(tempTime);
                 System.out.println(instructionsArrayList);
                 System.out.println(ingridientsChecklist);
                 System.out.println("going back now");
-                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("instructionsArrayList").setValue(instructionsArrayList);
-                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("ingridientsChecklist").setValue(ingridientsChecklist);
+                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("instructionsArrayList").setValue(instructionsArrayList);
+                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("ingridientsChecklist").setValue(ingridientsChecklist);
 
                 //go back to RecipeActivity
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
