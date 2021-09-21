@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,11 +24,16 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,7 +49,12 @@ public class RecipeActivity extends AppCompatActivity {
     float userRating;
     String imgURI;
     String colourTag;
-
+    String title;
+    String desc;
+    Integer difficulty;
+    Integer time;
+    Long RecipeID;
+    DatabaseReference reff;
 
 
     @Override
@@ -84,6 +95,37 @@ public class RecipeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+/*        //set variables
+        String email = user.getEmail();
+        int index = email.indexOf('@');
+        email = email.substring(0,index);
+        String finalEmail = email;
+        reff = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email));
+        reff.addValueEventListener(new ValueEventListener(){
+
+            //get from firebase database 'saved' branch
+            @RequiresApi(api = Build.VERSION_CODES.Q)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                //create Recipes from firebase into recipeObjList
+                //loop through
+                for (DataSnapshot element : children){
+                    if (element.child("title").getValue() == recipePassThrough.getTitle()) {
+                        //set values
+                        String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });*/
+        //DataSnapshot element = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipePassThrough.getTitle());
+        //String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
 
         //setting xml
         final Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
@@ -143,6 +185,10 @@ public class RecipeActivity extends AppCompatActivity {
                 tv.setPaintFlags(tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG);
             }
             final int finalI = i;
+            String email = user.getEmail();
+            int index = email.indexOf('@');
+            email = email.substring(0,index);
+            String finalEmail = email;
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,12 +196,12 @@ public class RecipeActivity extends AppCompatActivity {
                     //true
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
+                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
                     }
                     //false
                     else {
                         tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
+                        FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
                     }
                 }
             });
@@ -190,6 +236,10 @@ public class RecipeActivity extends AppCompatActivity {
             bookmarkButton.setChecked(false);
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
         }
+        String email = user.getEmail();
+        int index = email.indexOf('@');
+        email = email.substring(0,index);
+        String finalEmail = email;
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,13 +248,13 @@ public class RecipeActivity extends AppCompatActivity {
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = false;
                     bookmarkButton.setChecked(false);
-                    FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("saved").setValue(false);
+                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("saved").setValue(false);
                 }else{
                     bookmarkButton.setBackgroundResource(R.drawable.bookmark_button);
                     saved = true;
                     bookmarkButton.setChecked(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("saved").setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("saved").setValue(true);
                 }
             }
         });
@@ -219,7 +269,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 userRating = rating;
-                FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
+                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("userRating").setValue(userRating);
 
             }
         });
@@ -237,7 +287,7 @@ public class RecipeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = (String) adapterView.getItemAtPosition(i);
-                FirebaseDatabase.getInstance().getReference().child("RecipeUser").child(recipePassThrough.getTitle()).child("colourTag").setValue(item);
+                FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getTitle()).child("colourTag").setValue(item);
                 colourTag = item;
                 TypedArray ta = getApplicationContext().getResources().obtainTypedArray(R.array.array_name);
                 tv.setBackgroundColor(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));

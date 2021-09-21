@@ -23,8 +23,9 @@ public class Recipe implements Parcelable {
     //private ArrayList<Boolean> checklist;
     private float userRating;
     private ArrayList<String> instructionArrayList;
+    private Long recipeID;
 
-    public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating, ArrayList<String> instructionArrayList){
+    public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating, ArrayList<String> instructionArrayList, Long recipeID){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -35,9 +36,10 @@ public class Recipe implements Parcelable {
         this.ingridientsChecklist = ingridientsChecklist;
         this.userRating = userRating.floatValue();
         this.instructionArrayList = instructionArrayList;
+        this.recipeID = recipeID;
     }
 
-    public Recipe(String title, String desc, String img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating, ArrayList<String> instructionArrayList){
+    public Recipe(String title, String desc, String img, Integer difficulty, Integer time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, float userRating, ArrayList<String> instructionArrayList, Long recipeID){
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -48,6 +50,7 @@ public class Recipe implements Parcelable {
         this.ingridientsChecklist = ingridientsChecklist;
         this.userRating = userRating;
         this.instructionArrayList = instructionArrayList;
+        this.recipeID = recipeID;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -74,6 +77,7 @@ public class Recipe implements Parcelable {
         ingridientsChecklist = (ArrayList<ArrayList>) in.readSerializable();
         userRating = in.readFloat();
         instructionArrayList = (ArrayList<String>) in.readSerializable();
+        recipeID = in.readLong();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -104,6 +108,7 @@ public class Recipe implements Parcelable {
         dest.writeSerializable(ingridientsChecklist);
         dest.writeFloat(userRating);
         dest.writeSerializable(instructionArrayList);
+        dest.writeLong(recipeID);
     }
 
     @Override
@@ -141,6 +146,7 @@ public class Recipe implements Parcelable {
     public ArrayList<ArrayList> getingridientsChecklist() {return ingridientsChecklist;}
     public float getUserRating() {return userRating;}
     public ArrayList<String> getInstructionsArrayList() {return instructionArrayList;}
+    public Long getRecipeID() { return recipeID; }
 
 
     //setters

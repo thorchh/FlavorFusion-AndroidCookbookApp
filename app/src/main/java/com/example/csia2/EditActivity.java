@@ -31,7 +31,11 @@ import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
@@ -49,6 +53,7 @@ public class EditActivity extends AppCompatActivity {
     Uri mImgURI;
     ArrayList<String> arrayList;
     ArrayList<String> instructionsArrayList;
+    Long recipeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +153,7 @@ public class EditActivity extends AppCompatActivity {
                     EditText tempLin =  v.findViewById(R.id.linearLayoutEditTextView);
                     System.out.println((tempLin).getText());
                     // need to change finalI
-                    arrayList.remove((tempLin).getText());
+                    arrayList.remove(finalI);
                     ingredientsLinearLayoutEditActivity.removeView(v);
 
                 }
@@ -319,12 +324,16 @@ public class EditActivity extends AppCompatActivity {
                 String email = user.getEmail();
                 int index = email.indexOf('@');
                 email = email.substring(0,index);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("desc").setValue(tempDescription);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("difficulty").setValue(tempDifficulty);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("title").setValue(tempTitle);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("time").setValue(tempTime);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("instructionsArrayList").setValue(instructionsArrayList);
-                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("ingridientsChecklist").setValue(ingridientsChecklist);
+                //FirebaseDatabase.getInstance().getReference().children();
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipePassThrough.getTitle()).child("title").setValue(tempTitle);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("desc").setValue(tempDescription);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("difficulty").setValue(tempDifficulty);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(tempTitle).child("time").setValue(tempTime);
+                System.out.println(instructionsArrayList);
+                System.out.println(ingridientsChecklist);
+                System.out.println("going back now");
+                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("instructionsArrayList").setValue(instructionsArrayList);
+                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child("ingridientsChecklist").setValue(ingridientsChecklist);
 
                 //go back to RecipeActivity
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));

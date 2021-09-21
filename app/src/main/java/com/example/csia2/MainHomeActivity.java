@@ -71,6 +71,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     ArrayList<String> imageUrls = new ArrayList();
     ArrayList<String> imageName = new ArrayList<>();
     ArrayList<ArrayList> imageUrlsName = new ArrayList<>();
+    long recipeID;
 
 
     @Override
@@ -101,7 +102,11 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         }*/
 
         //change this to different branches later
-        reff = FirebaseDatabase.getInstance().getReference().child("RecipeUser");
+        //get email without @xxx.xxx
+        String email = user.getEmail();
+        int index = email.indexOf('@');
+        email = email.substring(0,index);
+        reff = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email));
         reff.addValueEventListener(new ValueEventListener(){
 
             //get from firebase database 'saved' branch
@@ -113,14 +118,15 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 //loop through
                 for (DataSnapshot element : children){
                     //set values
-                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
+                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue(); Long recipeID = (Long) element.child("RecipeID").getValue();
+                    System.out.println(recipeID);
                     if (userRating instanceof Long) {
                         Long lUserRating = (Long) userRating;
                         // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue(), instructionsArrayList));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue(), instructionsArrayList, recipeID));
                     } else {
                         // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating, instructionsArrayList));
+                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating, instructionsArrayList, recipeID));
                     }
                 }
                 //run init()
@@ -178,13 +184,16 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             }
         });
 
-        //loop through recipeobjlist
+/*        //loop through recipeobjlist
         for (Recipe recipe:recipeObjList) {
             int count = 0;
             //database reference
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            //take link from firebase database, need to find a way to set this. (so can easily add new and edit.)
-            DatabaseReference getImage = databaseReference.child("RecipeUser").child(recipe.getTitle()).child("img");
+            //get email without @xxx.xxx
+            String email = user.getEmail();
+            int index = email.indexOf('@');
+            email = email.substring(0,index);
+            DatabaseReference getImage = databaseReference.child(("Recipe" + email)).child(recipe.getTitle()).child("img");
             System.out.println("get img: " + getImage);
             final int finalCount = count;
             getImage.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -203,11 +212,11 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 }
             });
             count++;
-        }
+        }*/
 
         //img
         System.out.println("hello");
-        listFiles();
+        //listFiles();
     }
 
     //search menu
@@ -236,17 +245,19 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     //when cardobj is pressed
     @Override
     public void onNoteClick(int position) {
+        System.out.println(recipeID);
         //get cardobj from cardobjlist and get recipe through hashmap
         Recipe passThrough = recipeHash.get(cardObjList.get(position));
         //new intent
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("recipePassThrough", passThrough).putExtra("user", user);
+        System.out.println(recipeID);
         startActivity(intent);
     }
 
     //imgs get img reference list from firebase
     //need to find a way to get this list added to the list of objects
-    public void listFiles(){
+    /*public void listFiles(){
         try {
             imageRef.child("images/").listAll().addOnSuccessListener(new OnSuccessListener<ListResult>(){
                 @Override
@@ -259,6 +270,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                         urlTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+                                //get email without @xxx.xxx
                                 String email = user.getEmail();
                                 int index = email.indexOf('@');
                                 email = email.substring(0,index);
@@ -284,5 +296,5 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
             Toast.makeText(getApplicationContext(),"oops, had a problem loading images", Toast.LENGTH_LONG).show();
         }
     }
-
+*/
 }

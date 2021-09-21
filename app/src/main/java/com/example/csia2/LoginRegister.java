@@ -30,11 +30,11 @@ public class LoginRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         //declare buttons, edit texts and text views in oncreate
-        mEmail = (EditText) findViewById(R.id.emailLogin);
-        mPassword = (EditText) findViewById(R.id.passwordLogin);
-        btnSignIn = (Button) findViewById(R.id.register);
-        btnSignOut = (Button) findViewById(R.id.emailSignOutButton);
-        tvRegisterActivity = (TextView) findViewById(R.id.notReg);
+        mEmail = findViewById(R.id.emailLogin);
+        mPassword = findViewById(R.id.passwordLogin);
+        btnSignIn = findViewById(R.id.register);
+        btnSignOut = findViewById(R.id.emailSignOutButton);
+        tvRegisterActivity = findViewById(R.id.notReg);
 
 
         mAuth = FirebaseAuth.getInstance();
