@@ -97,16 +97,19 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 //create Recipes from firebase into recipeObjList
                 //loop through
                 for (DataSnapshot element : children){
-                    //set values
-                    String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue(); Long recipeID = (Long) element.child("RecipeID").getValue();
-                    System.out.println(recipeID);
-                    if (userRating instanceof Long) {
-                        Long lUserRating = (Long) userRating;
-                        // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue(), instructionsArrayList, recipeID));
-                    } else {
-                        // create new recipe and append into recipeobjlist
-                        recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating, instructionsArrayList, recipeID));
+                    //check if saved
+                    if ((Boolean) element.child("saved").getValue() == true){
+                        //set values
+                        String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue(); Long recipeID = (Long) element.child("RecipeID").getValue();
+                        System.out.println(recipeID);
+                        if (userRating instanceof Long) {
+                            Long lUserRating = (Long) userRating;
+                            // create new recipe and append into recipeobjlist
+                            recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, lUserRating.doubleValue(), instructionsArrayList, recipeID));
+                        } else {
+                            // create new recipe and append into recipeobjlist
+                            recipeObjList.add(new Recipe(title, desc, imgURI, difficulty, time, saved, colourTag, ingridientsChecklist, (Double) userRating, instructionsArrayList, recipeID));
+                        }
                     }
                 }
                 //run init()

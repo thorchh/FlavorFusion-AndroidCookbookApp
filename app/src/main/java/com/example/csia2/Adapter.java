@@ -99,7 +99,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             if (colourb.equals("Red")){
                 viewHolder.colourTagText.setBackgroundColor(colorArray[0]);
             }
-            else if (colourb.equals("blue")){
+            else if (colourb.equals("Blue")){
                 viewHolder.colourTagText.setBackgroundColor(colorArray[2]);
             }
             else if (colourb.equals("Green")){
