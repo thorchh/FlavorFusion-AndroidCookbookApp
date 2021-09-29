@@ -96,6 +96,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 //create Recipes from firebase into recipeObjList
                 //loop through
+                System.out.println("hellooo");
                 for (DataSnapshot element : children){
                     //check if saved
                     if ((Boolean) element.child("saved").getValue() == true){

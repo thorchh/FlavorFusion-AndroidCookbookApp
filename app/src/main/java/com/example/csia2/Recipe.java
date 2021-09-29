@@ -139,13 +139,11 @@ public class Recipe implements Parcelable {
     public String getImg(){return img;}
     public Integer getDifficulty() { return difficulty; }
     public Integer getTime() { return time; }
-    public Boolean getSaved() {return saved;}
-    public String getColourTag() {
-        return colourTag;
-    }
-    public ArrayList<ArrayList> getingridientsChecklist() {return ingridientsChecklist;}
-    public float getUserRating() {return userRating;}
-    public ArrayList<String> getInstructionsArrayList() {return instructionArrayList;}
+    public Boolean getSaved() {return saved; }
+    public String getColourTag() { return colourTag; }
+    public ArrayList<ArrayList> getingridientsChecklist() {return ingridientsChecklist; }
+    public float getUserRating() {return userRating; }
+    public ArrayList<String> getInstructionsArrayList() {return instructionArrayList; }
     public Long getRecipeID() { return recipeID; }
 
 
@@ -161,9 +159,4 @@ public class Recipe implements Parcelable {
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
     public void setTime(Integer time) { this.time = time; }
-    public void setSaved(Boolean saved) { this.saved = saved; }
-    public void setColourTag(String colourTag) { this.colourTag = colourTag; }
-    public void setingridientsChecklist(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
-    public void setUserRating(float userRating) { this.userRating = userRating; }
-    public void setInstructionsArrayList(ArrayList<String> instructionArrayList) { this.instructionArrayList = instructionArrayList; }
 }

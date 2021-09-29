@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,9 +40,11 @@ public class EditActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
     Uri mImgURI;
-    ArrayList<String> arrayList;
+    public ArrayList<String> ingredientsArrayList;
     ArrayList<String> instructionsArrayList;
     Long recipeID;
+    ArrayList<Integer> tempIngredientsArrayList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,45 +113,10 @@ public class EditActivity extends AppCompatActivity {
 
 
         //Ingredients ArrayList
-        arrayList = recipePassThrough.getingridientsChecklist().get(0);
+        ingredientsArrayList = recipePassThrough.getingridientsChecklist().get(0);
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         linf = LayoutInflater.from(EditActivity.this);
-        for (int i = 0; i< arrayList.size();i++){
-
-            View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
-            EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
-            tv.setText((String)(arrayList.get(i)));
-            final int finalI = i;
-            tv.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    arrayList.set(finalI, s.toString());
-                }
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-            //remove ingredient button
-            ImageButton removeIngredientButton = v.findViewById(R.id.removeIngredientButton);
-            removeIngredientButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Remove Ingredient");
-                    System.out.println(arrayList);
-                    System.out.println(finalI);
-                    EditText tempLin =  v.findViewById(R.id.linearLayoutEditTextView);
-                    System.out.println((tempLin).getText());
-                    // need to change finalI
-                    arrayList.remove(finalI);
-                    ingredientsLinearLayoutEditActivity.removeView(v);
-
-                }
-            });
-            ingredientsLinearLayoutEditActivity.addView(v);
-        }
+        addIngredientsLinearLayout();
 
         //Instructions ArrayList
         instructionsArrayList = recipePassThrough.getInstructionsArrayList();
@@ -269,13 +237,15 @@ public class EditActivity extends AppCompatActivity {
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayList.add("");
+                ingredientsArrayList.add("");
                 LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 linf = LayoutInflater.from(EditActivity.this);
                 View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
                 EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
                 tv.setText("");
                 ingredientsLinearLayoutEditActivity.addView(v);
+                addIngredientsLinearLayout();
+
             }
         });
 
@@ -311,7 +281,7 @@ public class EditActivity extends AppCompatActivity {
                 ArrayList<ArrayList> ingridientsChecklist = new ArrayList<>();
                 ArrayList<Boolean> checklist = new ArrayList<>();
                 ArrayList<String> ingridients = new ArrayList<>();
-                for(int i = 0; i< arrayList.size(); i++){ ingridients.add(arrayList.get(i)); checklist.add(false); }
+                for(int i = 0; i< ingredientsArrayList.size(); i++){ ingridients.add(ingredientsArrayList.get(i)); checklist.add(false); }
                 ingridientsChecklist.add(ingridients); ingridientsChecklist.add(checklist);
 
                 //send to firebase (to user branch)
@@ -337,6 +307,53 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));
             }
         });
+    }
+
+    public void addIngredientsLinearLayout(){
+        LinearLayout ingredientsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.ingredientsLinearLayoutEditActivity);
+        ingredientsLinearLayoutEditActivity.removeAllViews();
+        for (int i = 0; i< ingredientsArrayList.size();i++){
+            //inflate
+            LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            linf = LayoutInflater.from(EditActivity.this);
+            View v = linf.inflate(R.layout.itemlayoutnocheckbox, null);
+            EditText tv = ((EditText) v.findViewById(R.id.linearLayoutEditTextView));
+            tv.setText((String)(ingredientsArrayList.get(i)));
+            final int finalI = i;
+            tv.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    ingredientsArrayList.set(finalI, s.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            //remove ingredient button
+            ImageButton removeIngredientButton = v.findViewById(R.id.removeIngredientButton);
+            removeIngredientButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Remove Ingredient");
+                    System.out.println(ingredientsArrayList);
+                    System.out.println(finalI);
+                    EditText tempLin =  v.findViewById(R.id.linearLayoutEditTextView);
+                    System.out.println((tempLin).getText());
+                    // need to change finalI
+                    ingredientsArrayList.remove(finalI);
+                    for (int i = 0; i< ingredientsArrayList.size();i++){
+
+                    }
+                    ingredientsLinearLayoutEditActivity.removeView(v);
+                    addIngredientsLinearLayout();
+
+                }
+            });
+            ingredientsLinearLayoutEditActivity.addView(v);
+        }
     }
 
     //img chooser

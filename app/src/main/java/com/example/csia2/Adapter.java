@@ -66,7 +66,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         this.mOnNoteListener = onNoteListener;
         cardObjList = objList;
         cardObjListFull = new ArrayList<>(objList);
-
+        System.out.println("message" + cardObjListFull.size());
         this.layoutInflater = LayoutInflater.from(context);
 
 
