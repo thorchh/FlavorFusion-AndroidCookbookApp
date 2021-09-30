@@ -294,6 +294,10 @@ public class EditActivity extends AppCompatActivity {
                 recipePassThrough.setDifficulty(tempDifficulty);
                 FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("time").setValue(tempTime);
                 recipePassThrough.setTime(tempTime);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("ingridientsChecklist").setValue(ingridientsChecklist);
+                recipePassThrough.setIngridientsChecklist(ingridientsChecklist);
+                FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("instructionsArrayList").setValue(instructionsArrayList);
+                recipePassThrough.setInstructionArrayList(instructionsArrayList);
                 System.out.println(instructionsArrayList);
                 System.out.println(ingridientsChecklist);
                 System.out.println("going back now");
@@ -385,23 +389,6 @@ public class EditActivity extends AppCompatActivity {
                 }
             });
             instructionsLinearLayoutEditActivity.addView(v);
-        }
-    }
-
-    //img chooser
-    private void openFileChooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-            mImgURI = data.getData();
-            Picasso.get().load(mImgURI).into(imageView);
         }
     }
 }

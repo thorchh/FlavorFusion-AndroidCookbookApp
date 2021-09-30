@@ -159,4 +159,7 @@ public class Recipe implements Parcelable {
     }
     public void setDifficulty(Integer difficulty) { this.difficulty = difficulty; }
     public void setTime(Integer time) { this.time = time; }
+    public void setIngridientsChecklist(ArrayList<ArrayList> ingridientsChecklist) { this.ingridientsChecklist = ingridientsChecklist; }
+    public void setInstructionArrayList(ArrayList<String> instructionArrayList) { this.instructionArrayList = instructionArrayList; }
+
 }
