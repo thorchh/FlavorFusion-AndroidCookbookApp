@@ -253,17 +253,14 @@ public class EditActivity extends AppCompatActivity {
         addInstructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                instructionsArrayList.add("");
                 LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 linf = LayoutInflater.from(EditActivity.this);
                 View v = linf.inflate(R.layout.instructionslayouteditactivity, null);
                 EditText tv = ((EditText) v.findViewById(R.id.instructionsLinearLayoutTextViewEditActivity));
-                TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStepEditActivity);
                 tv.setText("");
-                instructionsArrayList.add("");
-                int i = instructionsArrayList.toArray().length;
-                System.out.println(i);
-                tv2.setText("Step " + (i) + " :");
                 instructionsLinearLayoutEditActivity.addView(v);
+                addInstructionsLinearLayout();
             }
         });
 
@@ -332,27 +329,62 @@ public class EditActivity extends AppCompatActivity {
                 public void afterTextChanged(Editable s) {
                 }
             });
+
             //remove ingredient button
             ImageButton removeIngredientButton = v.findViewById(R.id.removeIngredientButton);
             removeIngredientButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println("Remove Ingredient");
-                    System.out.println(ingredientsArrayList);
-                    System.out.println(finalI);
-                    EditText tempLin =  v.findViewById(R.id.linearLayoutEditTextView);
-                    System.out.println((tempLin).getText());
-                    // need to change finalI
                     ingredientsArrayList.remove(finalI);
-                    for (int i = 0; i< ingredientsArrayList.size();i++){
-
-                    }
                     ingredientsLinearLayoutEditActivity.removeView(v);
                     addIngredientsLinearLayout();
 
                 }
             });
             ingredientsLinearLayoutEditActivity.addView(v);
+        }
+    }
+
+    public void addInstructionsLinearLayout(){
+        LinearLayout instructionsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
+        instructionsLinearLayoutEditActivity.removeAllViews();
+        for (int i = 0; i< instructionsArrayList.size();i++) {
+            //inflate
+            LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            linf = LayoutInflater.from(EditActivity.this);
+            View v = linf.inflate(R.layout.instructionslayouteditactivity, null);
+            EditText tv = ((EditText) v.findViewById(R.id.instructionsLinearLayoutTextViewEditActivity));
+            TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStepEditActivity);
+            tv.setText((String)(instructionsArrayList.get(i)));
+            tv2.setText("Step " + (i + 1) + " :");
+            final int finalJ = i;
+            tv.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    instructionsArrayList.set(finalJ, s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+
+            //remove Instruction button
+            ImageButton removeInstructionButton = v.findViewById(R.id.removeInstructionButton);
+            removeInstructionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //remove from list and views
+                    instructionsArrayList.remove(finalJ);
+                    instructionsLinearLayoutEditActivity.removeView(v);
+                    addInstructionsLinearLayout();
+                }
+            });
+            instructionsLinearLayoutEditActivity.addView(v);
         }
     }
 
