@@ -66,7 +66,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         this.mOnNoteListener = onNoteListener;
         cardObjList = objList;
         cardObjListFull = new ArrayList<>(objList);
-        System.out.println("message" + cardObjListFull.size());
         this.layoutInflater = LayoutInflater.from(context);
 
 
@@ -147,8 +146,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-            System.out.println("performFiltering");
-            System.out.println("performFiltering");
             return results;
         }
 
@@ -157,10 +154,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             cardObjList.clear();
             cardObjList.addAll((List) results.values);
             for (CardObj i:cardObjList){
-                System.out.println(i);
             }
             notifyDataSetChanged();
-            System.out.println("publishResults");
         }
     };
 

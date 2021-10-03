@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
@@ -198,11 +199,9 @@ public class EditActivity extends AppCompatActivity {
                     if (minutes == 1){
                         timeProgressBarTextView.setText(newVal + "\n Minute");
                         timeProgressBarEditActivity.setProgress(newVal);
-                        System.out.println(timeProgressBarEditActivity.getProgress());
                     }else{
                         timeProgressBarTextView.setText(newVal + "\n Minutes");
                         timeProgressBarEditActivity.setProgress(newVal);
-                        System.out.println(timeProgressBarEditActivity.getProgress());
                     }
                 }else{
                     String tt;
@@ -268,11 +267,9 @@ public class EditActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get data
+                //get data from xml
                 String tempTitle = recipeTitleEditText.getText().toString();
                 Integer tempTime = timeProgressBarEditActivity.getProgress();
-                System.out.println("tempTime: " + tempTime);
-                System.out.println(timeProgressBarEditActivity.getProgress());
                 Integer tempDifficulty = difficultyProgressBarEditActivity.getProgress()/20;
                 String tempDescription = (String) recipeDescEditText.getText().toString();
                 ArrayList<ArrayList> ingridientsChecklist = new ArrayList<>();
@@ -285,7 +282,8 @@ public class EditActivity extends AppCompatActivity {
                 String email = user.getEmail();
                 int index = email.indexOf('@');
                 email = email.substring(0,index);
-                //FirebaseDatabase.getInstance().getReference().children();
+
+                //set values in firebase and recipePassThrough
                 FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("title").setValue(tempTitle);
                 recipePassThrough.setTitle(tempTitle);
                 FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("desc").setValue(tempDescription);
@@ -298,11 +296,7 @@ public class EditActivity extends AppCompatActivity {
                 recipePassThrough.setIngridientsChecklist(ingridientsChecklist);
                 FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("instructionsArrayList").setValue(instructionsArrayList);
                 recipePassThrough.setInstructionArrayList(instructionsArrayList);
-                System.out.println(instructionsArrayList);
-                System.out.println(ingridientsChecklist);
-                System.out.println("going back now");
-                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("instructionsArrayList").setValue(instructionsArrayList);
-                //FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipeID.toString()).child("ingridientsChecklist").setValue(ingridientsChecklist);
+                Toast toast = Toast. makeText(getApplicationContext(),"Going back now...", Toast. LENGTH_SHORT);
 
                 //go back to RecipeActivity
                 startActivity(new Intent(getApplicationContext(), RecipeActivity.class).putExtra("user", user).putExtra("recipePassThrough", recipePassThrough));

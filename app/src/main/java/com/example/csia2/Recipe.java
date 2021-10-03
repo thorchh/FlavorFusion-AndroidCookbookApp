@@ -12,19 +12,18 @@ public class Recipe implements Parcelable {
     private String title;
     private String desc;
     private String img;
-    // 0-5/5
+    // 0/5 to 5/5
     private Integer difficulty;
     // in minutes
     private Integer time;
     private Boolean saved;
     private String colourTag;
     private ArrayList<ArrayList> ingridientsChecklist;
-    //private ArrayList<String> ingridients;
-    //private ArrayList<Boolean> checklist;
     private float userRating;
     private ArrayList<String> instructionArrayList;
     private Long recipeID;
 
+    //constructor
     public Recipe(String title, String desc, String img, Long difficulty, Long time, Boolean saved, String colourTag, ArrayList<ArrayList> ingridientsChecklist, Double userRating, ArrayList<String> instructionArrayList, Long recipeID){
         this.title = title;
         this.desc = desc;
