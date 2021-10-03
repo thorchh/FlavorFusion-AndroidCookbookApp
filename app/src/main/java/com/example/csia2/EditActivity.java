@@ -115,44 +115,12 @@ public class EditActivity extends AppCompatActivity {
 
         //Ingredients ArrayList
         ingredientsArrayList = recipePassThrough.getingridientsChecklist().get(0);
-        LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        linf = LayoutInflater.from(EditActivity.this);
         addIngredientsLinearLayout();
 
         //Instructions ArrayList
         instructionsArrayList = recipePassThrough.getInstructionsArrayList();
-        LinearLayout instructions = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
-        for (int i = 0; i< instructionsArrayList.size();i++){
+        addInstructionsLinearLayout();
 
-            View v = linf.inflate(R.layout.instructionslayouteditactivity, null);
-            EditText tv = ((EditText) v.findViewById(R.id.instructionsLinearLayoutTextViewEditActivity));
-            TextView tv2 = (TextView) v.findViewById(R.id.instructionsLinearLayoutStepEditActivity);
-            tv.setText((String)(instructionsArrayList.get(i)));
-            tv2.setText("Step " + (i+1) + " :");
-            final int finalI = i;
-            //text
-            tv.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    instructionsArrayList.set(finalI, s.toString());
-                }
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-            //remove instruction button
-            ImageButton removeInstructionButton = v.findViewById(R.id.removeInstructionButton);
-            removeInstructionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Remove Instruction");
-                }
-            });
-            instructionsLinearLayoutEditActivity.addView(v);
-        }
 
         //set time
         int hours = recipePassThrough.getTime() / 60;
@@ -304,6 +272,7 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
+    //add and remove Ingredients method
     public void addIngredientsLinearLayout(){
         LinearLayout ingredientsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.ingredientsLinearLayoutEditActivity);
         ingredientsLinearLayoutEditActivity.removeAllViews();
@@ -343,6 +312,7 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    //add and remove Instructions method
     public void addInstructionsLinearLayout(){
         LinearLayout instructionsLinearLayoutEditActivity = (LinearLayout)findViewById(R.id.instructionsLinearLayoutEditActivity);
         instructionsLinearLayoutEditActivity.removeAllViews();
