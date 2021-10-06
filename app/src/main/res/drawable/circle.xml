@@ -14,13 +14,14 @@
             android:toDegrees="270">
             <shape
                 android:shape="ring"
-                android:thicknessRatio="24"
+                android:thicknessRatio="16"
                 android:useLevel="true">
                 <gradient
-                    android:endColor="#FF5252"
-                    android:startColor="#975DEC"
+                    android:endColor="#373737"
+                    android:startColor="#BABABA"
                     android:type="sweep" />
             </shape>
         </rotate>
     </item>
 </layer-list>
+

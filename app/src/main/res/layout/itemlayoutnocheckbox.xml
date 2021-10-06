@@ -15,9 +15,11 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:inputType="text"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:paddingBottom="5dp"
-            android:paddingTop="3dp"/>
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+            />
 
         <ImageButton
             android:id="@+id/removeIngredientButton"

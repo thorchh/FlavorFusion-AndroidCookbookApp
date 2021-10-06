@@ -51,10 +51,10 @@
             <EditText
                 android:id="@+id/recipeTitleEditText"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:hint="Title"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:text="Title"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -163,19 +163,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:gravity="center"
                 android:text="Description:"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingLeft="150dp"/>
 
             <EditText
                 android:id="@+id/recipeDescEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
                 android:hint="Description"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:text="Description"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:paddingLeft="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -188,10 +192,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Ingridients:"
+                    android:gravity="center"
+                    android:text="Ingredients:"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:paddingBottom="5dp"
-                    android:paddingTop="3dp"/>
+                    android:paddingTop="3dp"
+                    android:paddingLeft="137dp"/>
 
                 <ImageButton
                     android:id="@+id/addIngredientButton"
@@ -224,10 +231,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:gravity="center"
                     android:text="Instructions:"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:paddingBottom="5dp"
-                    android:paddingTop="3dp"/>
+                    android:paddingTop="3dp"
+                    android:paddingLeft="134dp"/>
 
                 <ImageButton
                     android:id="@+id/addInstructionButton"
@@ -241,7 +251,8 @@
                     android:id="@+id/emptySpaceEdit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:paddingLeft="130dp"/>
             </LinearLayout>
 
             <LinearLayout

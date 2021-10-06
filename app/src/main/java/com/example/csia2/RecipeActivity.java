@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,6 +58,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_recipe);
 
         //get user
@@ -91,37 +93,6 @@ public class RecipeActivity extends AppCompatActivity {
             }
         });
 
-/*        //set variables
-        String email = user.getEmail();
-        int index = email.indexOf('@');
-        email = email.substring(0,index);
-        String finalEmail = email;
-        reff = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email));
-        reff.addValueEventListener(new ValueEventListener(){
-
-            //get from firebase database 'saved' branch
-            @RequiresApi(api = Build.VERSION_CODES.Q)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                //create Recipes from firebase into recipeObjList
-                //loop through
-                for (DataSnapshot element : children){
-                    if (element.child("title").getValue() == recipePassThrough.getTitle()) {
-                        //set values
-                        String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });*/
-        //DataSnapshot element = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email)).child(recipePassThrough.getTitle());
-        //String title = (String) element.child("title").getValue();String desc = (String) element.child("desc").getValue();String imgURI = (String) element.child("img").getValue();Long difficulty = (Long) element.child("difficulty").getValue();Long time = (Long)element.child("time").getValue();Boolean saved = (Boolean) element.child("saved").getValue();String colourTag = (String) element.child("colourTag").getValue();ArrayList<ArrayList> ingridientsChecklist = (ArrayList<ArrayList>) element.child("ingridientsChecklist").getValue();Object userRating = element.child("userRating").getValue(); ArrayList<String> instructionsArrayList = (ArrayList<String>) element.child("instructionsArrayList").getValue();
-
         //setting xml
         final Recipe recipePassThrough = Objects.requireNonNull(getIntent().getExtras()).getParcelable("recipePassThrough");
         assert recipePassThrough != null;
@@ -131,11 +102,13 @@ public class RecipeActivity extends AppCompatActivity {
             imgURI = recipePassThrough.getImg();
             Picasso.get().load(imgURI).into((ImageView) findViewById(R.id.recipeIMG));
         ((ProgressBar) findViewById(R.id.difficultyProgressBar)).setProgress(recipePassThrough.getDifficulty()*20);
-        ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
         ((ProgressBar) findViewById(R.id.timeProgressBar)).setProgress(recipePassThrough.getTime());
-            //set time
+        ((TextView) findViewById(R.id.difficultyTextViewProgressBar)).setText("Difficulty: " + recipePassThrough.getDifficulty().toString() + "/5");
+            //set time text
+            //separate hours and minutes
             int hours = recipePassThrough.getTime() / 60;
             int minutes = recipePassThrough.getTime() % 60;
+            //minutes or minute
             if (recipePassThrough.getTime() <= 60){
                 if (minutes == 1){
                     ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(recipePassThrough.getTime().toString() + "\n Minute");
@@ -144,6 +117,7 @@ public class RecipeActivity extends AppCompatActivity {
                 }
             }else {
                 String tt;
+                //hours or hour
                 if (hours == 1) {
                     if (minutes == 1) {
                         tt = String.format("%d Hour \n %02d Minute", hours, minutes);
@@ -157,50 +131,65 @@ public class RecipeActivity extends AppCompatActivity {
                         tt = String.format("%d Hours \n %02d Minutes", hours, minutes);
                     }
                 }
+                //set text
                 ((TextView) findViewById(R.id.timeTextViewProgressBar)).setText(tt);
             }
 
         //checkboxList
         ArrayList<ArrayList> arrayList;
         arrayList = recipePassThrough.getingridientsChecklist();
+        //inflater
         LayoutInflater linf = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         linf = LayoutInflater.from(RecipeActivity.this);
         LinearLayout ingridientLinearLayout = (LinearLayout)findViewById(R.id.ingredientsLinearLayout);
+        //loop through ingridientsChecklist
         for (int i = 0; i< arrayList.get(0).size();i++){
-
+            //create view
             View v = linf.inflate(R.layout.itemlayout, null);
-
+            //get checkbox
             CheckBox tv = ((CheckBox) v.findViewById(R.id.linearLayoutTextView));
+            //set text from arrayList
             tv.setText((String)(arrayList.get(0).get(i)));
+            //set checked if true
             tv.setChecked((Boolean)(arrayList.get(1).get(i)));
+            //if true
             if ((Boolean) arrayList.get(1).get(i)) {
+                //initially cross out
                 tv.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             }
             else{
+                //initially uncross
                 tv.setPaintFlags(tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG);
             }
+            //get email
             final int finalI = i;
             String email = user.getEmail();
             int index = email.indexOf('@');
             email = email.substring(0,index);
             String finalEmail = email;
+            //set checkbox OnClickListener
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //get checkbox
                     TextView tv = ((CheckBox) v.findViewById(R.id.linearLayoutTextView));
-                    //true
+                    //if true
                     if ((tv.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0){
+                        //cross out
                         tv.setPaintFlags(tv.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+                        //set in firebase
                         FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(false);
                     }
-                    //false
+                    //if false
                     else {
+                        //uncross
                         tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        //set in firebase
                         FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("ingridientsChecklist").child("1").child(Integer.toString(finalI)).setValue(true);
                     }
                 }
             });
-
+            //add view to linear layout
             ingridientLinearLayout.addView(v);
         }
 
@@ -259,6 +248,7 @@ public class RecipeActivity extends AppCompatActivity {
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(userRating);
 
+        //setOnRatingBarChangeListener
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
 
             @Override
@@ -269,22 +259,29 @@ public class RecipeActivity extends AppCompatActivity {
             }
         });
 
-        //img
-
         //colourTag
         colourTag = recipePassThrough.getColourTag();
+        //get colors array from resources
         String[] colours = getResources().getStringArray(R.array.colours);
+        //create array adapter
         ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),R.layout.dropdown_item, colours);
+        //get spinner
         Spinner tv = (Spinner) findViewById(R.id.spinner);
+        //set array adapter and selection
         tv.setAdapter(arrayAdapter);
         tv.setSelection(Arrays.asList(colours).indexOf(colourTag));
+        //set onItemSelectedListener
         tv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //get item from position
                 String item = (String) adapterView.getItemAtPosition(i);
+                //set firebase colourTag value
                 FirebaseDatabase.getInstance().getReference().child("Recipe" + finalEmail).child(recipePassThrough.getRecipeID().toString()).child("colourTag").setValue(item);
                 colourTag = item;
+                //get TypedArray array_name from resources
                 TypedArray ta = getApplicationContext().getResources().obtainTypedArray(R.array.array_name);
+                //set colour by retrieving colour's Position from colours Array and passing it as the index ta's .getColor() Method
                 tv.setBackgroundColor(ta.getColor(Arrays.asList(colours).indexOf(colourTag),0));
             }
             @Override

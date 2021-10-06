@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
+import android.util.Log;
+import android.view.Window;
 import android.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +45,6 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
     private ArrayList<String> ingridients;
     private ArrayList<Boolean> checklist;
     private ArrayList<String> instructionsArrayList;
-    long recipeID;
 
 
     @Override
@@ -51,6 +52,7 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_mainhome);
         recipeObjList = new ArrayList<>();
         ingridients = new ArrayList<>();
@@ -65,6 +67,8 @@ public class MainHomeActivity extends AppCompatActivity implements Adapter.OnNot
         int index = email.indexOf('@');
         email = email.substring(0,index);
         reff = FirebaseDatabase.getInstance().getReference().child(("Recipe" + email));
+        System.out.println(reff);
+        System.out.println(reff.child(""));
         reff.addValueEventListener(new ValueEventListener(){
 
             //get from firebase database 'saved' branch

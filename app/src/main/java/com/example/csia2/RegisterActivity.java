@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register);
         //declare text views and edit texts in oncreate
         mEmail = (EditText) findViewById(R.id.emailRegister);
@@ -50,8 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.register);
         tvLoginActivity = (TextView) findViewById(R.id.alreadyReg);
         mAuth = FirebaseAuth.getInstance();
-
-
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     reff = FirebaseDatabase.getInstance().getReference();
                     Log.d("RecipeMain", reff.child("RecipeMain").toString());
-/*
-                        would need to add some delay, async is the problem
-*/
                     reff.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -96,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
                             init();
                         }
                     });
-                        //  */
                     
                 }else{
                     toastMessage("Registration failed, please try again");
@@ -106,25 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void init(){
-        //reff.child("Recipe" + email.substring(0,(email.indexOf('@')))).setValue(finalCopy.getValue());
-/*                    ArrayList<Boolean> arr = new ArrayList();
-                    reff.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            System.out.println("snap" + snapshot);
-                            finalCopy = snapshot;
-                            System.out.println("final copy" + finalCopy.child("recipemain").getValue());
-                            numRecipe = ((ArrayList) finalCopy.child("recipemain").getValue()).size();
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-
-                    });
-                    for (int i = 0; i < numRecipe; i++) {arr.add(true);}*/
         reff.child("Recipe" + email.substring(0,(email.indexOf('@')))).setValue(finalCopy.child("RecipeMain").getValue());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mAuth.signInWithEmailAndPassword(email,pass);

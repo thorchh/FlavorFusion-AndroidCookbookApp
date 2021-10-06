@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
+import android.view.Window;
 import android.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class ExploreActivity extends AppCompatActivity implements Adapter.OnNote
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_explore);
         user = Objects.requireNonNull(getIntent().getExtras()).getParcelable("user");
         assert user != null;

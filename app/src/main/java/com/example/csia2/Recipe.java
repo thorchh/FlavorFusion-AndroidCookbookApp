@@ -56,21 +56,9 @@ public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
         title = in.readString();
         desc = in.readString();
-        if (in.readByte() == 0) {
-            img = null;
-        } else {
-            img = in.readString();
-        }
-        if (in.readByte() == 0) {
-            difficulty = null;
-        } else {
-            difficulty = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            time = null;
-        } else {
-            time = in.readInt();
-        }
+        if (in.readByte() == 0) { img = null; } else { img = in.readString(); }
+        if (in.readByte() == 0) { difficulty = null; } else { difficulty = in.readInt(); }
+        if (in.readByte() == 0) { time = null; } else { time = in.readInt(); }
         saved = in.readBoolean();
         colourTag = in.readString();
         ingridientsChecklist = (ArrayList<ArrayList>) in.readSerializable();
@@ -84,24 +72,9 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(desc);
-        if (img == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeString(img);
-        }
-        if (difficulty == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(difficulty);
-        }
-        if (time == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(time);
-        }
+        if (img == null) { dest.writeByte((byte) 0); } else { dest.writeByte((byte) 1);dest.writeString(img); }
+        if (difficulty == null) { dest.writeByte((byte) 0); } else { dest.writeByte((byte) 1);dest.writeInt(difficulty); }
+        if (time == null) { dest.writeByte((byte) 0); } else { dest.writeByte((byte) 1);dest.writeInt(time); }
         dest.writeBoolean(saved);
         dest.writeString(colourTag);
         dest.writeSerializable(ingridientsChecklist);
