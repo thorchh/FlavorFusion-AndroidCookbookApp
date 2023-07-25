@@ -11,13 +11,13 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 
 ## Features
 
-- 👤 User Accounts with Data Sync: Create user accounts to access your saved recipes from multiple devices. Your data will be securely synchronized across all devices, ensuring you never lose your favorite recipes.
+- 👤 User Accounts with Data Sync: Create user accounts to access your saved recipes from multiple devices. Your data will be securely synchronized across all devices, ensuring you never lose your favourite recipes.
 
 - 🔍 Recipe Search: Easily search for recipes based on specific ingredients, titles, and descriptions.
 
-- 🏷️🎨 Tagging with Colors: Tag recipes with colours for easy categorization and organization.
+- 🏷️ Tagging with Colours: Tag recipes with colours for easy categorization and organization.
 
-- ❤️ Favorites: Save your favourite recipes to a dedicated page for quick access.
+- ❤️ Favourites: Save your favourite recipes to a dedicated page for quick access.
 
 - ✏️ Recipe Editing: Edit and customize existing recipes to suit your preferences.
 
