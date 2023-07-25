@@ -3,6 +3,12 @@
 ## Introduction
 Welcome to the Android Cookbook App repository! This app is designed to be your go-to cooking companion, offering a vast collection of delicious recipes right at your fingertips. Whether you're a seasoned chef or a novice in the kitchen, the Android Cookbook App will inspire you to create mouthwatering dishes for any occasion.
 
+## Tech Stack
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+
 ## Features
 - Recipe Collection: Explore a diverse range of recipes from various cuisines, including appetizers, main courses, desserts, and more. Each recipe is thoughtfully curated to ensure a delightful culinary experience.
 
@@ -13,7 +19,6 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 - Step-by-Step Instructions: Follow clear, step-by-step instructions for each recipe, accompanied by high-quality images. Never miss a beat with our detailed guidelines.
 
 - Shopping List: Plan your grocery shopping with the integrated shopping list feature. Add ingredients directly from the recipe to ensure you have everything you need for a delightful cooking session.
-
 
 ## Technologies Used
 - Android SDK
@@ -35,3 +40,7 @@ Contributions to the Android Cookbook App are welcome and encouraged! If you'd l
 Your feedback is valuable to me! If you encounter any issues, have suggestions for improvement, or want to request new features, please open an issue on this repository.
 
 Let's cook up some delicious memories together!
+
+## License & Copyright
+- © 2023 - Thor Christoffersen Hochman
+- Licensed under the MIT License.
