@@ -52,6 +52,35 @@ Please refer to the respective folders and files in the "Technical_Docs" directo
 
 If you have any questions or need further clarification, feel free to reach out! Happy coding and contributing!
 
+## Techniques Used
+- Firebase: Leveraged Firebase for real-time database functionality, authentication, and data synchronization.
+
+- RecyclerView: Implemented RecyclerView to efficiently display lists of recipes and enhance the user experience.
+
+- HashMap: Used HashMap for efficient data storage and retrieval.
+
+- Picasso Library: Integrated the Picasso library for loading and caching images.
+
+- Firebase Authentication: Enabled Firebase Authentication for user account creation and login.
+
+- Event Handlers: Implemented event handlers for various user interactions within the app.
+
+- Filter: Implemented a filter for efficient search functionality.
+
+- ProgressBar: Incorporated ProgressBar to provide visual feedback during data loading.
+
+- RatingBar: Utilized RatingBar to enable users to rate recipes.
+
+- Spinner: Implemented Spinner for selecting options in various parts of the app.
+
+- XML Drawable: Employed XML drawable to customize the appearance of UI elements.
+
+- Parcelable and Intent.putExtra: Employed Parcelable objects and Intent.putExtra for passing data between activities.
+
+- Object-Oriented Programming: Utilized Object-Oriented Programming principles throughout the app's codebase for better modularity and maintainability.
+
+- Dealing with Asynchronous Calls for Firebase: Managed asynchronous calls to Firebase to ensure smooth data retrieval.
+
 ## Installation
 To run the app locally on your Android device, follow these steps:
 
