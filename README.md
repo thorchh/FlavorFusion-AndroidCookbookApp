@@ -6,8 +6,8 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 ## Tech Stack
 ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
 ## Features
 - Recipe Collection: Explore a diverse range of recipes from various cuisines, including appetizers, main courses, desserts, and more. Each recipe is thoughtfully curated to ensure a delightful culinary experience.
