@@ -10,15 +10,27 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
 
 ## Features
-- Recipe Collection: Explore a diverse range of recipes from various cuisines, including appetizers, main courses, desserts, and more. Each recipe is thoughtfully curated to ensure a delightful culinary experience.
+- Recipe Search: Easily search for recipes based on specific ingredients, titles, and descriptions.
 
-- Search and Filter: Quickly find the recipe you're looking for with our intuitive search and filter functionality. You can search by ingredients, dish name, or cuisine type to discover the perfect recipe for your taste buds.
+- Recipe Details: Display detailed information about each recipe, including an image, ingredients, and step-by-step instructions.
 
-- Favorites: Save your favorite recipes to easily access them later. Bookmark the recipes you love and build your personalized cookbook.
+- Scrollable Recipe List: Browse through a scrollable list of recipes, allowing smooth navigation and exploration.
 
-- Step-by-Step Instructions: Follow clear, step-by-step instructions for each recipe, accompanied by high-quality images. Never miss a beat with our detailed guidelines.
+- Shopping List: Create and manage a shopping list for each recipe, complete with checkboxes to mark off ingredients as you shop.
 
-- Shopping List: Plan your grocery shopping with the integrated shopping list feature. Add ingredients directly from the recipe to ensure you have everything you need for a delightful cooking session.
+- Time and Difficulty Ratings: View estimated cooking time and a difficulty rating for each recipe to help plan your cooking schedule.
+
+- Recipe Rating: Rate recipes based on your cooking experience and provide feedback for other users.
+
+- Tagging with Colors: Tag recipes with colours for easy categorization and organization.
+
+- Favorites: Save your favourite recipes to a dedicated page for quick access.
+
+- Recipe Editing: Edit and customize existing recipes to suit your preferences.
+
+- User Accounts: Create user accounts to access your saved recipes from multiple devices.
+
+- Bottom Navigation Bar: Utilize a user-friendly bottom navigation bar to switch between different app sections.
 
 ## Technologies Used
 - Android SDK
