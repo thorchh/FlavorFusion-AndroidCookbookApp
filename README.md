@@ -1,15 +1,15 @@
-# Android Cookbook App
+# Android Cookbook App 🍳📚
 
 ## Introduction
 Welcome to the Android Cookbook App repository! This app is designed to be your go-to cooking companion, offering a vast collection of delicious recipes right at your fingertips. Whether you're a seasoned chef or a novice in the kitchen, the Android Cookbook App will inspire you to create mouthwatering dishes for any occasion.
 
-## Tech Stack
+## Tech Stack 🛠️
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
 
-## Features
+## Features 🚀
 
 - 👤 User Accounts with Data Sync: Create user accounts to access your saved recipes from multiple devices. Your data will be securely synchronized across all devices, ensuring you never lose your favourite recipes.
 
@@ -33,26 +33,26 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 
 - 🔼🔽 Bottom Navigation Bar: Utilize a user-friendly bottom navigation bar to switch between different app sections.
 
-## Technical Documentation
+## Technical Documentation 📚
 In this section, you'll find an overview of the technical documentation related to the development and implementation of the Android Cookbook App.
 
-### Data Flow Diagram
+### Data Flow Diagram 🗂️
 <img width="547" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/b72a7f99-9db0-43a3-b7ca-3284d9c3c412">
 
-### Structure Diagram
+### Structure Diagram 📂
 <img width="622" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/9a76a3b7-5fa4-4d1e-9d94-86e7c80eda53">
 
-### Activity Page Diagram
+### Activity Page Diagram 📝
 <img width="405" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/15c6ec6d-bc8f-4e68-b242-781c899395dd">
 
-### UML Design
+### UML Design 🧩
 <img width="491" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/58d8040e-1db5-43ac-814b-7a7b145c85fc">
 
 Please refer to the respective folders and files in the "Technical_Docs" directory for more detailed information on each aspect of the technical documentation. It is encouraged that developers and contributors explore these resources to gain deeper insights into the app's implementation and development process.
 
-If you have any questions or need further clarification, feel free to reach out! Happy coding and contributing!
+If you have any questions or need further clarification, feel free to reach out! Happy coding and contributing! 🙌
 
-## Techniques Used
+## Techniques Used 🤓
 - Firebase: Leveraged Firebase for real-time database functionality, authentication, and data synchronization.
 
 - RecyclerView: Implemented RecyclerView to efficiently display lists of recipes and enhance the user experience.
@@ -81,22 +81,22 @@ If you have any questions or need further clarification, feel free to reach out!
 
 - Dealing with Asynchronous Calls for Firebase: Managed asynchronous calls to Firebase to ensure smooth data retrieval.
 
-## Installation
+## Installation 💻
 To run the app locally on your Android device, follow these steps:
 
-1. Clone this repository to your local machine using git clone.
+1. Clone this repository to your local machine using 'git clone'.
 2. Open the project in Android Studio.
 3. Connect your Android device to your computer.
 4. Click on the "Run" button in Android Studio to install and launch the app on your device.
 
-## Contribution
+## Contribution 🤝
 Contributions to the Android Cookbook App are welcome and encouraged! If you'd like to add new features, fix bugs, or improve the user experience, feel free to open a pull request. Please ensure to follow the code style and guidelines of this project.
 
-## Feedback
+## Feedback 📝
 Your feedback is valuable to me! If you encounter any issues, have suggestions for improvement, or want to request new features, please open an issue on this repository.
 
 Let's cook up some delicious memories together!
 
-## License & Copyright
+## License & Copyright 🍽️🥗🍰
 - © 2023 - Thor Christoffersen Hochman
 - Licensed under the MIT License.
