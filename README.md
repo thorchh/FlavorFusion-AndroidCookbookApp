@@ -32,10 +32,24 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 
 - Bottom Navigation Bar: Utilize a user-friendly bottom navigation bar to switch between different app sections.
 
-## Technologies Used
-- Android SDK
-- Java
-- Firebase
+## Technical Documentation
+In this section, you'll find an overview of the technical documentation related to the development and implementation of the Android Cookbook App.
+
+### Data Flow Diagram
+<img width="547" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/b72a7f99-9db0-43a3-b7ca-3284d9c3c412">
+
+### Structure Diagram
+<img width="622" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/9a76a3b7-5fa4-4d1e-9d94-86e7c80eda53">
+
+### Activity Page Diagram
+<img width="405" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/15c6ec6d-bc8f-4e68-b242-781c899395dd">
+
+### UML Design
+<img width="491" alt="image" src="https://github.com/thorchh/CookBook-Android-App/assets/75025911/58d8040e-1db5-43ac-814b-7a7b145c85fc">
+
+Please refer to the respective folders and files in the "Technical_Docs" directory for more detailed information on each aspect of the technical documentation. It is encouraged that developers and contributors explore these resources to gain deeper insights into the app's implementation and development process.
+
+If you have any questions or need further clarification, feel free to reach out! Happy coding and contributing!
 
 ## Installation
 To run the app locally on your Android device, follow these steps:
