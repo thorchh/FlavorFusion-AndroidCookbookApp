@@ -10,27 +10,28 @@ Welcome to the Android Cookbook App repository! This app is designed to be your 
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
 
 ## Features
-- Recipe Search: Easily search for recipes based on specific ingredients, titles, and descriptions.
 
-- Recipe Details: Display detailed information about each recipe, including an image, ingredients, and step-by-step instructions.
+- 👤 User Accounts with Data Sync: Create user accounts to access your saved recipes from multiple devices. Your data will be securely synchronized across all devices, ensuring you never lose your favorite recipes.
 
-- Scrollable Recipe List: Browse through a scrollable list of recipes, allowing smooth navigation and exploration.
+- 🔍 Recipe Search: Easily search for recipes based on specific ingredients, titles, and descriptions.
 
-- Shopping List: Create and manage a shopping list for each recipe, complete with checkboxes to mark off ingredients as you shop.
+- 🏷️🎨 Tagging with Colors: Tag recipes with colours for easy categorization and organization.
 
-- Time and Difficulty Ratings: View estimated cooking time and a difficulty rating for each recipe to help plan your cooking schedule.
+- ❤️ Favorites: Save your favourite recipes to a dedicated page for quick access.
 
-- Recipe Rating: Rate recipes based on your cooking experience and provide feedback for other users.
+- ✏️ Recipe Editing: Edit and customize existing recipes to suit your preferences.
 
-- Tagging with Colors: Tag recipes with colours for easy categorization and organization.
+- 📋 Recipe Details: Display detailed information about each recipe, including an image, ingredients, and step-by-step instructions.
 
-- Favorites: Save your favourite recipes to a dedicated page for quick access.
+- 📜 Scrollable Recipe List: Browse through a scrollable list of recipes, allowing smooth navigation and exploration.
 
-- Recipe Editing: Edit and customize existing recipes to suit your preferences.
+- 🛒 Shopping List: Create and manage a shopping list for each recipe, complete with checkboxes to mark off ingredients as you shop.
 
-- User Accounts: Create user accounts to access your saved recipes from multiple devices.
+- ⏰🌟 Time and Difficulty Ratings: View estimated cooking time and a difficulty rating for each recipe to help plan your cooking schedule.
 
-- Bottom Navigation Bar: Utilize a user-friendly bottom navigation bar to switch between different app sections.
+- ⭐ Recipe Rating: Rate recipes based on your cooking experience and provide feedback for other users.
+
+- 🔼🔽 Bottom Navigation Bar: Utilize a user-friendly bottom navigation bar to switch between different app sections.
 
 ## Technical Documentation
 In this section, you'll find an overview of the technical documentation related to the development and implementation of the Android Cookbook App.
