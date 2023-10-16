@@ -1,4 +1,4 @@
-# Android Cookbook App 🍳📚
+# FlavorFusion - The Android Cookbook App 🍳📚
 
 ## Introduction
 Welcome to the Android Cookbook App repository! This app is designed to be your go-to cooking companion, offering a vast collection of delicious recipes right at your fingertips. Whether you're a seasoned chef or a novice in the kitchen, the Android Cookbook App will inspire you to create mouthwatering dishes for any occasion.
